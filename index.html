@@ -145,6 +145,8 @@
 		  opacity: 1;
 		  bottom: 60px;
 		}
+		
+
     </style>
     <!-- Custom styles for this template -->
     <link href="css/cover.css" rel="stylesheet">
@@ -443,7 +445,7 @@
         <div class="wow fadeInUp section5 inner cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
             <br/>
             <p class="section5-title section5-main">Date</p>
-            <p class="section5-title section5-sub" style="margin-top: 0;">11월 8일 · 토요일 · 18:30</p>
+            <p class="section5-title section5-sub" style="margin-top: 0;">11월 8일 · 토요일 · 18:30<div id="wedding-dcount-text" class="section5-title section5-main">Loading...</div></p>
             <table class="wow fadeInUp section5-title section5-table">
                 <tr>
                     <td class="sun">S</td>
@@ -648,8 +650,38 @@
 			behavior: 'smooth'
 		  });
 		};
+		
+		
+
 	</script>
 
+	<script>
+	  function updateDdayCountdown() {
+		const weddingDate = new Date("2025-11-08T00:00:00");
+		const now = new Date();
+
+		// 시간 차 계산 (하루 단위로)
+		const oneDay = 1000 * 60 * 60 * 24;
+		const diffInTime = weddingDate.setHours(0, 0, 0, 0) - now.setHours(0, 0, 0, 0);
+		const diffInDays = Math.floor(diffInTime / oneDay);
+
+		let displayText = "";
+
+		if (diffInDays > 0) {
+		  displayText = `D-${diffInDays}`;
+		} else if (diffInDays === 0) {
+		  displayText = `💍 D-Day`;
+		} else {
+		  displayText = `💒 D+${Math.abs(diffInDays)}`;
+		}
+
+		document.getElementById("wedding-dcount-text").innerText = displayText;
+	  }
+
+	  // 최초 실행 및 주기적 업데이트
+	  updateDdayCountdown();
+	  setInterval(updateDdayCountdown, 60 * 1000); // 1분 간격으로 업데이트
+	</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
