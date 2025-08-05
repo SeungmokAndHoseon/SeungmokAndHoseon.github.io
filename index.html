@@ -619,40 +619,45 @@
 </div>
 	<button id="backToTop" title="맨 위로 이동">↑</button>
 	<script>
-	
-		document.getElementById('sharelink-btn').addEventListener('click', function () {
-		  const url = window.location.href;
+	  document.getElementById('sharelink-btn').addEventListener('click', function () {
+		const url = window.location.href;
 
-		  navigator.clipboard.writeText(url).then(() => {
-			const toast = document.getElementById('sharelink-toast');
-			toast.classList.add('show');
+		// Create temporary input
+		const tempInput = document.createElement("input");
+		tempInput.value = url;
+		document.body.appendChild(tempInput);
+		tempInput.select();
 
-			setTimeout(() => {
-			  toast.classList.remove('show');
-			}, 2000);
-		  }).catch(err => {
-			alert("복사 실패: " + err);
-		  });
+		const isSuccess = document.execCommand("copy");
+		document.body.removeChild(tempInput);
+
+		// 사용자에게 피드백 제공
+		const toast = document.getElementById('sharelink-toast');
+		toast.classList.add('show');
+
+		setTimeout(() => {
+		  toast.classList.remove('show');
+		}, 2000);
+
+		// navigator.clipboard는 Android에서 복사 안내 뜨는 경우가 많으므로 사용하지 않음
+	  });
+
+	  // 스크롤 버튼 처리
+	  const btn = document.getElementById("backToTop");
+	  window.onscroll = function () {
+		if (document.documentElement.scrollTop > 100) {
+		  btn.classList.add("show");
+		} else {
+		  btn.classList.remove("show");
+		}
+	  };
+
+	  btn.onclick = function () {
+		window.scrollTo({
+		  top: 0,
+		  behavior: 'smooth'
 		});
-		const btn = document.getElementById("backToTop");
-
-		window.onscroll = function () {
-		  if (document.documentElement.scrollTop > 100) {
-			btn.classList.add("show");
-		  } else {
-			btn.classList.remove("show");
-		  }
-		};
-
-		btn.onclick = function () {
-		  window.scrollTo({
-			top: 0,
-			behavior: 'smooth'
-		  });
-		};
-		
-		
-
+	  };
 	</script>
 
 	<script>
