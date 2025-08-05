@@ -46,6 +46,49 @@
 		.line-7 {
 			background-color: #747F00; /* 7호선 색상 */
 		}
+		
+		
+		.bus-line {
+			    color: #fff;
+				border-radius: 14px;
+				padding: 0 11px;
+				margin-right: 10px;
+				font-size: 13px;
+		}
+		.line-trunk {
+			background-color: #446de3; /* 간선 색상 */
+		}
+		.line-branch {
+			background-color: #68c157; /* 지선 색상 */
+		}
+		.line-airport {
+			background-color: #7e46cb; /* 공항선 색상 */
+		}
+		.line-metropolitan {
+			background-color: #e96358; /* 광역선 색상 */
+		}
+		
+		#backToTop {
+		  position: fixed;
+		  bottom: 30px;
+		  right: 30px;
+		  width: 50px;
+		  height: 50px;
+		  font-size: 24px;
+		  background-color: #0052A4;
+		  color: white;
+		  border: none;
+		  border-radius: 50%;
+		  cursor: pointer;
+		  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+		  transition: opacity 0.3s ease;
+		  opacity: 0;
+		  z-index: 999;
+		}
+
+		#backToTop.show {
+		  opacity: 1;
+		}
     </style>
     <!-- Custom styles for this template -->
     <link href="css/cover.css" rel="stylesheet">
@@ -125,8 +168,8 @@
         </div>
         <div class="wow fadeInUp">
             <div class="section1-title section1-sub2">
-                김현태 · 지영주<span class="small">의&nbsp아들&nbsp&nbsp</span>김승목<br/>
-                이종진 · 강복순<span class="small">의&nbsp&nbsp&nbsp딸&nbsp&nbsp&nbsp</span>이호선
+                김현태 · 지영주<span class="small">의&nbsp아들&nbsp&nbsp</span>승목<br/>
+                이종진 · 강복순<span class="small">의&nbsp&nbsp&nbsp딸&nbsp&nbsp&nbsp</span>호선
             </div>
             <br/><br/><br/><br/>
         </div>
@@ -137,23 +180,11 @@
             모든 분들에게
         </p>
         <p class="wow fadeInUp section2-title section2-sub inner cover cover-container d-flex w-100 h-100 p-2 mx-auto flex-column">
-            안녕하세요.<br/>
-            <br/>
-            결혼식을 진행하는 저희 마음과 같이<br/>
-            초대받는 분들 마음도<br/>
-            무거우실 거라 생각합니다.<br/>
-            <br/>
-            코로나19로 인해 결혼식 진행 여부에 대하여<br/>
-            많은 고민을 했지만 종식을 예상할 수 없어<br/>
-            식을 예정대로 진행하게 되었습니다.<br/>
-            <br/>
-            못 오시는 분들 소식에 서운해하지 않으니<br/>
-            마음의 부담 갖지 않으시길 바랍니다.<br/>
-            <br/>
-            저희 두사람의 결혼 소식이<br/>
-            불편한 마음으로 머물지 않고<br/>
-            기분 좋은 소식이 되길 진심으로 바랍니다.<br/>
-            <br/>
+            지금까지 함께해 주시며 나누었던 소중한 순간들이 저희에게 큰 기쁨과<br>
+			힘이 되었습니다. 이제 저희 인생의 또 하나의 특별한 순간을 맞이하며,<br>
+			소중한 여러분을 이 자리에 초대하고 싶습니다. 따뜻한 축복과 응원의<br>
+			마음을 전해 주시면 더없이 기쁠 것 같아요. 그날 뵙기를 손꼽아 기다리고<br>
+			있겠습니다!<br><br>
             신랑 김승목 신부 이호선 올림
         </p>
         <br/><br/><br/><br/>
@@ -517,10 +548,10 @@
                         </div>
                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                             <div class="card-body section6-location-sub">
-                                간선 : 652, 672 <br/>
-                                지선 : 6632 <br/>
-                                공항 : 6018 <br/>
-                                광역 : 770
+                                <span class="bus-line line-trunk">간선버스</span> : 652, 672 <br/>
+                                <span class="bus-line line-branch">지선버스</span> : 6632 <br/>
+                                <span class="bus-line line-airport">공항버스</span> : 6018 <br/>
+                                <span class="bus-line line-metropolitan">광역버스</span> : 770
                             </div>
                         </div>
                     </div>
@@ -550,12 +581,32 @@
             <br/><br/>
         </div>
         <footer class="pt-5 text-muted text-center text-small section8">
-            <p class="mb-1">© 2025-11-08 Seungmok, Hoseon</p>
+            <p class="mb-1">© made with ♡ by Seungmok & Hoseon</p>
             <br/><br/>
             <br/><br/>
         </footer>
     </main>
 </div>
+	<button id="backToTop" title="맨 위로 이동">↑</button>
+	<script>
+		const btn = document.getElementById("backToTop");
+
+		window.onscroll = function () {
+		  if (document.documentElement.scrollTop > 100) {
+			btn.classList.add("show");
+		  } else {
+			btn.classList.remove("show");
+		  }
+		};
+
+		btn.onclick = function () {
+		  window.scrollTo({
+			top: 0,
+			behavior: 'smooth'
+		  });
+		};
+	</script>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
