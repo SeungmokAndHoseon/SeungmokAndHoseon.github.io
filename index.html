@@ -16,7 +16,7 @@
     <meta property="og:image:height" content="800" />
     <meta property="og:description" content="사랑으로 물들어가는 계절, 연인에서 부부라는 이름으로 평생을 함께 하고자 합니다." />
     <meta name="format-detection" content="telephone=no" />
-    <title>김승목, 이호선의 모바일 청첩장</title>
+    <title>승목❤️호선</title>
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <style>
@@ -94,6 +94,57 @@
 		#backToTop.show {
 		  opacity: 1;
 		}
+		.highlight-box {
+		  //font-size: 1.5em;
+		  font-weight: bold;
+		  background-color: #fef3c7; /* 연한 노랑 (주의 강조 느낌) */
+		  color: #b45309;           /* 진한 오렌지/브라운 (주의 강조 느낌) */
+		  border: 2px solid #facc15;
+		  //padding: 16px 24px;
+		  //border-radius: 12px;
+		  //box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+		  display: inline-block;
+		  text-align: center;
+		  //margin: 20px auto;
+		}
+		
+		#sharelink-btn.sharelink-button {
+			width: 100%;                /* 좌우로 100% 채움 */
+		  padding: 12px 20px;
+		  font-size: 16px;
+		  background-color: #C1D0B5;
+		  color: white;
+		  border: none;
+		  border-radius: 8px;
+		  cursor: pointer;
+		  transition: background-color 0.2s ease;
+		  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+		}
+
+		#sharelink-btn.sharelink-button:hover {
+		  background-color: #9AD756;
+		}
+
+		#sharelink-toast.sharelink-toast {
+		  position: fixed;
+		  bottom: 40px;
+		  left: 50%;
+		  transform: translateX(-50%);
+		  background: #CCE5FF;
+		  color: white;
+		  padding: 14px 20px;
+		  border-radius: 8px;
+		  font-size: 15px;
+		  opacity: 0;
+		  pointer-events: none;
+		  transition: opacity 0.5s ease, bottom 0.5s ease;
+		  z-index: 9999;
+		}
+
+		#sharelink-toast.sharelink-toast.show {
+		  opacity: 1;
+		  bottom: 60px;
+		}
     </style>
     <!-- Custom styles for this template -->
     <link href="css/cover.css" rel="stylesheet">
@@ -103,6 +154,8 @@
             integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
             crossorigin="anonymous"></script>
     <script src="js/wow.min.js"></script>
+	<!--<script src="js/main.js"></script>
+	<link href="css/main.css" rel="stylesheet">-->
     <script>
         var wow = new WOW(
             {
@@ -117,17 +170,6 @@
         );
         wow.init();
 
-        $(document).ready(function() {
-            let date = new Date(2020, 10, 28);
-            let currentDate = new Date();
-
-            let result = date - currentDate;
-            let misec = 24 * 60 * 60 * 1000;
-
-            result = (result <= 0)? 0 : (parseInt(result / misec) + 1);
-
-            $("#d-day").html(result);
-        });
     </script>
 	<!-- Google tag (gtag.js) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGW3XRM4W6"></script>
@@ -142,22 +184,25 @@
 <body class="text-center">
 <div class="top-div">
     <header class="inner cover cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <h1 class="wow fadeIn cover-heading" style="text-align: right; margin-top: 38%; margin-right: 25%; font-size: 2rem;">
+        <!--<h1 class="wow fadeIn cover-heading" style="text-align: right; margin-top: 38%; margin-right: 25%; font-size: 2rem;">
             <span style="letter-spacing : -0.13em; margin-right: 0.1em">⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽</span><br/>
             11月&nbsp;8日 <br/>
             <span style="letter-spacing : -0.13em; margin-right: 0.1em;">⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺</span>
-        </h1>
+        </h1>-->
     </header>
     <main role="main" class="inner">
-        <div class="wow fadeInUp">
-            <p class="top-title">김승목 · 이호선</p>
-            <p class="top-title-sub">토요일 18시 30분</p>
+        <div class="wow fadeInUp"><br>
+			<img class="header-deco svelte-15smenq" alt="letter header deco" src="img/deco.svg">
+            <p class="top-title">김승목 ❤️ 이호선</p>
+			
+			
+            <p class="top-title-sub">2025년 11월 8일(토) 18시 30분</p>
             <p class="top-title-sub">소풍컨벤션웨딩홀 7층 베일리홀</p>
-            <br/><br/><br/>
+            <br/><!--<br/><br/>-->
             <hr class="cover-container"/>
             <br/>
         </div>
-        <div class="wow fadeInUp">
+        <!--<div class="wow fadeInUp">
             <p class="section1-title section1-main">
                 예쁜 예감이 들었다 <br/>
                 우리는 언제나 손을 잡고 있게 될 것이다.
@@ -165,7 +210,11 @@
                 - 이이체, 연인 -
             </p>
             <br/>
-        </div>
+        </div>-->
+        <p class="wow fadeInUp section2-title section2-main inner cover cover-container d-flex w-100 h-100 p-5 mx-auto flex-column">
+            축하해 주시는<br/>
+            모든 분들에게
+        </p>
         <div class="wow fadeInUp">
             <p class="section1-title section1-sub">
                 사랑으로 물들어가는 계절,<br/>
@@ -182,15 +231,11 @@
                 김현태 · 지영주<span class="small">의&nbsp아들&nbsp&nbsp</span>승목<br/>
                 이종진 · 강복순<span class="small">의&nbsp&nbsp&nbsp딸&nbsp&nbsp&nbsp</span>호선
             </div>
-            <br/><br/><br/><br/>
+            <br/><br/>
         </div>
         <hr class="cover-container"/>
         <br/>
-        <p class="wow fadeInUp section2-title section2-main inner cover cover-container d-flex w-100 h-100 p-5 mx-auto flex-column">
-            축하해 주시는<br/>
-            모든 분들에게
-        </p>
-        <p class="wow fadeInUp section2-title section2-sub inner cover cover-container d-flex w-100 h-100 p-2 mx-auto flex-column">
+        <!--<p class="wow fadeInUp section2-title section2-sub inner cover cover-container d-flex w-100 h-100 p-2 mx-auto flex-column">
             지금까지 함께해 주시며 나누었던 소중한 순간들이 저희에게 큰 기쁨과<br>
 			힘이 되었습니다. 이제 저희 인생의 또 하나의 특별한 순간을 맞이하며,<br>
 			소중한 여러분을 이 자리에 초대하고 싶습니다. 따뜻한 축복과 응원의<br>
@@ -198,7 +243,7 @@
 			있겠습니다!<br><br>
             신랑 김승목 신부 이호선 올림
         </p>
-        <br/><br/><br/><br/>
+        <br/><br/><br/><br/>-->
         <div class="section3 inner cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
             <p class="wow fadeInUp section3-title section3-main">Gallery</p>
             <div id="carouselExampleControls" class="wow fadeIn carousel slide section3-image" data-ride="carousel">
@@ -550,7 +595,8 @@
                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                             <div class="card-body section6-location-sub">
                                 네비게이션: "소풍컨벤션웨딩홀 " 또는 "부천 터미널 소풍" 입력 <br/>
-                                &nbsp;&nbsp;&nbsp;· [주소검색] 경기도 부천시 원미구 송내대로 239<br/>
+                                &nbsp;&nbsp;&nbsp;👉🏻 [주소검색] 경기도 부천시 원미구 송내대로 239<br/>
+                                &nbsp;&nbsp;&nbsp;👉🏻 <div class="highlight-box">건물 내 <strong>3시간 무료주차</strong></div><br/>
                             </div>
                         </div>
                     </div>
@@ -559,8 +605,11 @@
             <br/><br/>
             <br/><br/>
         </div>
+		<button id="sharelink-btn" class="sharelink-button">🔗 링크로 공유하기</button>
+		<div id="sharelink-toast" class="sharelink-toast">📋 링크가 복사되었습니다!</div>
         <footer class="pt-5 text-muted text-center text-small section8">
-            <p class="mb-1">© made with ♡ by Seungmok & Hoseon</p>
+		
+            <p class="mb-1">© made with ♡ by Seungmok & Hoseon&nbsp;&nbsp;&nbsp;&nbsp;<img class="location-deco svelte-1018lq3"    position: absolute; bottom: 2.5em; right: 1.5em; alt="" src="data:image/svg+xml,%3csvg%20width='57'%20height='97'%20viewBox='0%200%2057%2097'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M1.1957%2096.3367C20.8809%2089.7546%2038.8394%2076.1299%2048.7423%2057.042C53.9223%2047.0571%2056.8551%2035.7821%2056.9948%2024.4347C57.0646%2018.7939%2056.4361%2013.1203%2055.0523%207.66377C54.5%205.47196%2053.9541%202.67461%2052.0243%201.30555C49.7834%20-0.280719%2047.5045%201.46352%2045.8223%203.0432C37.4937%2010.8758%2033.6658%2023.2631%2035.8432%2034.6632C36.0527%2035.769%2037.8745%2035.5386%2037.7603%2034.3933C36.8716%2025.9091%2034.599%2017.6355%2030.9552%209.97405C30.1744%208.32855%2029.4126%206.2289%2028.0161%205.02439C26.6068%203.80672%2024.823%204.20163%2023.4963%205.33373C20.9761%207.47947%2019.3891%2011.1325%2018.5893%2014.3379C16.8499%2021.3478%2018.1957%2028.8776%2020.2144%2035.6637C22.5885%2043.6608%2025.8831%2051.4605%2029.3238%2059.0232C33.4055%2068.0011%2038.0523%2076.7025%2043.2005%2085.0682C43.8734%2086.1674%2045.5683%2085.1473%2044.8891%2084.0481C36.5034%2070.4299%2029.4698%2055.9231%2023.9914%2040.7976C21.6681%2034.3867%2019.6684%2027.6204%2019.7637%2020.7093C19.8017%2017.5368%2020.335%2014.305%2021.6681%2011.4287C22.3536%209.93456%2023.2297%208.40753%2024.3723%207.23593C24.9436%206.65672%2025.7879%205.96561%2026.6005%206.4461C27.3559%206.88709%2027.7939%208.0521%2028.1811%208.80903C32.2819%2016.7206%2034.8719%2025.4615%2035.8051%2034.3933C36.4462%2034.3078%2037.0874%2034.2156%2037.7222%2034.1301C35.9067%2024.5861%2038.6553%2014.2655%2044.8383%206.96607C45.581%206.09066%2046.3682%205.25476%2047.2061%204.4715C48.0377%203.69482%2049.2311%202.39816%2050.469%202.75359C51.4085%203.02345%2051.9291%204.16215%2052.2591%205.03097C52.7289%206.26181%2053.0273%207.59138%2053.3383%208.87487C54.5635%2013.9562%2055.1031%2019.1955%2055.0396%2024.4347C54.9126%2035.0713%2052.2528%2045.6617%2047.5299%2055.0938C43.0545%2064.0256%2036.7192%2071.8516%2029.2603%2078.2756C20.8682%2085.5027%2011.0542%2090.9131%200.675165%2094.3818C-0.511914%2094.7767%20-0.00407349%2096.7316%201.1957%2096.3367Z'%20fill='%23AA8988'/%3e%3c/svg%3e"></p>
             <br/><br/>
             <br/><br/>
         </footer>
@@ -568,6 +617,21 @@
 </div>
 	<button id="backToTop" title="맨 위로 이동">↑</button>
 	<script>
+	
+		document.getElementById('sharelink-btn').addEventListener('click', function () {
+		  const url = window.location.href;
+
+		  navigator.clipboard.writeText(url).then(() => {
+			const toast = document.getElementById('sharelink-toast');
+			toast.classList.add('show');
+
+			setTimeout(() => {
+			  toast.classList.remove('show');
+			}, 2000);
+		  }).catch(err => {
+			alert("복사 실패: " + err);
+		  });
+		});
 		const btn = document.getElementById("backToTop");
 
 		window.onscroll = function () {

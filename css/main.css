@@ -1,0 +1,23 @@
+
+
+.countdown-container {
+  text-align: center;
+  color: #333;
+}
+
+
+#countdown {
+    border: 1px dotted #5f1919;
+    margin: 20px 0;
+    padding: 20px 15px;
+    width: 300px;
+	display: block;
+    unicode-bidi: isolate;
+	font-size: x-large;
+	text-align: center;
+	-webkit-font-smoothing: antialiased;
+    color: #5f1919;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    font-family: GangwonEdu;
+
+}
