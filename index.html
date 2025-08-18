@@ -391,7 +391,10 @@
                 
                 <p class="wow fadeInUp section3-title section3-main">Gallery</p>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="gallery-grid"></div>
-                <button id="load-more" class="btn btn-outline-secondary btn-block mt-3">더보기</button>
+                <div class="text-center mt-3">
+                    <button id="load-more" class="btn btn-outline-secondary">더보기</button>
+                    <button id="fold-gallery" class="btn btn-outline-secondary" style="display: none;">접기</button>
+                </div>
             </div>
             <!-- Swiper Modal -->
 <div id="imageModal" class="modal fade" tabindex="-1">
@@ -911,25 +914,53 @@
   const galleryGrid = document.getElementById('gallery-grid');
   const loadMoreBtn = document.getElementById('load-more');
   const swiperWrapper = document.getElementById('swiperWrapper');
+  const foldBtn = document.getElementById('fold-gallery');
+
   let swiperInstance;
 
   function renderImages() {
-    const slice = allImage.slice(shownCnt, shownCnt + perLoad);
-    slice.forEach((src, idx) => {
-      const col = document.createElement('div');
-      col.className = 'col-4 p-1';
-      col.innerHTML = `<img src="${src}" alt="" data-index="${shownCnt + idx}" class="img-thumbnail">`;
-      galleryGrid.appendChild(col);
-    });
-    shownCnt += slice.length;
+  const slice = allImage.slice(shownCnt, shownCnt + perLoad);
+  slice.forEach((src, idx) => {
+    const col = document.createElement('div');
+    col.className = 'col-4 p-1 extra-gallery';
+    col.innerHTML = `<img src="${src}" alt="" data-index="${shownCnt + idx}" class="img-thumbnail">`;
+    galleryGrid.appendChild(col);
+  });
+  shownCnt += slice.length;
 
-    if (shownCnt >= allImage.length) {
-      loadMoreBtn.style.display = 'none';
-    }
+  if (shownCnt >= allImage.length) {
+    loadMoreBtn.style.display = 'none';
   }
 
-  renderImages();
-  loadMoreBtn.addEventListener('click', renderImages);
+  // 접기 버튼 표시
+  if (shownCnt > perLoad) {
+    foldBtn.style.display = 'inline-block';
+  }
+}
+
+// function resetGallery() {
+//   // 초기 9개만 남기고 나머지 삭제
+//   const extras = document.querySelectorAll('.extra-gallery');
+//   extras.forEach(el => el.remove());
+
+//   shownCnt = perLoad;
+//   loadMoreBtn.style.display = 'inline-block';
+//   foldBtn.style.display = 'none';
+  
+// }
+function resetGallery() {
+  // 전체 초기화 후 다시 처음부터 렌더링
+  galleryGrid.innerHTML = '';
+  shownCnt = 0;
+
+  renderImages(); // 초기 9개 이미지 다시 로드
+
+  loadMoreBtn.style.display = 'inline-block';
+  foldBtn.style.display = 'none';
+}
+  renderImages(); // 최초 9개 로딩
+loadMoreBtn.addEventListener('click', renderImages);
+foldBtn.addEventListener('click', resetGallery);
 
   galleryGrid.addEventListener('click', (e) => {
     if (e.target.tagName === 'IMG') {
@@ -966,6 +997,7 @@
       modal.show();
     }
   });
+  
 </script>
 
 
