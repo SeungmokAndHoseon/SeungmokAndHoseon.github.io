@@ -532,4 +532,10 @@ header {
   pointer-events: none;
 }
 
+.gallery-container img {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* 1:1 비율 유지 (800x800) */
+  object-fit: cover;
+  /* border-radius: 1px; */
+  cursor: pointer;
 }
