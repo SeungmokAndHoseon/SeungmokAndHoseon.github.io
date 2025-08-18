@@ -212,9 +212,12 @@
             audio.addEventListener("canplaythrough", () => {
                 msgBar.classList.add("visible");
 
+                // 메시지바 2초 후 사라지기
                 setTimeout(() => {
-                    msgBar.classList.remove("visible");
+                const msg = document.getElementById('music-msg-bar');
+                if (msg) msg.classList.remove('visible');
                 }, 2000);
+
             });
 
             // on/off 버튼 클릭 시 음악 토글
