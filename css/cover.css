@@ -532,41 +532,4 @@ header {
   pointer-events: none;
 }
 
-/* 전체 뷰포트 대비 이미지 영역 높이 조절 */
-.hero-section {
-  position: relative;
-  height: 75vh;       /* 화면의 75% 높이 적용 */
-  max-height: 80vh;   /* 최대 80vh 제한 */
-  overflow: hidden;
-}
-
-/* 내부 img 요소 조절 */
-.hero-section img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;       /* 이미지 비율 유지하며 영역 채움 */
-  object-position: top;    /* 상단 중심으로 위치 지정 */
-}
-
-/* 상단 텍스트 영역 여백 조정 */
-.hero-section .top-title {
-  margin-top: 1em;
-  font-size: 1.8em;
-}
-.hero-section .top-title-sub {
-  margin-bottom: 0.5em;
-  font-size: 1.2em;
-}
-
-/* 모바일 대응: 이미지 영역 높이 조금 줄임 */
-@media (max-width: 768px) {
-  .hero-section {
-    height: 60vh;
-  }
-  .hero-section .top-title {
-    font-size: 1.6em;
-  }
-  .hero-section .top-title-sub {
-    font-size: 1.0em;
-  }
 }
