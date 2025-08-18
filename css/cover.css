@@ -639,3 +639,32 @@ header {
     font-size: 28px;
   }
 }
+
+
+#music-toggle {
+  position: fixed;
+  top: 6px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  color: black;
+  cursor: pointer;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+#music-toggle svg {
+  width: 24px;
+  height: 24px;
+  stroke: black;
+  transition: stroke 0.3s ease;
+}
+
+#music-toggle:hover svg {
+  stroke: #ffdede;
+}

@@ -221,20 +221,20 @@
             });
 
             // on/off 버튼 클릭 시 음악 토글
-            btn.addEventListener("click", () => {
-                if (!userInitiated) {
-                    audio.volume = 0.5;
-                    userInitiated = true;
-                }
+            // btn.addEventListener("click", () => {
+            //     if (!userInitiated) {
+            //         audio.volume = 0.5;
+            //         userInitiated = true;
+            //     }
 
-                if (audio.paused) {
-                    audio.play().catch(err => console.warn("재생 실패:", err));
-                    btn.textContent = "🎵";
-                } else {
-                    audio.pause();
-                    btn.textContent = "🔇";
-                }
-            });
+            //     if (audio.paused) {
+            //         audio.play().catch(err => console.warn("재생 실패:", err));
+            //         btn.textContent = "🎵";
+            //     } else {
+            //         audio.pause();
+            //         btn.textContent = "🔇";
+            //     }
+            // });
         });
     </script>
     <!-- Swiper CSS -->
@@ -248,7 +248,18 @@
 <body class="text-center">
     <div class="top-div">
         <!-- 음악 제어 버튼 (항상 고정) -->
-        <button id="music-toggle" title="음악 재생/정지">🔇</button>
+        <!-- <button id="music-toggle" title="음악 재생/정지">🔇</button> -->
+        <!-- 음악 토글 버튼 -->
+        <button id="music-toggle" aria-label="Toggle Music">
+        <span id="music-icon">
+            <!-- 초기 상태: OFF (🔇 아이콘) -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M9 18V5l12-2v13M3 3l18 18" />
+            <circle cx="6" cy="18" r="3" />
+            </svg>
+        </span>
+        </button>
 
         <!-- 메시지 바 -->
         <div id="music-msg-bar" class="music-msg-bar">
@@ -257,7 +268,7 @@
 
         <!-- 음악 파일 -->
         <audio id="bg-music" src="music.mp3" preload="auto" loop></audio>
-        
+
         <header class="inner cover cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
             <!--<h1 class="wow fadeIn cover-heading" style="text-align: right; margin-top: 38%; margin-right: 25%; font-size: 2rem;">
@@ -1022,6 +1033,42 @@
         });
 
     </script>
+<script>
+const musicToggleBtn = document.getElementById('music-toggle');
+const musicIcon = document.getElementById('music-icon');
+const audio = document.getElementById('bg-music');
+
+// 초기 상태: 음악 OFF
+let isMusicPlaying = false;
+audio.pause(); // 재생하지 않음
+
+const svgMusicOn = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+       stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path d="M9 18V5l12-2v13" />
+    <circle cx="6" cy="18" r="3" />
+    <circle cx="18" cy="16" r="3" />
+  </svg>`;
+
+const svgMusicOff = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+       stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <path d="M9 18V5l12-2v13M3 3l18 18" />
+    <circle cx="6" cy="18" r="3" />
+  </svg>`;
+
+musicToggleBtn.addEventListener('click', () => {
+  isMusicPlaying = !isMusicPlaying;
+
+  // 아이콘 토글
+  musicIcon.innerHTML = isMusicPlaying ? svgMusicOn : svgMusicOff;
+
+  // 음악 재생/정지
+  if (audio) {
+    isMusicPlaying ? audio.play() : audio.pause();
+  }
+});
+</script>
 
 </body>
 
