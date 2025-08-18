@@ -600,4 +600,8 @@ header {
     opacity: 1;
   }
 
-  
+  .modal-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

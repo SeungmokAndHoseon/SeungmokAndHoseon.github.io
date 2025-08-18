@@ -397,22 +397,14 @@
                 </div>
             </div>
             <!-- Swiper Modal -->
+<!-- 이미지 모달 -->
 <div id="imageModal" class="modal fade" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-xl">
     <div class="modal-content bg-transparent border-0">
-      <div class="modal-body p-0">
-
-        <div class="swiper" id="swiperGallery">
-          <div class="swiper-wrapper" id="swiperWrapper">
-            <!-- JS로 슬라이드 삽입 -->
-          </div>
-
-          <!-- Swiper Nav -->
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-pagination"></div>
-        </div>
-
+      <div class="modal-body p-0 position-relative d-flex align-items-center justify-content-center" style="height: 80vh;">
+        <button id="prevBtn" class="btn btn-light position-absolute" style="left: 10px; z-index: 10;">←</button>
+        <img id="modalImage" src="" class="img-fluid" style="max-width: 90%; max-height: 100%; object-fit: contain;">
+        <button id="nextBtn" class="btn btn-light position-absolute" style="right: 10px; z-index: 10;">→</button>
       </div>
     </div>
   </div>
@@ -900,7 +892,7 @@
 //   });
 </script>
 <script>
-  const allImage = [
+  const allImages = [
     'img/1.jpg', 'img/2.jpg', 'img/3.jpg',
     'img/4.jpg', 'img/5.jpg', 'img/6.jpg',
     'img/7.jpg', 'img/8.jpg', 'img/9.jpg',
@@ -909,95 +901,78 @@
     'img/16.jpg', 'img/17.jpg', 'img/18.jpg'
   ];
 
-  let shownCnt = 0;
+  let shownCount = 0;
   const perLoad = 9;
   const galleryGrid = document.getElementById('gallery-grid');
   const loadMoreBtn = document.getElementById('load-more');
-  const swiperWrapper = document.getElementById('swiperWrapper');
   const foldBtn = document.getElementById('fold-gallery');
 
-  let swiperInstance;
+  let currentIndex = 0;
+  const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+  const modalImage = document.getElementById('modalImage');
 
   function renderImages() {
-  const slice = allImage.slice(shownCnt, shownCnt + perLoad);
-  slice.forEach((src, idx) => {
-    const col = document.createElement('div');
-    col.className = 'col-4 extra-gallery no-gap';
-    // col.innerHTML = `<img src="${src}" alt="" data-index="${shownCnt + idx}" class="img-thumbnail">`;
-    col.innerHTML = `<img src="${src}" alt="" data-index="${shownCnt + idx}" loading="lazy">`;
-
-    galleryGrid.appendChild(col);
-  });
-  shownCnt += slice.length;
-
-  if (shownCnt >= allImage.length) {
-    loadMoreBtn.style.display = 'none';
+    const slice = allImages.slice(shownCount, shownCount + perLoad);
+    slice.forEach((src, idx) => {
+      const col = document.createElement('div');
+      col.className = 'col-4 extra-gallery no-gap';
+      col.innerHTML = `<img src="${src}" alt="" data-index="${shownCount + idx}" class="img-fluid w-100" loading="lazy">`;
+      galleryGrid.appendChild(col);
+    });
+    shownCount += slice.length;
+    if (shownCount >= allImages.length) loadMoreBtn.style.display = 'none';
+    if (shownCount > perLoad) foldBtn.style.display = 'inline-block';
   }
 
-  // 접기 버튼 표시
-  if (shownCnt > perLoad) {
-    foldBtn.style.display = 'inline-block';
+  function resetGallery() {
+    galleryGrid.innerHTML = '';
+    shownCount = 0;
+    renderImages();
+    loadMoreBtn.style.display = 'inline-block';
+    foldBtn.style.display = 'none';
   }
-}
 
-// function resetGallery() {
-//   // 초기 9개만 남기고 나머지 삭제
-//   const extras = document.querySelectorAll('.extra-gallery');
-//   extras.forEach(el => el.remove());
+  renderImages();
+  loadMoreBtn.addEventListener('click', renderImages);
+  foldBtn.addEventListener('click', resetGallery);
 
-//   shownCnt = perLoad;
-//   loadMoreBtn.style.display = 'inline-block';
-//   foldBtn.style.display = 'none';
-  
-// }
-function resetGallery() {
-  // 전체 초기화 후 다시 처음부터 렌더링
-  galleryGrid.innerHTML = '';
-  shownCnt = 0;
-
-  renderImages(); // 초기 9개 이미지 다시 로드
-
-  loadMoreBtn.style.display = 'inline-block';
-  foldBtn.style.display = 'none';
-}
-  renderImages(); // 최초 9개 로딩
-loadMoreBtn.addEventListener('click', renderImages);
-foldBtn.addEventListener('click', resetGallery);
-
+  // 갤러리 클릭 시 모달 열기
   galleryGrid.addEventListener('click', (e) => {
     if (e.target.tagName === 'IMG') {
-      const clickedIndex = parseInt(e.target.dataset.index);
-      swiperWrapper.innerHTML = "";
-
-      allImage.forEach((src) => {
-        const slide = document.createElement('div');
-        slide.className = 'swiper-slide text-center';
-        slide.innerHTML = `<img src="${src}" class="img-fluid" style="max-height:80vh; object-fit:contain;">`;
-        swiperWrapper.appendChild(slide);
-      });
-
-      // Swiper 인스턴스 초기화
-      if (swiperInstance) swiperInstance.destroy(true, true);
-      swiperInstance = new Swiper('#swiperGallery', {
-        initialSlide: clickedIndex,
-        loop: true,
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-        keyboard: {
-          enabled: true,
-        }
-      });
-
-      // 모달 열기
-      const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+      currentIndex = parseInt(e.target.dataset.index);
+      modalImage.src = allImages[currentIndex];
       modal.show();
     }
+  });
+
+  // 다음/이전 버튼
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % allImages.length;
+    modalImage.src = allImages[currentIndex];
+  });
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+    modalImage.src = allImages[currentIndex];
+  });
+
+  // 키보드 방향키 이벤트
+  document.addEventListener('keydown', (e) => {
+    if (!document.getElementById('imageModal').classList.contains('show')) return;
+    if (e.key === 'ArrowRight') document.getElementById('nextBtn').click();
+    if (e.key === 'ArrowLeft') document.getElementById('prevBtn').click();
+  });
+
+  // 터치 이벤트 (모바일)
+  let touchStartX = 0;
+  modalImage.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
+
+  modalImage.addEventListener('touchend', (e) => {
+    let touchEndX = e.changedTouches[0].screenX;
+    if (touchStartX - touchEndX > 50) document.getElementById('nextBtn').click();
+    else if (touchEndX - touchStartX > 50) document.getElementById('prevBtn').click();
   });
   
 </script>
