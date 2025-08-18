@@ -201,42 +201,51 @@
         gtag('config', 'G-YGW3XRM4W6');
     </script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const audio = document.getElementById("bg-music");
-            const btn = document.getElementById("music-toggle");
-            const msg = document.getElementById("ready-msg");
-            let userInitiated = false;
+document.addEventListener("DOMContentLoaded", () => {
+  const audio = document.getElementById("bg-music");
+  const btn = document.getElementById("music-toggle");
+  const msgBar = document.getElementById("music-msg-bar");
+  let userInitiated = false;
 
-            // 음악 준비 완료 시 메시지 표시
-            audio.addEventListener("canplaythrough", () => {
-                msg.style.display = "block";
-                setTimeout(() => msg.style.display = "none", 2000);
-            }); // :contentReference[oaicite:5]{index=5}
+  // 음악 준비되면 메시지 바만 2초간 표시
+  audio.addEventListener("canplaythrough", () => {
+    msgBar.classList.add("visible");
 
-            btn.addEventListener("click", () => {
-                // 최초 클릭 시 음악을 재생 시도
-                if (!userInitiated) {
-                    audio.volume = 0.5;
-                    userInitiated = true;
-                }
-                if (audio.paused) {
-                    audio.play().catch(err => console.warn("재생 실패:", err));
-                    btn.textContent = "🔊";
-                } else {
-                    audio.pause();
-                    btn.textContent = "🔇";
-                }
-            });
-        });
+    setTimeout(() => {
+      msgBar.classList.remove("visible");
+    }, 2000);
+  });
+
+  // on/off 버튼 클릭 시 음악 토글
+  btn.addEventListener("click", () => {
+    if (!userInitiated) {
+      audio.volume = 0.5;
+      userInitiated = true;
+    }
+
+    if (audio.paused) {
+      audio.play().catch(err => console.warn("재생 실패:", err));
+      btn.textContent = "🎵";
+    } else {
+      audio.pause();
+      btn.textContent = "🔇";
+    }
+  });
+});
     </script>
 </head>
 
 <body class="text-center">
-  <div class="music-control">
-    <audio id="bg-music" src="music.mp3" preload="auto" loop></audio>
-    <button id="music-toggle" title="음악 재생/일시정지">🔇</button>
-    <div id="ready-msg" class="ready-message">배경음악이 준비되었습니다.</div>
-  </div>
+<!-- 음악 제어 버튼 (항상 고정) -->
+<button id="music-toggle" title="음악 재생/정지">🔇</button>
+
+<!-- 메시지 바 -->
+<div id="music-msg-bar" class="music-msg-bar">
+  <div class="ready-message">배경음악이 준비되었습니다.</div>
+</div>
+
+<!-- 음악 파일 -->
+<audio id="bg-music" src="music.mp3" preload="auto" loop></audio>
     <div class="top-div">
         <header class="inner cover cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
             <!--<h1 class="wow fadeIn cover-heading" style="text-align: right; margin-top: 38%; margin-right: 25%; font-size: 2rem;">
@@ -580,7 +589,7 @@
                         <td></td>
                     </tr>
                 </table>
-                
+
                 <!--<p class="wow fadeInUp section5-title section5-sub" style="margin-top:1.3em">명운 ❤️ 재은 결혼식이 <span id="d-day"></span>일 남았습니다.</p>-->
                 <br /><br />
             </div>
