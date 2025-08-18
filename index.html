@@ -235,10 +235,10 @@
         });
     </script>
     <!-- Swiper CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
-<!-- Swiper JS -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 </head>
 
@@ -388,7 +388,7 @@
                 <br /><br /><br />
             </div> -->
             <div class="gallery-container container">
-                
+
                 <p class="wow fadeInUp section3-title section3-main">Gallery</p>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="gallery-grid"></div>
                 <div class="text-center mt-3">
@@ -397,18 +397,26 @@
                 </div>
             </div>
             <!-- Swiper Modal -->
-<!-- 이미지 모달 -->
-<div id="imageModal" class="modal fade" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-xl">
-    <div class="modal-content bg-transparent border-0">
-      <div class="modal-body p-0 position-relative d-flex align-items-center justify-content-center" style="height: 80vh;">
-        <button id="prevBtn" class="btn btn-light position-absolute" style="left: 10px; z-index: 10;">←</button>
-        <img id="modalImage" src="" class="img-fluid" style="max-width: 90%; max-height: 100%; object-fit: contain;">
-        <button id="nextBtn" class="btn btn-light position-absolute" style="right: 10px; z-index: 10;">→</button>
-      </div>
-    </div>
-  </div>
-</div>
+            <!-- 이미지 모달 -->
+            <div id="imageModal" class="modal fade" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div class="modal-content bg-transparent border-0">
+                        <div class="modal-body p-0 position-relative d-flex align-items-center justify-content-center" style="height: 80vh;">
+                            <img id="modalImage" src="" class="img-fluid" style="max-width: 90%; max-height: 100%; object-fit: contain;">
+                            <!-- 닫기 버튼 -->
+                            <button type="button" class="gallery-modal-button close-button" data-dismiss="modal" aria-label="Close">×</button>
+                        
+                            <!-- 이전 버튼 -->
+                            <button id="prevBtn" class="gallery-modal-button">←</button>
+                        
+                            <!-- 다음 버튼 -->
+                            <button id="nextBtn" class="gallery-modal-button">→</button>
+                        
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="wow fadeInUp">
                 <br /><br />
@@ -810,7 +818,7 @@
         // 최초 실행 및 주기적 업데이트
         updateDdayCountdown();
         setInterval(updateDdayCountdown, 60 * 1000); // 1분 간격으로 업데이트
-</script>
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -820,163 +828,162 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-        <script>
-//   const allImages = [
-//     'img/1.jpg', 'img/2.jpg', 'img/3.jpg',
-//     'img/4.jpg', 'img/5.jpg', 'img/6.jpg',
-//     'img/7.jpg', 'img/8.jpg', 'img/9.jpg',
-//     'img/10.jpg', 'img/11.jpg', 'img/12.jpg',
-//     'img/13.jpg', 'img/14.jpg', 'img/15.jpg',
-//     'img/16.jpg', 'img/17.jpg', 'img/18.jpg'
-//   ];
+    <script>
+        //   const allImages = [
+        //     'img/1.jpg', 'img/2.jpg', 'img/3.jpg',
+        //     'img/4.jpg', 'img/5.jpg', 'img/6.jpg',
+        //     'img/7.jpg', 'img/8.jpg', 'img/9.jpg',
+        //     'img/10.jpg', 'img/11.jpg', 'img/12.jpg',
+        //     'img/13.jpg', 'img/14.jpg', 'img/15.jpg',
+        //     'img/16.jpg', 'img/17.jpg', 'img/18.jpg'
+        //   ];
 
-//   let shownCount = 0;
-//   const perLoad = 9;
-//   const galleryGrid = document.getElementById('gallery-grid');
-//   const loadMoreBtn = document.getElementById('load-more');
+        //   let shownCount = 0;
+        //   const perLoad = 9;
+        //   const galleryGrid = document.getElementById('gallery-grid');
+        //   const loadMoreBtn = document.getElementById('load-more');
 
-//   function renderImages() {
-//     const slice = allImages.slice(shownCount, shownCount + perLoad);
-//     slice.forEach((src, idx) => {
-//       const col = document.createElement('div');
-//       col.className = 'col-4 p-0';
-//       col.innerHTML = `<img src="${src}" alt="" data-index="${shownCount + idx}" class="img-thumbnail">`;
-//       galleryGrid.appendChild(col);
-//     });
-//     shownCount += slice.length;
+        //   function renderImages() {
+        //     const slice = allImages.slice(shownCount, shownCount + perLoad);
+        //     slice.forEach((src, idx) => {
+        //       const col = document.createElement('div');
+        //       col.className = 'col-4 p-0';
+        //       col.innerHTML = `<img src="${src}" alt="" data-index="${shownCount + idx}" class="img-thumbnail">`;
+        //       galleryGrid.appendChild(col);
+        //     });
+        //     shownCount += slice.length;
 
-//     if (shownCount >= allImages.length) {
-//       loadMoreBtn.style.display = 'none';
-//     }
-//   }
+        //     if (shownCount >= allImages.length) {
+        //       loadMoreBtn.style.display = 'none';
+        //     }
+        //   }
 
-//   loadMoreBtn.addEventListener('click', renderImages);
-//   renderImages(); // 최초 9장 로드
+        //   loadMoreBtn.addEventListener('click', renderImages);
+        //   renderImages(); // 최초 9장 로드
 
-//   // Modal Viewer
-//   const modal = new bootstrap.Modal(document.getElementById('imageModal'));
-//   const modalImage = document.getElementById('modalImage');
-//   let currentIndex = 0;
+        //   // Modal Viewer
+        //   const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+        //   const modalImage = document.getElementById('modalImage');
+        //   let currentIndex = 0;
 
-//   galleryGrid.addEventListener('click', (e) => {
-//     if (e.target.tagName === 'IMG') {
-//       currentIndex = parseInt(e.target.dataset.index);
-//       modalImage.src = allImages[currentIndex];
-//       modal.show();
-//     }
-//   });
+        //   galleryGrid.addEventListener('click', (e) => {
+        //     if (e.target.tagName === 'IMG') {
+        //       currentIndex = parseInt(e.target.dataset.index);
+        //       modalImage.src = allImages[currentIndex];
+        //       modal.show();
+        //     }
+        //   });
 
-//   document.getElementById('prevBtn').addEventListener('click', () => {
-//     currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
-//     modalImage.src = allImages[currentIndex];
-//   });
+        //   document.getElementById('prevBtn').addEventListener('click', () => {
+        //     currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+        //     modalImage.src = allImages[currentIndex];
+        //   });
 
-//   document.getElementById('nextBtn').addEventListener('click', () => {
-//     currentIndex = (currentIndex + 1) % allImages.length;
-//     modalImage.src = allImages[currentIndex];
-//   });
+        //   document.getElementById('nextBtn').addEventListener('click', () => {
+        //     currentIndex = (currentIndex + 1) % allImages.length;
+        //     modalImage.src = allImages[currentIndex];
+        //   });
 
-//   // 터치 제스처 추가
-//   let touchStartX = 0;
-//   modalImage.addEventListener('touchstart', (e) => {
-//     touchStartX = e.changedTouches[0].screenX;
-//   });
+        //   // 터치 제스처 추가
+        //   let touchStartX = 0;
+        //   modalImage.addEventListener('touchstart', (e) => {
+        //     touchStartX = e.changedTouches[0].screenX;
+        //   });
 
-//   modalImage.addEventListener('touchend', (e) => {
-//     let touchEndX = e.changedTouches[0].screenX;
-//     if (touchStartX - touchEndX > 50) {
-//       document.getElementById('nextBtn').click();
-//     } else if (touchEndX - touchStartX > 50) {
-//       document.getElementById('prevBtn').click();
-//     }
-//   });
-</script>
-<script>
-  const allImages = [
-    'img/1.jpg', 'img/2.jpg', 'img/3.jpg',
-    'img/4.jpg', 'img/5.jpg', 'img/6.jpg',
-    'img/7.jpg', 'img/8.jpg', 'img/9.jpg',
-    'img/10.jpg', 'img/11.jpg', 'img/12.jpg',
-    'img/13.jpg', 'img/14.jpg', 'img/15.jpg',
-    'img/16.jpg', 'img/17.jpg', 'img/18.jpg'
-  ];
+        //   modalImage.addEventListener('touchend', (e) => {
+        //     let touchEndX = e.changedTouches[0].screenX;
+        //     if (touchStartX - touchEndX > 50) {
+        //       document.getElementById('nextBtn').click();
+        //     } else if (touchEndX - touchStartX > 50) {
+        //       document.getElementById('prevBtn').click();
+        //     }
+        //   });
+    </script>
+    <script>
+        const allImages = [
+            'img/1.jpg', 'img/2.jpg', 'img/3.jpg',
+            'img/4.jpg', 'img/5.jpg', 'img/6.jpg',
+            'img/7.jpg', 'img/8.jpg', 'img/9.jpg',
+            'img/10.jpg', 'img/11.jpg', 'img/12.jpg',
+            'img/13.jpg', 'img/14.jpg', 'img/15.jpg',
+            'img/16.jpg', 'img/17.jpg', 'img/18.jpg'
+        ];
 
-  let shownCount = 0;
-  const perLoad = 9;
-  const galleryGrid = document.getElementById('gallery-grid');
-  const loadMoreBtn = document.getElementById('load-more');
-  const foldBtn = document.getElementById('fold-gallery');
+        let shownCount = 0;
+        const perLoad = 9;
+        const galleryGrid = document.getElementById('gallery-grid');
+        const loadMoreBtn = document.getElementById('load-more');
+        const foldBtn = document.getElementById('fold-gallery');
 
-  let currentIndex = 0;
-  const modal = new bootstrap.Modal(document.getElementById('imageModal'));
-  const modalImage = document.getElementById('modalImage');
+        let currentIndex = 0;
+        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+        const modalImage = document.getElementById('modalImage');
 
-  function renderImages() {
-    const slice = allImages.slice(shownCount, shownCount + perLoad);
-    slice.forEach((src, idx) => {
-      const col = document.createElement('div');
-      col.className = 'col-4 extra-gallery no-gap';
-      col.innerHTML = `<img src="${src}" alt="" data-index="${shownCount + idx}" class="img-fluid w-100" loading="lazy">`;
-      galleryGrid.appendChild(col);
-    });
-    shownCount += slice.length;
-    if (shownCount >= allImages.length) loadMoreBtn.style.display = 'none';
-    if (shownCount > perLoad) foldBtn.style.display = 'inline-block';
-  }
+        function renderImages() {
+            const slice = allImages.slice(shownCount, shownCount + perLoad);
+            slice.forEach((src, idx) => {
+                const col = document.createElement('div');
+                col.className = 'col-4 extra-gallery no-gap';
+                col.innerHTML = `<img src="${src}" alt="" data-index="${shownCount + idx}" class="img-fluid w-100" loading="lazy">`;
+                galleryGrid.appendChild(col);
+            });
+            shownCount += slice.length;
+            if (shownCount >= allImages.length) loadMoreBtn.style.display = 'none';
+            if (shownCount > perLoad) foldBtn.style.display = 'inline-block';
+        }
 
-  function resetGallery() {
-    galleryGrid.innerHTML = '';
-    shownCount = 0;
-    renderImages();
-    loadMoreBtn.style.display = 'inline-block';
-    foldBtn.style.display = 'none';
-  }
+        function resetGallery() {
+            galleryGrid.innerHTML = '';
+            shownCount = 0;
+            renderImages();
+            loadMoreBtn.style.display = 'inline-block';
+            foldBtn.style.display = 'none';
+        }
 
-  renderImages();
-  loadMoreBtn.addEventListener('click', renderImages);
-  foldBtn.addEventListener('click', resetGallery);
+        renderImages();
+        loadMoreBtn.addEventListener('click', renderImages);
+        foldBtn.addEventListener('click', resetGallery);
 
-  // 갤러리 클릭 시 모달 열기
-  galleryGrid.addEventListener('click', (e) => {
-    if (e.target.tagName === 'IMG') {
-      currentIndex = parseInt(e.target.dataset.index);
-      modalImage.src = allImages[currentIndex];
-      modal.show();
-    }
-  });
+        // 갤러리 클릭 시 모달 열기
+        galleryGrid.addEventListener('click', (e) => {
+            if (e.target.tagName === 'IMG') {
+                currentIndex = parseInt(e.target.dataset.index);
+                modalImage.src = allImages[currentIndex];
+                modal.show();
+            }
+        });
 
-  // 다음/이전 버튼
-  document.getElementById('nextBtn').addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % allImages.length;
-    modalImage.src = allImages[currentIndex];
-  });
+        // 다음/이전 버튼
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % allImages.length;
+            modalImage.src = allImages[currentIndex];
+        });
 
-  document.getElementById('prevBtn').addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
-    modalImage.src = allImages[currentIndex];
-  });
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+            modalImage.src = allImages[currentIndex];
+        });
 
-  // 키보드 방향키 이벤트
-  document.addEventListener('keydown', (e) => {
-    if (!document.getElementById('imageModal').classList.contains('show')) return;
-    if (e.key === 'ArrowRight') document.getElementById('nextBtn').click();
-    if (e.key === 'ArrowLeft') document.getElementById('prevBtn').click();
-  });
+        // 키보드 방향키 이벤트
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('imageModal').classList.contains('show')) return;
+            if (e.key === 'ArrowRight') document.getElementById('nextBtn').click();
+            if (e.key === 'ArrowLeft') document.getElementById('prevBtn').click();
+        });
 
-  // 터치 이벤트 (모바일)
-  let touchStartX = 0;
-  modalImage.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  });
+        // 터치 이벤트 (모바일)
+        let touchStartX = 0;
+        modalImage.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
 
-  modalImage.addEventListener('touchend', (e) => {
-    let touchEndX = e.changedTouches[0].screenX;
-    if (touchStartX - touchEndX > 50) document.getElementById('nextBtn').click();
-    else if (touchEndX - touchStartX > 50) document.getElementById('prevBtn').click();
-  });
-  
-</script>
+        modalImage.addEventListener('touchend', (e) => {
+            let touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) document.getElementById('nextBtn').click();
+            else if (touchEndX - touchStartX > 50) document.getElementById('prevBtn').click();
+        });
 
+    </script>
 
 </body>
 

@@ -488,7 +488,7 @@ header {
 /* 음악 on/off 버튼 - 항상 우측 상단 고정 */
 #music-toggle {
   position: fixed;
-  top: 12px;
+  top: 7px;
   right: 16px;
   font-size: 18px;
   background: none;
@@ -583,25 +583,60 @@ header {
   transform: scale(1.02);
   transition: transform 0.2s ease;
 }
-  /* Swiper 버튼 화살표 색상 흰색으로 */
-  .swiper-button-next,
-  .swiper-button-prev {
-    color: #fff !important;
+
+
+/* 기본 버튼 스타일 (앞서 설정한 것 유지) */
+.gallery-modal-button {
+  position: absolute;
+  z-index: 1051;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  padding: 0;
+  line-height: 1;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+
+/* 닫기 버튼 위치 (기본: PC용) */
+.close-button {
+  top: 20px;
+  right: 20px;
+}
+
+/* 이전 버튼 (좌측 중앙) */
+#prevBtn {
+  top: 50%;
+  left: 40px;
+  transform: translateY(-50%);
+}
+
+/* 다음 버튼 (우측 중앙) */
+#nextBtn {
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+}
+
+/* 미디어쿼리: 모바일 대응 */
+@media (max-width: 768px) {
+  #prevBtn {
+    left: 16px;
   }
 
-  /* Swiper 하단 점 색상 */
-  .swiper-pagination-bullet {
-    background: #ffffff !important;
-    opacity: 0.5;
+  #nextBtn {
+    right: 16px;
   }
 
-  .swiper-pagination-bullet-active {
-    background: #ffffff !important;
-    opacity: 1;
+  .close-button {
+    top: 16px;
+    right: 16px;
   }
 
-  .modal-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .gallery-modal-button {
+    font-size: 28px;
+  }
 }
