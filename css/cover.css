@@ -538,21 +538,31 @@ header {
   object-fit: cover;
   /* border-radius: 1px; */
   cursor: pointer;
+  align-items: center;
 }
 
-  #gallery-grid img {
+  /* #gallery-grid img {
     width: 800px;
     height: 800px;
     object-fit: cover;
     max-width: 100%;
     display: block;
     margin: 0 auto;
-  }
+  } */
 
   @media (max-width: 768px) {
     #gallery-grid img {
       width: 100%;
       height: auto;
       aspect-ratio: 1/1;
+  align-items: center;
     }
   }
+
+  #gallery-grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 6px;
+  align-items: center;
+}
