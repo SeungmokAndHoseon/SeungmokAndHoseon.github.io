@@ -922,8 +922,10 @@
   const slice = allImage.slice(shownCnt, shownCnt + perLoad);
   slice.forEach((src, idx) => {
     const col = document.createElement('div');
-    col.className = 'col-4 p-1 extra-gallery';
-    col.innerHTML = `<img src="${src}" alt="" data-index="${shownCnt + idx}" class="img-thumbnail">`;
+    col.className = 'col-4 extra-gallery no-gap';
+    // col.innerHTML = `<img src="${src}" alt="" data-index="${shownCnt + idx}" class="img-thumbnail">`;
+    col.innerHTML = `<img src="${src}" alt="" data-index="${shownCnt + idx}" loading="lazy">`;
+
     galleryGrid.appendChild(col);
   });
   shownCnt += slice.length;

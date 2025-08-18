@@ -566,3 +566,20 @@ header {
   border-radius: 6px;
   align-items: center;
 }
+  .no-gap {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .no-gap img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: none;
+  border-radius: 8px; /* ← 원하는 정도로 조절 (예: 4px, 8px, 12px 등) */
+  object-fit: cover;
+}
+.no-gap img:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease;
+}
