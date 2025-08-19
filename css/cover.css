@@ -743,3 +743,22 @@ header {
 .copy-btn:hover .copy-icon {
   transform: scale(1.2) rotate(-5deg);
 }
+.account-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.bank-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.account-text {
+  font-size: 15px;
+  color: #333;
+  white-space: nowrap;
+}
