@@ -407,8 +407,8 @@
                 <p class="wow fadeInUp section3-title section3-main">Gallery</p>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="gallery-grid"></div>
                 <div class="text-center mt-3">
-                    <button id="load-more" class="btn btn-outline-secondary">더보기</button>
-                    <button id="fold-gallery" class="btn btn-outline-secondary" style="display: none;">접기</button>
+                <button id="loadMoreBtn" class="btn btn-outline-secondary">더보기</button>
+                <button id="foldBtn" class="btn btn-outline-secondary d-none">접기</button>
                 </div>
             </div>
             <!-- Swiper Modal -->
@@ -846,187 +846,110 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-    <script>
-        //   const allImages = [
-        //     'img/1.jpg', 'img/2.jpg', 'img/3.jpg',
-        //     'img/4.jpg', 'img/5.jpg', 'img/6.jpg',
-        //     'img/7.jpg', 'img/8.jpg', 'img/9.jpg',
-        //     'img/10.jpg', 'img/11.jpg', 'img/12.jpg',
-        //     'img/13.jpg', 'img/14.jpg', 'img/15.jpg',
-        //     'img/16.jpg', 'img/17.jpg', 'img/18.jpg'
-        //   ];
+<script>
+  const galleryGrid = document.getElementById('gallery-grid');
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  const foldBtn = document.getElementById('foldBtn');
+  const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+  const modalImage = document.getElementById('modalImage');
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
 
-        //   let shownCount = 0;
-        //   const perLoad = 9;
-        //   const galleryGrid = document.getElementById('gallery-grid');
-        //   const loadMoreBtn = document.getElementById('load-more');
+  const imagePairs = [
+    { thumb: 'img/thumbs/1.jpg', full: 'img/1.jpg' },
+    { thumb: 'img/thumbs/2.jpg', full: 'img/2.jpg' },
+    { thumb: 'img/thumbs/3.jpg', full: 'img/3.jpg' },
+    { thumb: 'img/thumbs/4.jpg', full: 'img/4.jpg' },
+    { thumb: 'img/thumbs/5.jpg', full: 'img/5.jpg' },
+    { thumb: 'img/thumbs/6.jpg', full: 'img/6.jpg' },
+    { thumb: 'img/thumbs/7.jpg', full: 'img/7.jpg' },
+    { thumb: 'img/thumbs/8.jpg', full: 'img/8.jpg' },
+    { thumb: 'img/thumbs/9.jpg', full: 'img/9.jpg' },
+    { thumb: 'img/thumbs/10.jpg', full: 'img/10.jpg' },
+    { thumb: 'img/thumbs/11.jpg', full: 'img/11.jpg' },
+    { thumb: 'img/thumbs/12.jpg', full: 'img/12.jpg' },
+    { thumb: 'img/thumbs/13.jpg', full: 'img/13.jpg' },
+    { thumb: 'img/thumbs/14.jpg', full: 'img/14.jpg' },
+    { thumb: 'img/thumbs/15.jpg', full: 'img/15.jpg' },
+    { thumb: 'img/thumbs/16.jpg', full: 'img/16.jpg' },
+    { thumb: 'img/thumbs/17.jpg', full: 'img/17.jpg' },
+    { thumb: 'img/thumbs/18.jpg', full: 'img/18.jpg' }
+  ];
 
-        //   function renderImages() {
-        //     const slice = allImages.slice(shownCount, shownCount + perLoad);
-        //     slice.forEach((src, idx) => {
-        //       const col = document.createElement('div');
-        //       col.className = 'col-4 p-0';
-        //       col.innerHTML = `<img src="${src}" alt="" data-index="${shownCount + idx}" class="img-thumbnail">`;
-        //       galleryGrid.appendChild(col);
-        //     });
-        //     shownCount += slice.length;
+  let currentIndex = 0;
+  let showingAll = false;
 
-        //     if (shownCount >= allImages.length) {
-        //       loadMoreBtn.style.display = 'none';
-        //     }
-        //   }
+  function renderThumbnails(showAll = false) {
+    galleryGrid.innerHTML = '';
+    const count = showAll ? imagePairs.length : 9;
+    for (let i = 0; i < count; i++) {
+      const pair = imagePairs[i];
+      const col = document.createElement('div');
+      col.className = 'col-4 extra-gallery no-gap';
 
-        //   loadMoreBtn.addEventListener('click', renderImages);
-        //   renderImages(); // 최초 9장 로드
+      const img = document.createElement('img');
+      img.src = pair.thumb;
+      img.alt = "";
+      img.className = "img-fluid w-100";
+      img.dataset.index = i;
 
-        //   // Modal Viewer
-        //   const modal = new bootstrap.Modal(document.getElementById('imageModal'));
-        //   const modalImage = document.getElementById('modalImage');
-        //   let currentIndex = 0;
+      col.appendChild(img);
+      galleryGrid.appendChild(col);
+    }
 
-        //   galleryGrid.addEventListener('click', (e) => {
-        //     if (e.target.tagName === 'IMG') {
-        //       currentIndex = parseInt(e.target.dataset.index);
-        //       modalImage.src = allImages[currentIndex];
-        //       modal.show();
-        //     }
-        //   });
+    // 버튼 상태 전환
+    if (showAll) {
+      loadMoreBtn.classList.add('d-none');
+      foldBtn.classList.remove('d-none');
+    } else {
+      loadMoreBtn.classList.remove('d-none');
+      foldBtn.classList.add('d-none');
+    }
+  }
 
-        //   document.getElementById('prevBtn').addEventListener('click', () => {
-        //     currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
-        //     modalImage.src = allImages[currentIndex];
-        //   });
+  // 초기 렌더링
+  renderThumbnails();
 
-        //   document.getElementById('nextBtn').addEventListener('click', () => {
-        //     currentIndex = (currentIndex + 1) % allImages.length;
-        //     modalImage.src = allImages[currentIndex];
-        //   });
+  loadMoreBtn.addEventListener('click', () => {
+    showingAll = true;
+    renderThumbnails(true);
+  });
 
-        //   // 터치 제스처 추가
-        //   let touchStartX = 0;
-        //   modalImage.addEventListener('touchstart', (e) => {
-        //     touchStartX = e.changedTouches[0].screenX;
-        //   });
+  foldBtn.addEventListener('click', () => {
+    showingAll = false;
+    renderThumbnails(false);
+  });
 
-        //   modalImage.addEventListener('touchend', (e) => {
-        //     let touchEndX = e.changedTouches[0].screenX;
-        //     if (touchStartX - touchEndX > 50) {
-        //       document.getElementById('nextBtn').click();
-        //     } else if (touchEndX - touchStartX > 50) {
-        //       document.getElementById('prevBtn').click();
-        //     }
-        //   });
-    </script>
-    <script>
-        const allImages = [
-            'img/1.jpg', 'img/2.jpg', 'img/3.jpg',
-            'img/4.jpg', 'img/5.jpg', 'img/6.jpg',
-            'img/7.jpg', 'img/8.jpg', 'img/9.jpg',
-            'img/10.jpg', 'img/11.jpg', 'img/12.jpg',
-            'img/13.jpg', 'img/14.jpg', 'img/15.jpg',
-            'img/16.jpg', 'img/17.jpg', 'img/18.jpg'
-        ];
+  galleryGrid.addEventListener('click', (e) => {
+    if (e.target.tagName === 'IMG') {
+      currentIndex = parseInt(e.target.dataset.index);
+      modalImage.src = imagePairs[currentIndex].full;
+      modal.show();
+    }
+  });
 
-        let shownCount = 0;
-        const perLoad = 9;
-        const galleryGrid = document.getElementById('gallery-grid');
-        const loadMoreBtn = document.getElementById('load-more');
-        const foldBtn = document.getElementById('fold-gallery');
+  nextBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % imagePairs.length;
+    modalImage.src = imagePairs[currentIndex].full;
+  });
 
-        let currentIndex = 0;
-        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
-        const modalImage = document.getElementById('modalImage');
+  prevBtn.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + imagePairs.length) % imagePairs.length;
+    modalImage.src = imagePairs[currentIndex].full;
+  });
 
+  // 터치 스와이프
+  let touchStartX = 0;
+  modalImage.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+  });
 
-        // Intersection Observer 사용
-        const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    obs.unobserve(img);
-                }
-            });
-        }, {
-            rootMargin: "100px" // 미리 로딩
-        });
-
-        function renderImages() {
-            const fragment = document.createDocumentFragment();
-            allImages.forEach((src, idx) => {
-                const col = document.createElement('div');
-                col.className = 'col-4 extra-gallery no-gap';
-                const img = document.createElement('img');
-                img.src = src;
-                img.alt = "";
-                img.className = "img-fluid w-100";
-                img.loading = "eager";
-                img.decoding = "sync";  // 즉시 디코딩
-                img.dataset.index = idx;
-                col.appendChild(img);
-                fragment.appendChild(col);
-            });
-
-            galleryGrid.appendChild(fragment);
-            loadMoreBtn.style.display = 'none';
-            foldBtn.style.display = 'none';
-        }
-
-        function resetGallery() {
-            // 성능 최적화를 위해 requestAnimationFrame 사용
-            window.requestAnimationFrame(() => {
-                galleryGrid.innerHTML = '';
-                shownCount = 0;
-                renderImages();
-                loadMoreBtn.style.display = 'inline-block';
-                foldBtn.style.display = 'none';
-            });
-        }
-
-        renderImages();
-        loadMoreBtn.addEventListener('click', renderImages);
-        foldBtn.addEventListener('click', resetGallery);
-
-        // 갤러리 클릭 시 모달 열기
-        galleryGrid.addEventListener('click', (e) => {
-            if (e.target.tagName === 'IMG') {
-                currentIndex = parseInt(e.target.dataset.index);
-                modalImage.src = allImages[currentIndex];
-                modal.show();
-            }
-        });
-
-        // 다음/이전 버튼
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % allImages.length;
-            modalImage.src = allImages[currentIndex];
-        });
-
-        document.getElementById('prevBtn').addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
-            modalImage.src = allImages[currentIndex];
-        });
-
-        // 키보드 방향키 이벤트
-        document.addEventListener('keydown', (e) => {
-            if (!document.getElementById('imageModal').classList.contains('show')) return;
-            if (e.key === 'ArrowRight') document.getElementById('nextBtn').click();
-            if (e.key === 'ArrowLeft') document.getElementById('prevBtn').click();
-        });
-
-        // 터치 이벤트 (모바일)
-        let touchStartX = 0;
-        modalImage.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        modalImage.addEventListener('touchend', (e) => {
-            let touchEndX = e.changedTouches[0].screenX;
-            if (touchStartX - touchEndX > 50) document.getElementById('nextBtn').click();
-            else if (touchEndX - touchStartX > 50) document.getElementById('prevBtn').click();
-        });
-
-    </script>
+  modalImage.addEventListener('touchend', (e) => {
+    const touchEndX = e.changedTouches[0].screenX;
+    if (touchStartX - touchEndX > 50) nextBtn.click();
+    else if (touchEndX - touchStartX > 50) prevBtn.click();
+  });
+</script>
     <script>
         const musicToggleBtn = document.getElementById('music-toggle');
         const musicIcon = document.getElementById('music-icon');

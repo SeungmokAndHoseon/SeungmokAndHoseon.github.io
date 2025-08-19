@@ -668,3 +668,12 @@ header {
 #music-toggle:hover svg {
   stroke: #ffdede;
 }
+
+
+.extra-gallery {
+  padding: 4px;
+}
+
+#loadMoreBtn, #foldBtn {
+  min-width: 100px;
+}
