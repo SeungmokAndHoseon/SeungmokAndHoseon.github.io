@@ -214,8 +214,8 @@
 
                 // 메시지바 2초 후 사라지기
                 setTimeout(() => {
-                const msg = document.getElementById('music-msg-bar');
-                if (msg) msg.classList.remove('visible');
+                    const msg = document.getElementById('music-msg-bar');
+                    if (msg) msg.classList.remove('visible');
                 }, 2000);
 
             });
@@ -251,14 +251,14 @@
         <!-- <button id="music-toggle" title="음악 재생/정지">🔇</button> -->
         <!-- 음악 토글 버튼 -->
         <button id="music-toggle" aria-label="Toggle Music">
-        <span id="music-icon">
-            <!-- 초기 상태: OFF (🔇 아이콘) -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path d="M9 18V5l12-2v13M3 3l18 18" />
-            <circle cx="6" cy="18" r="3" />
-            </svg>
-        </span>
+            <span id="music-icon">
+                <!-- 초기 상태: OFF (🔇 아이콘) -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor"
+                    stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M9 18V5l12-2v13M3 3l18 18" />
+                    <circle cx="6" cy="18" r="3" />
+                </svg>
+            </span>
         </button>
 
         <!-- 메시지 바 -->
@@ -416,18 +416,21 @@
             <div id="imageModal" class="modal fade" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered modal-xl">
                     <div class="modal-content bg-transparent border-0">
-                        <div class="modal-body p-0 position-relative d-flex align-items-center justify-content-center" style="height: 80vh;">
-                            <img id="modalImage" src="" class="img-fluid" style="max-width: 90%; max-height: 100%; object-fit: contain;">
+                        <div class="modal-body p-0 position-relative d-flex align-items-center justify-content-center"
+                            style="height: 80vh;">
+                            <img id="modalImage" src="" class="img-fluid"
+                                style="max-width: 90%; max-height: 100%; object-fit: contain;">
                             <!-- 닫기 버튼 -->
-                            <button type="button" class="gallery-modal-button close-button" data-dismiss="modal" aria-label="Close">×</button>
-                        
+                            <button type="button" class="gallery-modal-button close-button" data-dismiss="modal"
+                                aria-label="Close">×</button>
+
                             <!-- 이전 버튼 -->
                             <button id="prevBtn" class="gallery-modal-button">←</button>
-                        
+
                             <!-- 다음 버튼 -->
                             <button id="nextBtn" class="gallery-modal-button">→</button>
-                        
-                        
+
+
                         </div>
                     </div>
                 </div>
@@ -937,45 +940,36 @@
 
         // Intersection Observer 사용
         const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            obs.unobserve(img);
-            }
-        });
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    obs.unobserve(img);
+                }
+            });
         }, {
-        rootMargin: "100px" // 미리 로딩
+            rootMargin: "100px" // 미리 로딩
         });
 
         function renderImages() {
-            const slice = allImages.slice(shownCount, shownCount + perLoad);
-            const fragment = document.createDocumentFragment(); // DOM Fragment 사용
-
-            slice.forEach((src, idx) => {
-                const img = new Image();
-                img.dataset.src = src;
-                img.src = ""; // 미리 로딩되지 않도록 빈 값
-                img.loading = "lazy";
-                img.decoding = "async";
-                observer.observe(img);
-                img.alt = "";
-                img.className = "img-fluid w-100";
-                img.dataset.index = shownCount + idx;
-
+            const fragment = document.createDocumentFragment();
+            allImages.forEach((src, idx) => {
                 const col = document.createElement('div');
                 col.className = 'col-4 extra-gallery no-gap';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = "";
+                img.className = "img-fluid w-100";
+                img.loading = "eager";
+                img.decoding = "sync";  // 즉시 디코딩
+                img.dataset.index = idx;
                 col.appendChild(img);
                 fragment.appendChild(col);
             });
 
-            // 빠른 DOM 삽입
             galleryGrid.appendChild(fragment);
-
-            shownCount += slice.length;
-
-            if (shownCount >= allImages.length) loadMoreBtn.style.display = 'none';
-            if (shownCount > perLoad) foldBtn.style.display = 'inline-block';
+            loadMoreBtn.style.display = 'none';
+            foldBtn.style.display = 'none';
         }
 
         function resetGallery() {
@@ -1033,16 +1027,16 @@
         });
 
     </script>
-<script>
-const musicToggleBtn = document.getElementById('music-toggle');
-const musicIcon = document.getElementById('music-icon');
-const audio = document.getElementById('bg-music');
+    <script>
+        const musicToggleBtn = document.getElementById('music-toggle');
+        const musicIcon = document.getElementById('music-icon');
+        const audio = document.getElementById('bg-music');
 
-// 초기 상태: 음악 OFF
-let isMusicPlaying = false;
-audio.pause(); // 재생하지 않음
+        // 초기 상태: 음악 OFF
+        let isMusicPlaying = false;
+        audio.pause(); // 재생하지 않음
 
-const svgMusicOn = `
+        const svgMusicOn = `
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
        stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
     <path d="M9 18V5l12-2v13" />
@@ -1050,25 +1044,25 @@ const svgMusicOn = `
     <circle cx="18" cy="16" r="3" />
   </svg>`;
 
-const svgMusicOff = `
+        const svgMusicOff = `
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
        stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
     <path d="M9 18V5l12-2v13M3 3l18 18" />
     <circle cx="6" cy="18" r="3" />
   </svg>`;
 
-musicToggleBtn.addEventListener('click', () => {
-  isMusicPlaying = !isMusicPlaying;
+        musicToggleBtn.addEventListener('click', () => {
+            isMusicPlaying = !isMusicPlaying;
 
-  // 아이콘 토글
-  musicIcon.innerHTML = isMusicPlaying ? svgMusicOn : svgMusicOff;
+            // 아이콘 토글
+            musicIcon.innerHTML = isMusicPlaying ? svgMusicOn : svgMusicOff;
 
-  // 음악 재생/정지
-  if (audio) {
-    isMusicPlaying ? audio.play() : audio.pause();
-  }
-});
-</script>
+            // 음악 재생/정지
+            if (audio) {
+                isMusicPlaying ? audio.play() : audio.pause();
+            }
+        });
+    </script>
 
 </body>
 
