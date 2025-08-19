@@ -407,8 +407,8 @@
                 <p class="wow fadeInUp section3-title section3-main">Gallery</p>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="gallery-grid"></div>
                 <div class="text-center mt-3">
-                <button id="loadMoreBtn" class="btn btn-outline-secondary">더보기</button>
-                <button id="foldBtn" class="btn btn-outline-secondary d-none">접기</button>
+                    <button id="loadMoreBtn" class="btn btn-outline-secondary">더보기</button>
+                    <button id="foldBtn" class="btn btn-outline-secondary d-none">접기</button>
                 </div>
             </div>
             <!-- Swiper Modal -->
@@ -846,110 +846,126 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
-<script>
-  const galleryGrid = document.getElementById('gallery-grid');
-  const loadMoreBtn = document.getElementById('loadMoreBtn');
-  const foldBtn = document.getElementById('foldBtn');
-  const modal = new bootstrap.Modal(document.getElementById('imageModal'));
-  const modalImage = document.getElementById('modalImage');
-  const nextBtn = document.getElementById('nextBtn');
-  const prevBtn = document.getElementById('prevBtn');
+    <script>
+        const galleryGrid = document.getElementById('gallery-grid');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const foldBtn = document.getElementById('foldBtn');
+        const modal = new bootstrap.Modal(document.getElementById('imageModal'));
+        const modalImage = document.getElementById('modalImage');
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
 
-  const imagePairs = [
-    { thumb: 'img/thumbs/1.jpg', full: 'img/1.jpg' },
-    { thumb: 'img/thumbs/2.jpg', full: 'img/2.jpg' },
-    { thumb: 'img/thumbs/3.jpg', full: 'img/3.jpg' },
-    { thumb: 'img/thumbs/4.jpg', full: 'img/4.jpg' },
-    { thumb: 'img/thumbs/5.jpg', full: 'img/5.jpg' },
-    { thumb: 'img/thumbs/6.jpg', full: 'img/6.jpg' },
-    { thumb: 'img/thumbs/7.jpg', full: 'img/7.jpg' },
-    { thumb: 'img/thumbs/8.jpg', full: 'img/8.jpg' },
-    { thumb: 'img/thumbs/9.jpg', full: 'img/9.jpg' },
-    { thumb: 'img/thumbs/10.jpg', full: 'img/10.jpg' },
-    { thumb: 'img/thumbs/11.jpg', full: 'img/11.jpg' },
-    { thumb: 'img/thumbs/12.jpg', full: 'img/12.jpg' },
-    { thumb: 'img/thumbs/13.jpg', full: 'img/13.jpg' },
-    { thumb: 'img/thumbs/14.jpg', full: 'img/14.jpg' },
-    { thumb: 'img/thumbs/15.jpg', full: 'img/15.jpg' },
-    { thumb: 'img/thumbs/16.jpg', full: 'img/16.jpg' },
-    { thumb: 'img/thumbs/17.jpg', full: 'img/17.jpg' },
-    { thumb: 'img/thumbs/18.jpg', full: 'img/18.jpg' }
-  ];
+        const imagePairs = [
+            { thumb: 'img/thumbs/1.jpg', full: 'img/1.jpg' },
+            { thumb: 'img/thumbs/2.jpg', full: 'img/2.jpg' },
+            { thumb: 'img/thumbs/3.jpg', full: 'img/3.jpg' },
+            { thumb: 'img/thumbs/4.jpg', full: 'img/4.jpg' },
+            { thumb: 'img/thumbs/5.jpg', full: 'img/5.jpg' },
+            { thumb: 'img/thumbs/6.jpg', full: 'img/6.jpg' },
+            { thumb: 'img/thumbs/7.jpg', full: 'img/7.jpg' },
+            { thumb: 'img/thumbs/8.jpg', full: 'img/8.jpg' },
+            { thumb: 'img/thumbs/9.jpg', full: 'img/9.jpg' },
+            { thumb: 'img/thumbs/10.jpg', full: 'img/10.jpg' },
+            { thumb: 'img/thumbs/11.jpg', full: 'img/11.jpg' },
+            { thumb: 'img/thumbs/12.jpg', full: 'img/12.jpg' },
+            { thumb: 'img/thumbs/13.jpg', full: 'img/13.jpg' },
+            { thumb: 'img/thumbs/14.jpg', full: 'img/14.jpg' },
+            { thumb: 'img/thumbs/15.jpg', full: 'img/15.jpg' },
+            { thumb: 'img/thumbs/16.jpg', full: 'img/16.jpg' },
+            { thumb: 'img/thumbs/17.jpg', full: 'img/17.jpg' },
+            { thumb: 'img/thumbs/18.jpg', full: 'img/18.jpg' }
+        ];
 
-  let currentIndex = 0;
-  let showingAll = false;
+        let currentIndex = 0;
+        let showingAll = false;
 
-  function renderThumbnails(showAll = false) {
-    galleryGrid.innerHTML = '';
-    const count = showAll ? imagePairs.length : 9;
-    for (let i = 0; i < count; i++) {
-      const pair = imagePairs[i];
-      const col = document.createElement('div');
-      col.className = 'col-4 extra-gallery no-gap';
+        function renderThumbnails(showAll = false) {
+            galleryGrid.innerHTML = '';
+            const count = showAll ? imagePairs.length : 9;
+            for (let i = 0; i < count; i++) {
+                const pair = imagePairs[i];
+                const col = document.createElement('div');
+                col.className = 'col-4 extra-gallery no-gap';
 
-      const img = document.createElement('img');
-      img.src = pair.thumb;
-      img.alt = "";
-      img.className = "img-fluid w-100";
-      img.dataset.index = i;
+                const img = document.createElement('img');
+                img.src = pair.thumb;
+                img.alt = "";
+                img.className = "img-fluid w-100";
+                img.dataset.index = i;
 
-      col.appendChild(img);
-      galleryGrid.appendChild(col);
-    }
+                col.appendChild(img);
+                galleryGrid.appendChild(col);
+            }
 
-    // 버튼 상태 전환
-    if (showAll) {
-      loadMoreBtn.classList.add('d-none');
-      foldBtn.classList.remove('d-none');
-    } else {
-      loadMoreBtn.classList.remove('d-none');
-      foldBtn.classList.add('d-none');
-    }
-  }
+            // 버튼 상태 전환
+            if (showAll) {
+                loadMoreBtn.classList.add('d-none');
+                foldBtn.classList.remove('d-none');
+            } else {
+                loadMoreBtn.classList.remove('d-none');
+                foldBtn.classList.add('d-none');
+            }
+        }
 
-  // 초기 렌더링
-  renderThumbnails();
+        // 초기 렌더링
+        renderThumbnails();
 
-  loadMoreBtn.addEventListener('click', () => {
-    showingAll = true;
-    renderThumbnails(true);
-  });
+        loadMoreBtn.addEventListener('click', () => {
+            showingAll = true;
+            renderThumbnails(true);
 
-  foldBtn.addEventListener('click', () => {
-    showingAll = false;
-    renderThumbnails(false);
-  });
 
-  galleryGrid.addEventListener('click', (e) => {
-    if (e.target.tagName === 'IMG') {
-      currentIndex = parseInt(e.target.dataset.index);
-      modalImage.src = imagePairs[currentIndex].full;
-      modal.show();
-    }
-  });
+            // 나머지 고화질 이미지 미리 로드 (인덱스 9~17)
+            preloadImages([9, 10, 11, 12, 13, 14, 15, 16, 17]);
+        });
 
-  nextBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % imagePairs.length;
-    modalImage.src = imagePairs[currentIndex].full;
-  });
+        foldBtn.addEventListener('click', () => {
+            showingAll = false;
+            renderThumbnails(false);
+        });
 
-  prevBtn.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + imagePairs.length) % imagePairs.length;
-    modalImage.src = imagePairs[currentIndex].full;
-  });
+        galleryGrid.addEventListener('click', (e) => {
+            if (e.target.tagName === 'IMG') {
+                currentIndex = parseInt(e.target.dataset.index);
+                modalImage.src = imagePairs[currentIndex].full;
+                modal.show();
+            }
+        });
 
-  // 터치 스와이프
-  let touchStartX = 0;
-  modalImage.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  });
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % imagePairs.length;
+            modalImage.src = imagePairs[currentIndex].full;
+        });
 
-  modalImage.addEventListener('touchend', (e) => {
-    const touchEndX = e.changedTouches[0].screenX;
-    if (touchStartX - touchEndX > 50) nextBtn.click();
-    else if (touchEndX - touchStartX > 50) prevBtn.click();
-  });
-</script>
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + imagePairs.length) % imagePairs.length;
+            modalImage.src = imagePairs[currentIndex].full;
+        });
+
+        // 터치 스와이프
+        let touchStartX = 0;
+        modalImage.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        modalImage.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            if (touchStartX - touchEndX > 50) nextBtn.click();
+            else if (touchEndX - touchStartX > 50) prevBtn.click();
+        });
+
+        function preloadImages(range) {
+            range.forEach(idx => {
+                const img = new Image();
+                img.src = imagePairs[idx].full;
+            });
+        }
+
+        // DOMContentLoaded 후, 앞 9장만 미리 로딩
+        document.addEventListener('DOMContentLoaded', () => {
+            preloadImages([0, 1, 2, 3, 4, 5, 6, 7, 8]);
+        });
+    </script>
     <script>
         const musicToggleBtn = document.getElementById('music-toggle');
         const musicIcon = document.getElementById('music-icon');
