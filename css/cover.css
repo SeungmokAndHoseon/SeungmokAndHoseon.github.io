@@ -274,19 +274,19 @@ header {
 .section4-sec1 {
   font-family: NanumMyeongjo-r;
   line-height: 1.5em;
-  font-size: 1.3rem;
+  font-size: 0.9rem;
 }
 
 .section4-sec2 {
   font-family: NanumMyeongjo-b;
   line-height: 1.5em;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
 }
 
 .section4-sec3 {
   font-family: NanumMyeongjo-b;
   line-height: 1.5em;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
   background: none;
   border: none;
   color: #55CCCC;
@@ -295,7 +295,7 @@ header {
 .section4-sec3-g {
   font-family: NanumMyeongjo-b;
   line-height: 1.5em;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
   background: none;
   border: none;
   color: #FF99CC;
@@ -320,7 +320,7 @@ header {
 .section5-sub {
   font-family: NanumMyeongjo-r;
   line-height: 1.5em;
-  font-size: 1.3rem;
+  font-size: 0.9rem;
 }
 
 .section5-table {
@@ -374,7 +374,7 @@ header {
 .section6-location-main {
   font-family: NanumMyeongjo-e;
   line-height: 1.5em;
-  font-size: 1.3rem;
+  font-size: 0.9rem;
 }
 
 .section6-sub {
@@ -386,7 +386,7 @@ header {
 .section6-location-sub {
   font-family: NanumMyeongjo-r;
   line-height: 1.5em;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   text-align: left;
 }
 
@@ -405,22 +405,22 @@ header {
 }
 
 .section7-modal-title {
-  font-size: 1.4rem;
+  font-size: 1.0rem;
 }
 
 .section7-modal-content {
-  font-size: 1.2rem;
+  font-size: 0.8rem;
 }
 
 .section7-main {
   font-family: NanumMyeongjo-b;
   line-height: 1.4em;
-  font-size: 1.4rem;
+  font-size: 1.0rem;
 }
 
 .section7-button {
   font-family: NanumMyeongjo-b;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   background-color: #CC9999;
   color: #fff;
   border: 0;
