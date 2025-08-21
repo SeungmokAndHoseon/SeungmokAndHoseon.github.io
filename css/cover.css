@@ -42,7 +42,7 @@ a:hover {
   color: #333;
   text-shadow: none;
   font-family: NanumMyeongjo-b;
-  font-size: 1.7rem;
+  font-size: 1.2rem;
 }
 
 .top-title-sub{
@@ -50,7 +50,7 @@ a:hover {
   color: #333;
   text-shadow: none;
   font-family: NanumMyeongjo-b;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
 }
 
 
@@ -179,30 +179,30 @@ header {
   margin-top: 1em;
   color: #333;
   text-shadow: none;
-  font-size: 1rem;
+  font-size: 0.6rem;
 }
 
 .section1-main {
   background-color: #fefefe;
   font-family: NanumMyeongjo-r;
   line-height: 2em;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
 }
 
 .section1-sub {
   font-family: NanumMyeongjo-b;
   line-height: 2.1em;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
 }
 
 .section1-sub2 {
   font-family: NanumMyeongjo-b;
   line-height: 2.1em;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
 }
 
 .section1-sub2 .small {
-  font-size: 1.2rem;
+  font-size: 0.8rem;
 }
 
 .section2-title {
@@ -214,7 +214,7 @@ header {
 .section2-main {
   font-family: NanumMyeongjo-b;
   line-height: 1.5em;
-  font-size: 1.35rem;
+  font-size: 0.95rem;
   position: relative;
 }
 
@@ -236,7 +236,7 @@ header {
 .section2-sub {
   font-family: NanumMyeongjo-b;
   line-height: 2em;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
 }
 
 .section3 {
