@@ -587,19 +587,39 @@ header {
 /* 기본 버튼 스타일 (앞서 설정한 것 유지) */
 .gallery-modal-button {
   position: absolute;
-  z-index: 1051;
-  background: none;
+  z-index: 5;
   border: none;
-  color: #fff;
-  font-size: 32px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-  padding: 0;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  font-size: 26px;
   line-height: 1;
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+  color: #fff;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: transform .12s ease, background .12s ease;
+  user-select: none;
+}
+.gallery-modal-button:hover { background: rgba(0,0,0,0.7); transform: scale(1.04); }
+
+/* 닫기 버튼: 하단 중앙 */
+.close-centered {
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
+
+/* 모바일에서 터치 여유 */
+@media (max-width: 576px) {
+  .gallery-modal-button { width: 56px; height: 56px; font-size: 28px; }
+  .nav-left  { left: 10px;  }
+  .nav-right { right: 10px; }
+}
 /* 닫기 버튼 위치 (기본: PC용) */
 .close-button {
   top: 20px;
@@ -639,7 +659,58 @@ header {
     font-size: 28px;
   }
 }
+/* 공통 네비게이션 버튼 (< >) */
+.gallery-modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  width: 64px;
+  height: 64px;
+  font-size: 48px;      /* 기호 크기를 키움 */
+  font-weight: bold;
+  color: #6e6969;          /* 기호를 흰색으로 */
+  background: transparent; /* 완전히 투명 */
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+.gallery-modal-nav:hover {
+  transform: scale(1.5); /* hover 시 기호만 커짐 */
+  color: #f8f6f6;
+}
+.nav-left  { left: 24px; }
+.nav-right { right: 24px; }
 
+/* 닫기 버튼 (흰 원 + 검은 X) */
+.gallery-modal-close {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #fff; /* 흰색 원 */
+  font-size: 28px;
+  font-weight: bold;
+  color: #000;      /* 검은색 X */
+  cursor: pointer;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.gallery-modal-close:hover {
+  background: #f0f0f0;
+  transform: scale(1.08);
+}
 
 #music-toggle {
   position: fixed;
