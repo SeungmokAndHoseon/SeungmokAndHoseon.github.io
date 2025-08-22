@@ -602,7 +602,7 @@
   const lng = 127.0280;        // 경도
   const placeName = "더채플앳논현";
 
-  // ★ 카카오내비 "네이티브 앱키"로 교체하세요.
+  // KakaoNavi 네이티브 앱키
   const KAKAO_APP_KEY = "81a9baa23016b5555dacfb54fdeb2e5b";
 
   // 단말 구분
@@ -610,74 +610,146 @@
   const isAndroid = ua.includes("android");
   const isIOS = /iphone|ipad|ipod/.test(ua);
 
-  /** 현재 페이지를 그대로 유지한 채 앱만 실행 */
-  function launchApp({ schemeUrl, intentUrl }) {
+  // 공통 웹 Fallback 링크들 (새 탭으로 열림)
+  const WEB_FALLBACK = {
+    kakao: `https://map.kakao.com/link/to/${encodeURIComponent(placeName)},${lat},${lng}`,
+    naver: `https://map.naver.com/v5/search/${encodeURIComponent(placeName)}`,
+    tmap:  `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&destination_place_id=&travelmode=driving`
+  };
+
+  // 현재 페이지를 유지한 채 앱만 실행 + 실패 시 웹 링크를 새 탭으로
+  function openAppDeepLink({ iosScheme, androidIntent, webUrl }) {
+    let didBackground = false;
+    const onVisibility = () => { didBackground = true; };
+    document.addEventListener("visibilitychange", onVisibility, { once: true });
+
     if (isAndroid) {
-      // Android: intent:// 로 실행 (웹 이동/새탭 없음)
-      try {
-        window.location.href = intentUrl;
-      } catch (e) { /* 앱 미설치 시에도 웹 이동 금지 */ }
+      // Android: intent://
+      try { window.location.href = androidIntent; } catch (e) {}
+      setTimeout(() => { if (!didBackground) window.open(webUrl, "_blank"); }, 1500);
     } else if (isIOS) {
-      // iOS: 숨김 iframe으로 스킴 실행 (웹 이동/새탭 없음)
+      // iOS: 숨은 iframe으로 스킴 호출
       const iframe = document.createElement("iframe");
       iframe.style.display = "none";
-      iframe.src = schemeUrl;
+      iframe.src = iosScheme;
       document.body.appendChild(iframe);
-      setTimeout(() => document.body.removeChild(iframe), 2000);
+      setTimeout(() => {
+        try { document.body.removeChild(iframe); } catch {}
+        if (!didBackground) window.open(webUrl, "_blank");
+      }, 1500);
     } else {
-      // 기타 환경: 스킴 시도 (가능한 한 현재 탭 유지)
-      window.location.href = schemeUrl;
+      // PC 등
+      window.open(webUrl, "_blank");
     }
   }
 
-  // Kakao Navi (필수: appkey, apiver)
-  function goKakaoNavi() {
+  // =========================
+  // Kakao Navi
+  // =========================
+  function buildKakao(iOS = false) {
     const qs = new URLSearchParams({
-      appkey: KAKAO_APP_KEY,   // 필수
-      apiver: "1.0",           // 필수
+      appkey: KAKAO_APP_KEY,
+      apiver: "1.0",
       name: placeName,
       x: String(lng),
       y: String(lat),
       coord_type: "wgs84"
     }).toString();
-
-    const schemeUrl = `kakaonavi://navigate?${qs}`;
-    const intentUrl =
-      `intent://navigate?${qs}#Intent;scheme=kakaonavi;package=com.locnall.KimGiSa;end`;
-
-    launchApp({ schemeUrl, intentUrl });
+    return {
+      iosScheme: `kakaonavi://navigate?${qs}`,
+      androidIntent: `intent://navigate?${qs}#Intent;scheme=kakaonavi;package=com.locnall.KimGiSa;end`,
+      webUrl: WEB_FALLBACK.kakao
+    };
+  }
+  // 자동판별
+  function goKakaoNavi() {
+    const cfg = buildKakao();
+    openAppDeepLink(cfg);
+  }
+  // 명시적 버전
+  function goKakaoNavi_AOS() {
+    const { androidIntent, webUrl } = buildKakao();
+    openAppDeepLink({ iosScheme: "", androidIntent, webUrl });
+  }
+  function goKakaoNavi_IOS() {
+    const { iosScheme, webUrl } = buildKakao(true);
+    openAppDeepLink({ iosScheme, androidIntent: "", webUrl });
+  }
+  function goKakaoNavi_PC() {
+    window.open(WEB_FALLBACK.kakao, "_blank");
   }
 
+  // =========================
   // Naver Map
-  function goNaverNavi() {
+  // =========================
+  function buildNaver(iOS = false) {
     const qs = new URLSearchParams({
       dlat: String(lat),
       dlng: String(lng),
       dname: placeName
     }).toString();
-
-    const schemeUrl = `nmap://route/car?${qs}`;
-    const intentUrl =
-      `intent://route/car?${qs}#Intent;scheme=nmap;package=com.nhn.android.nmap;end`;
-
-    launchApp({ schemeUrl, intentUrl });
+    return {
+      iosScheme: `nmap://route/car?${qs}`,
+      androidIntent: `intent://route/car?${qs}#Intent;scheme=nmap;package=com.nhn.android.nmap;end`,
+      webUrl: WEB_FALLBACK.naver
+    };
+  }
+  function goNaverNavi() {
+    const cfg = buildNaver();
+    openAppDeepLink(cfg);
+  }
+  function goNaverNavi_AOS() {
+    const { androidIntent, webUrl } = buildNaver();
+    openAppDeepLink({ iosScheme: "", androidIntent, webUrl });
+  }
+  function goNaverNavi_IOS() {
+    const { iosScheme, webUrl } = buildNaver(true);
+    openAppDeepLink({ iosScheme, androidIntent: "", webUrl });
+  }
+  function goNaverNavi_PC() {
+    window.open(WEB_FALLBACK.naver, "_blank");
   }
 
+  // =========================
   // T map
-  function goTmapNavi() {
+  // =========================
+  function buildTmap(iOS = false) {
     const qs = new URLSearchParams({
       goalx: String(lng),
       goaly: String(lat),
       goalname: placeName
     }).toString();
-
-    const schemeUrl = `tmap://route?${qs}`;
-    const intentUrl =
-      `intent://route?${qs}#Intent;scheme=tmap;package=com.skt.tmap.ku;end`;
-
-    launchApp({ schemeUrl, intentUrl });
+    return {
+      iosScheme: `tmap://route?${qs}`,
+      androidIntent: `intent://route?${qs}#Intent;scheme=tmap;package=com.skt.tmap;end`,
+      // ← 여기 webUrl은 위의 WEB_FALLBACK.tmap(= Google Maps)로 연결
+      webUrl: WEB_FALLBACK.tmap
+    };
   }
+
+  function goTmapNavi() {
+    const cfg = buildTmap();
+    openAppDeepLink(cfg);
+  }
+  function goTmapNavi_AOS() {
+    const { androidIntent, webUrl } = buildTmap();
+    openAppDeepLink({ iosScheme: "", androidIntent, webUrl });
+  }
+  function goTmapNavi_IOS() {
+    const { iosScheme, webUrl } = buildTmap(true);
+    openAppDeepLink({ iosScheme, androidIntent: "", webUrl });
+  }
+  function goTmapNavi_PC() {
+    // PC에서는 공개 지도 URL을 새 탭으로
+    window.open(WEB_FALLBACK.tmap, "_blank");
+  }
+
+  // 필요 시 버튼에 바인딩:
+  // document.getElementById('btnKakao').onclick = goKakaoNavi;
+  // document.getElementById('btnNaver').onclick = goNaverNavi;
+  // document.getElementById('btnTmap').onclick = goTmapNavi;
 </script>
+
 
                 <script>
                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
