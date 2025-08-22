@@ -937,3 +937,25 @@ img.no-actions{
 .account-row .copy-icon {
   stroke: currentColor;
 }
+
+/* iOS에서 이미지 롱프레스 저장 방지용 래퍼/실드 */
+.img-guard {
+  position: relative;
+  display: inline-block;   /* 레이아웃 보존 */
+}
+.img-guard > img {
+  display: block;          /* 갭 제거 */
+}
+.img-guard .img-guard-shield {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+  z-index: 2;
+  /* iOS 콜아웃/선택 방지 */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  /* 드래그/저장 힌트 억제 */
+  -webkit-user-drag: none;
+  user-drag: none;
+}

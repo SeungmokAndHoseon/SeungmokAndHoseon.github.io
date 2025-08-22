@@ -255,6 +255,50 @@
         document.querySelectorAll('img.no-actions').forEach(img => {
             img.setAttribute('draggable', 'false');
         });
+        (function () {
+            const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+            if (!isIOS) return;
+
+            document.querySelectorAll('img.no-actions').forEach((img) => {
+                // 이미 처리된 경우 무시
+                if (img.closest('.img-guard')) return;
+
+                // 래퍼 생성 후 이미지 감싸기
+                const wrap = document.createElement('span');
+                wrap.className = 'img-guard';
+                img.parentNode.insertBefore(wrap, img);
+                wrap.appendChild(img);
+
+                // 투명 실드 생성 (롱프레스 타겟을 이미지가 아닌 실드로)
+                const shield = document.createElement('span');
+                shield.className = 'img-guard-shield';
+                shield.setAttribute('aria-hidden', 'true');
+                wrap.appendChild(shield);
+
+                // 클릭/탭은 이미지로 전달 (갤러리 모달 등 기존 동작 유지)
+                ['click', 'touchend'].forEach((type) => {
+                    shield.addEventListener(
+                        type,
+                        () => {
+                            img.dispatchEvent(new Event('click', { bubbles: true }));
+                        },
+                        { passive: true }
+                    );
+                });
+
+                // iOS 일부 상황에서 뜨는 콜아웃 억제 (실드에만 적용)
+                ['contextmenu', 'gesturestart'].forEach((type) => {
+                    shield.addEventListener(
+                        type,
+                        (e) => e.preventDefault(),
+                        { passive: false }
+                    );
+                });
+
+                // 드래그/저장 힌트 억제 (중복 안전망)
+                img.setAttribute('draggable', 'false');
+            });
+        })();
     </script>
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -869,11 +913,13 @@
             </script>
             <button id="sharelink-btn" class="sharelink-button">🔗 링크로 공유하기</button>
             <button id="kakao-share-btn" class="sharelink-button">
-  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#3C1E1E" style="margin-right:6px;">
-    <path d="M12 2C6.48 2 2 6.02 2 10.98c0 3.1 1.89 5.82 4.75 7.43-.2.72-.71 2.61-.82 3.07-.13.55.2.54.42.39.17-.11 2.7-1.84 3.8-2.59.61.09 1.24.14 1.85.14 5.52 0 10-4.02 10-8.96C22 6.02 17.52 2 12 2z"/>
-  </svg>
-  카카오톡으로 공유하기
-</button>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#3C1E1E"
+                    style="margin-right:6px;">
+                    <path
+                        d="M12 2C6.48 2 2 6.02 2 10.98c0 3.1 1.89 5.82 4.75 7.43-.2.72-.71 2.61-.82 3.07-.13.55.2.54.42.39.17-.11 2.7-1.84 3.8-2.59.61.09 1.24.14 1.85.14 5.52 0 10-4.02 10-8.96C22 6.02 17.52 2 12 2z" />
+                </svg>
+                카카오톡으로 공유하기
+            </button>
             <div id="sharelink-toast" class="sharelink-toast">📋 링크를 복사했어요!</div>
             <footer class="pt-5 text-muted text-center text-small section8">
 
