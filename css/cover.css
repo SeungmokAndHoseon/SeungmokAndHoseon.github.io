@@ -921,11 +921,11 @@ img.no-actions{
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: #f0f4ff;       /* 파스텔 블루톤 */
+  background: #C1D0B5;       /* 파스텔 블루톤 */
   border: none;
   padding: 4px 8px;          /* 버튼답게 살짝 여유 */
   margin: 0;
-  color: #444;
+  color: #ffffff;
   font-size: 14px;
   cursor: pointer;
   border-radius: 6px;        /* 둥근 모서리 */
@@ -933,8 +933,8 @@ img.no-actions{
 }
 
 .account-row .copy-btn:hover {
-  background: #dce6ff;       /* hover 시 조금 더 진한 파스텔 블루 */
-  color: #000;
+  background: #9AD756;       /* hover 시 조금 더 진한 파스텔 블루 */
+  color: #ffffff;
 }
 
 .account-row .copy-icon {
