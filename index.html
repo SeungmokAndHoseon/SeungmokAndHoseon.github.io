@@ -650,7 +650,7 @@
   // Kakao Navi
   // =========================
   function buildKakao(iOS = false) {
-    alert("kakao");
+    alert("kakao2");
     kakao_navi();
     const qs = new URLSearchParams({
       appkey: KAKAO_APP_KEY,
@@ -759,9 +759,9 @@ function kakao_navi() {
     if (!Kakao.init) {
         Kakao.init('13da3914377346b0b8f74f5309b49dad')
     }
-    if (is_pc == '1') {
-        alert('모바일 기기 전용 기능입니다')
-    }
+    // if (is_pc == '1') {
+    //     alert('모바일 기기 전용 기능입니다')
+    // }
 
     
     Kakao.Navi.start({
