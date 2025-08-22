@@ -649,21 +649,21 @@
   // =========================
   // Kakao Navi
   // =========================
-  function buildKakao(iOS = false) {
-    alert("kakao4");
-    kakao_navi();
+    function buildKakao(iOS = false) {
+    // 카카오맵 스킴 파라미터 정의
     const qs = new URLSearchParams({
-      appkey: KAKAO_APP_KEY,
-      apiver: "1.0",
-      dest: { name: placeName, x: String(lng), y: String(lat) },
-      option: { coord_type: "wgs84" }
+        by: "CAR",                  // 이동 수단 (CAR, PUBLICTRANSIT, WALK)
+        eX: String(lng),            // 목적지 경도
+        eY: String(lat),            // 목적지 위도
+        eName: placeName            // 목적지 이름
     }).toString();
+
     return {
-      iosScheme: `kakaonavi://navigate?${qs}`,
-      androidIntent: `intent://navigate?${qs}#Intent;scheme=kakaonavi;package=com.locnall.KimGiSa;end`,
-      webUrl: WEB_FALLBACK.kakao
+        iosScheme: `kakaomap://route?${qs}`,
+        androidIntent: `intent://route?${qs}#Intent;scheme=kakaomap;package=net.daum.android.map;end`,
+        webUrl: `https://map.kakao.com/link/to/${encodeURIComponent(placeName)},${lat},${lng}`
     };
-  }
+    }
   // 자동판별
   function goKakaoNavi() {
     const cfg = buildKakao();
