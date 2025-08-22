@@ -650,10 +650,8 @@
     const qs = new URLSearchParams({
       appkey: KAKAO_APP_KEY,
       apiver: "1.0",
-      name: placeName,
-      x: String(lng),
-      y: String(lat),
-      coord_type: "wgs84"
+      dest: { name: placeName, x: String(lng), y: String(lat) },
+      option: { coord_type: "wgs84" }
     }).toString();
     return {
       iosScheme: `kakaonavi://navigate?${qs}`,
