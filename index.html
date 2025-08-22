@@ -597,87 +597,145 @@
                 </div>
                 <script type="text/javascript" src="js/kakao.js"></script>
 <script>
-  // 목적지 정보
-  const lat = 37.4979;         // 위도
-  const lng = 127.0280;        // 경도
+  // 목적지 좌표/이름
+  const lat = 37.4979;   // 위도
+  const lng = 127.0280;  // 경도
   const placeName = "더채플앳논현";
 
-  // ★ 카카오내비 "네이티브 앱키"로 교체하세요.
-  const KAKAO_APP_KEY = "81a9baa23016b5555dacfb54fdeb2e5b";
+  // ★ 카카오 네이티브 앱 키 넣기 (Kakao Developers 콘솔의 '네이티브 앱 키')
+  const KAKAO_APP_KEY = "81a9baa23016b5555dacfb54fdeb2e5b"; // 예) "12ab34cdef5678901234567890abcd12"
 
-  // 단말 구분
+  // 플랫폼 판별
   const ua = navigator.userAgent.toLowerCase();
-  const isAndroid = ua.includes("android");
+  const isAndroid = ua.indexOf("android") > -1;
   const isIOS = /iphone|ipad|ipod/.test(ua);
 
-  /** 현재 페이지를 그대로 유지한 채 앱만 실행 */
-  function launchApp({ schemeUrl, intentUrl }) {
-    if (isAndroid) {
-      // Android: intent:// 로 실행 (웹 이동/새탭 없음)
-      try {
-        window.location.href = intentUrl;
-      } catch (e) { /* 앱 미설치 시에도 웹 이동 금지 */ }
-    } else if (isIOS) {
-      // iOS: 숨김 iframe으로 스킴 실행 (웹 이동/새탭 없음)
+  /**
+   * 공통: 앱 딥링크 열기 (현재 탭 유지)
+   * - iOS: 숨은 iframe으로 scheme 열기
+   * - Android: intent:// 사용
+   * - 앱 미설치 시: 스토어로만 이동 (웹 API로는 가지 않음 → JSON 노출 방지)
+   */
+  function openAppDeepLink({ iosScheme, androidIntent, storeUrl }) {
+    let didHide = false;
+
+    const onVisibility = () => {
+      didHide = true; // 사용자가 앱으로 전환됨
+    };
+    document.addEventListener("visibilitychange", onVisibility, { once: true });
+
+    if (isIOS) {
+      // 숨은 iframe으로 현재 페이지 그대로 둔 채 스킴 호출
       const iframe = document.createElement("iframe");
       iframe.style.display = "none";
-      iframe.src = schemeUrl;
+      iframe.src = iosScheme;
       document.body.appendChild(iframe);
-      setTimeout(() => document.body.removeChild(iframe), 2000);
+
+      // 일정 시간 내 전환이 없으면(= 미설치) 스토어로 유도
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+        if (!didHide) {
+          window.location.href = storeUrl; // 앱스토어 이동
+        }
+      }, 1500);
+    } else if (isAndroid) {
+      // intent:// 은 현재 탭 유지 + 앱 설치 시 바로 실행, 미설치 시 fallback으로 스토어 이동
+      // 일부 브라우저에서 자동 스토어 이동이 안되면 아래 setTimeout 보조
+      window.location.href = androidIntent;
+
+      setTimeout(() => {
+        if (!didHide) {
+          window.location.href = storeUrl; // 플레이스토어 이동
+        }
+      }, 1500);
     } else {
-      // 기타 환경: 스킴 시도 (가능한 한 현재 탭 유지)
-      window.location.href = schemeUrl;
+      // PC 등: 아무 동작 안 함(원한다면 안내 토스트 표시)
+      console.warn("모바일에서만 지원됩니다.");
     }
   }
 
-  // Kakao Navi (필수: appkey, apiver)
+  // ─────────────────────────────────────────────
+  // Kakao Navi
+  // ─────────────────────────────────────────────
   function goKakaoNavi() {
-    const qs = new URLSearchParams({
-      appkey: KAKAO_APP_KEY,   // 필수
-      apiver: "1.0",           // 필수
-      name: placeName,
-      x: String(lng),
-      y: String(lat),
-      coord_type: "wgs84"
-    }).toString();
+    // KakaoNavi 요구 파라미터:
+    // - apiver=1.0 (필수)
+    // - appkey=네이티브앱키 (필수)
+    // - name, x(경도), y(위도), coord_type=wgs84
+    // iOS는 scheme 직접, Android는 intent 사용
+    const iosScheme =
+      `kakaonavi://navigate?appkey=${encodeURIComponent(KAKAO_APP_KEY)}` +
+      `&apiver=1.0` +
+      `&name=${encodeURIComponent(placeName)}` +
+      `&x=${encodeURIComponent(lng)}` +
+      `&y=${encodeURIComponent(lat)}` +
+      `&coord_type=wgs84`;
 
-    const schemeUrl = `kakaonavi://navigate?${qs}`;
-    const intentUrl =
-      `intent://navigate?${qs}#Intent;scheme=kakaonavi;package=com.locnall.KimGiSa;end`;
+    const androidIntent =
+      `intent://navigate?` +
+      `appkey=${encodeURIComponent(KAKAO_APP_KEY)}` +
+      `&apiver=1.0` +
+      `&name=${encodeURIComponent(placeName)}` +
+      `&x=${encodeURIComponent(lng)}` +
+      `&y=${encodeURIComponent(lat)}` +
+      `&coord_type=wgs84` +
+      `#Intent;scheme=kakaonavi;package=com.locnall.KimGiSa;end`;
 
-    launchApp({ schemeUrl, intentUrl });
+    const storeUrl = isIOS
+      ? "https://apps.apple.com/kr/app/kakao-navi/id1153455246"
+      : "https://play.google.com/store/apps/details?id=com.locnall.KimGiSa";
+
+    openAppDeepLink({ iosScheme, androidIntent, storeUrl });
   }
 
+  // ─────────────────────────────────────────────
   // Naver Map
+  // ─────────────────────────────────────────────
   function goNaverNavi() {
-    const qs = new URLSearchParams({
-      dlat: String(lat),
-      dlng: String(lng),
-      dname: placeName
-    }).toString();
+    // iOS/Android 공통 스킴: nmap://route/car
+    const base = `nmap://route/car?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(placeName)}`;
+    const iosScheme = base; // iOS는 바로 스킴
+    const androidIntent =
+      `intent://route/car?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(placeName)}` +
+      `#Intent;scheme=nmap;package=com.nhn.android.nmap;end`;
 
-    const schemeUrl = `nmap://route/car?${qs}`;
-    const intentUrl =
-      `intent://route/car?${qs}#Intent;scheme=nmap;package=com.nhn.android.nmap;end`;
+    const storeUrl = isIOS
+      ? "https://apps.apple.com/kr/app/naver-map-navigation/id311867728"
+      : "https://play.google.com/store/apps/details?id=com.nhn.android.nmap";
 
-    launchApp({ schemeUrl, intentUrl });
+    openAppDeepLink({ iosScheme, androidIntent, storeUrl });
   }
 
+  // ─────────────────────────────────────────────
   // T map
+  // ─────────────────────────────────────────────
   function goTmapNavi() {
-    const qs = new URLSearchParams({
-      goalx: String(lng),
-      goaly: String(lat),
-      goalname: placeName
-    }).toString();
+    // T map 스킴: tmap://route?goalx={경도}&goaly={위도}&goalname=...
+    const iosScheme =
+      `tmap://route?goalx=${encodeURIComponent(lng)}` +
+      `&goaly=${encodeURIComponent(lat)}` +
+      `&goalname=${encodeURIComponent(placeName)}`;
 
-    const schemeUrl = `tmap://route?${qs}`;
-    const intentUrl =
-      `intent://route?${qs}#Intent;scheme=tmap;package=com.skt.tmap.ku;end`;
+    // Android 패키지명: com.skt.tmap
+    const androidIntent =
+      `intent://route?goalx=${encodeURIComponent(lng)}` +
+      `&goaly=${encodeURIComponent(lat)}` +
+      `&goalname=${encodeURIComponent(placeName)}` +
+      `#Intent;scheme=tmap;package=com.skt.tmap;end`;
 
-    launchApp({ schemeUrl, intentUrl });
+    const storeUrl = isIOS
+      ? "https://apps.apple.com/kr/app/t-map-%ED%8B%B0%EB%A7%A4%ED%94%84/id431589174"
+      : "https://play.google.com/store/apps/details?id=com.skt.tmap";
+
+    openAppDeepLink({ iosScheme, androidIntent, storeUrl });
   }
+
+  // 필요 시 기존 핸들러에 바인딩:
+  // document.getElementById('btnKakao').onclick = goKakaoNavi;
+  // document.getElementById('btnNaver').onclick = goNaverNavi;
+  // document.getElementById('btnTmap').onclick = goTmapNavi;
 </script>
+
 
                 <script>
                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
