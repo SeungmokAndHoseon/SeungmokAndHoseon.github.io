@@ -203,7 +203,7 @@ header {
 .section1-sub2 {
   font-family: NanumMyeongjo-b;
   line-height: 2.1em;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
 }
 
 .section1-sub2 .small {
@@ -639,15 +639,12 @@ header {
   top: 50%;
   transform: translateY(-50%);
   border: none;
-  width: 64px;
-  height: 64px;
-  font-size: 48px;
-  /* 기호 크기를 키움 */
-  font-weight: bold;
-  color: #6e6767;
-  /* 기호를 흰색으로 */
-  background: transparent;
-  /* 완전히 투명 */
+  width: 80px;              /* 버튼 영역 넓힘 */
+  height: 80px;
+  font-size: 64px;          /* 기호 자체 크게 */
+  font-weight: 300;         /* 얇게 (Light 느낌) */
+  color: #6e6767;           /* 기호 색상 */
+  background: transparent;  /* 투명 배경 */
   cursor: pointer;
   z-index: 5;
   display: flex;

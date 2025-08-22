@@ -239,22 +239,22 @@
         });
     </script>
     <script>
-// PC/안드: 우클릭·롱프레스 메뉴만 차단 (스크롤 영향 없음)
-document.addEventListener('contextmenu', (e) => {
-  if (e.target.closest('img.no-actions')) {
-    e.preventDefault(); // 메뉴만 막음
-  }
-});
+        // PC/안드: 우클릭·롱프레스 메뉴만 차단 (스크롤 영향 없음)
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.closest('img.no-actions')) {
+                e.preventDefault(); // 메뉴만 막음
+            }
+        });
 
-// 드래그 저장 방지
-document.addEventListener('dragstart', (e) => {
-  if (e.target.closest('img.no-actions')) e.preventDefault();
-});
+        // 드래그 저장 방지
+        document.addEventListener('dragstart', (e) => {
+            if (e.target.closest('img.no-actions')) e.preventDefault();
+        });
 
-// 이미지 자체 드래그 비활성화
-document.querySelectorAll('img.no-actions').forEach(img => {
-  img.setAttribute('draggable', 'false');
-});
+        // 이미지 자체 드래그 비활성화
+        document.querySelectorAll('img.no-actions').forEach(img => {
+            img.setAttribute('draggable', 'false');
+        });
     </script>
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -359,8 +359,18 @@ document.querySelectorAll('img.no-actions').forEach(img => {
                             </button>
 
                             <!-- 이전/다음 버튼 -->
-                            <button id="prevBtn" class="gallery-modal-nav nav-left" aria-label="Previous">&lt;</button>
-                            <button id="nextBtn" class="gallery-modal-nav nav-right" aria-label="Next">&gt;</button>
+                            <button id="prevBtn" class="gallery-modal-nav nav-left" aria-label="Previous"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"
+                                    fill="none" stroke="#6e6767" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="15 18 9 12 15 6"></polyline>
+                                </svg></button>
+                            <button id="nextBtn" class="gallery-modal-nav nav-right" aria-label="Next"><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"
+                                    fill="none" stroke="#6e6767" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"></polyline>
+                                </svg></button>
                         </div>
                     </div>
                 </div>
@@ -469,16 +479,16 @@ document.querySelectorAll('img.no-actions').forEach(img => {
                                 </button>
                             </div>
                             <div class="modal-body section7-modal section7-modal-content account-row">
-                            <img class="bank-icon no-actions" src="./img/ibk.png" alt="기업은행">
-                            <span class="account-text">기업은행 356-011-775-02-011 김승목</span>
-                            <button class="copy-btn" data-account="기업은행 356-011-775-02-011 김승목">
-                                <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" viewBox="0 0 24 24">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                                </svg>
-                            </button>
+                                <img class="bank-icon no-actions" src="./img/ibk.png" alt="기업은행">
+                                <span class="account-text">기업은행 356-011-775-02-011 김승목</span>
+                                <button class="copy-btn" data-account="기업은행 356-011-775-02-011 김승목">
+                                    <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                        fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" viewBox="0 0 24 24">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                    </svg>
+                                </button>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -501,31 +511,32 @@ document.querySelectorAll('img.no-actions').forEach(img => {
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
+
                             <div class="modal-body section7-modal section7-modal-content account-row">
-                            <img class="bank-icon no-actions" src="./img/kakaobank.png" alt="카카오뱅크">
-                            <span class="account-text">카카오뱅크 7979-79-13360 이호선</span>
-                            <button class="copy-btn" data-account="카카오뱅크 7979-79-13360 이호선">
-                                <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" viewBox="0 0 24 24">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                                </svg>
-                            </button>
+                                <img class="bank-icon no-actions" src="./img/shbank.png" alt="신한은행">
+                                <span class="account-text">신한은행 110-004-296616 이종진</span>
+                                <button class="copy-btn" data-account="신한은행 110-004-296616 이종진">
+                                    <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                        fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" viewBox="0 0 24 24">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                    </svg>
+
+                                </button>
                             </div>
-                            
+
                             <div class="modal-body section7-modal section7-modal-content account-row">
-                            <img class="bank-icon no-actions" src="./img/shbank.png" alt="신한은행">
-                            <span class="account-text">신한은행 110-004-296616 이종진</span>
-                            <button class="copy-btn" data-account="신한은행 110-004-296616 이종진">
-                                <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" viewBox="0 0 24 24">
-                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                                </svg>
-                                
-                            </button>
+                                <img class="bank-icon no-actions" src="./img/kakaobank.png" alt="카카오뱅크">
+                                <span class="account-text">카카오뱅크 7979-79-13360 이호선</span>
+                                <button class="copy-btn" data-account="카카오뱅크 7979-79-13360 이호선">
+                                    <svg class="copy-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                        fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" viewBox="0 0 24 24">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+                                    </svg>
+                                </button>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -852,13 +863,16 @@ document.querySelectorAll('img.no-actions').forEach(img => {
                 <br /><br />
             </div>
             <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script>
-  Kakao.init("39521630d23344f3613c4100a3936364"); 
-  console.log(Kakao.isInitialized()); // true 나오면 정상
-</script>
+            <script>
+                Kakao.init("39521630d23344f3613c4100a3936364");
+                console.log(Kakao.isInitialized()); // true 나오면 정상
+            </script>
             <button id="sharelink-btn" class="sharelink-button">🔗 링크로 공유하기</button>
-            <button id="kakao-share-btn" class="sharelink-button"><!--style="margin-top:10px; background-color:#FEE500; color:#3C1E1E;">-->
-  💬 카카오톡으로 공유하기
+            <button id="kakao-share-btn" class="sharelink-button">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#3C1E1E" style="margin-right:6px;">
+    <path d="M12 2C6.48 2 2 6.02 2 10.98c0 3.1 1.89 5.82 4.75 7.43-.2.72-.71 2.61-.82 3.07-.13.55.2.54.42.39.17-.11 2.7-1.84 3.8-2.59.61.09 1.24.14 1.85.14 5.52 0 10-4.02 10-8.96C22 6.02 17.52 2 12 2z"/>
+  </svg>
+  카카오톡으로 공유하기
 </button>
             <div id="sharelink-toast" class="sharelink-toast">📋 링크를 복사했어요!</div>
             <footer class="pt-5 text-muted text-center text-small section8">
@@ -874,30 +888,30 @@ document.querySelectorAll('img.no-actions').forEach(img => {
     </div>
     <button id="backToTop" title="맨 위로 이동">↑</button>
     <script>
-  document.getElementById("kakao-share-btn").addEventListener("click", () => {
-    Kakao.Link.sendDefault({
-      objectType: "feed",
-      content: {
-        title: "김승목 ❤️ 이호선 결혼식에 초대합니다.",
-        description: "2025년 11월 8일(토) 18시 30분 · 소풍컨벤션웨딩홀 7층 베일리홀",
-        imageUrl: "https://seungmokandhoseon.github.io/img/header.jpg", 
-        link: {
-          mobileWebUrl: window.location.href,
-          webUrl: window.location.href
-        }
-      },
-      buttons: [
-        {
-          title: "모바일청첩장 열기",
-          link: {
-            mobileWebUrl: window.location.href,
-            webUrl: window.location.href
-          }
-        }
-      ]
-    });
-  });
-</script>
+        document.getElementById("kakao-share-btn").addEventListener("click", () => {
+            Kakao.Link.sendDefault({
+                objectType: "feed",
+                content: {
+                    title: "김승목 ❤️ 이호선 결혼식에 초대합니다.",
+                    description: "2025년 11월 8일(토) 18시 30분 · 소풍컨벤션웨딩홀 7층 베일리홀",
+                    imageUrl: "https://seungmokandhoseon.github.io/img/header.jpg",
+                    link: {
+                        mobileWebUrl: window.location.href,
+                        webUrl: window.location.href
+                    }
+                },
+                buttons: [
+                    {
+                        title: "모바일청첩장 열기",
+                        link: {
+                            mobileWebUrl: window.location.href,
+                            webUrl: window.location.href
+                        }
+                    }
+                ]
+            });
+        });
+    </script>
     <script>
         document.getElementById('sharelink-btn').addEventListener('click', function () {
             const url = window.location.href;
