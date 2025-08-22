@@ -650,6 +650,8 @@
   // Kakao Navi
   // =========================
   function buildKakao(iOS = false) {
+    alert("kakao");
+    kakao_navi();
     const qs = new URLSearchParams({
       appkey: KAKAO_APP_KEY,
       apiver: "1.0",
@@ -669,10 +671,8 @@
   }
   // 명시적 버전
   function goKakaoNavi_AOS() {
-    alert("kakao");
-    kakao_navi();
-    // const { androidIntent, webUrl } = buildKakao();
-    // openAppDeepLink({ iosScheme: "", androidIntent, webUrl });
+    const { androidIntent, webUrl } = buildKakao();
+    openAppDeepLink({ iosScheme: "", androidIntent, webUrl });
   }
   function goKakaoNavi_IOS() {
     const { iosScheme, webUrl } = buildKakao(true);
