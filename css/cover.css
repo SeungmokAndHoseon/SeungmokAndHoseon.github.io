@@ -320,7 +320,7 @@ header {
 .section5-sub {
   font-family: NanumMyeongjo-r;
   line-height: 1.5em;
-  font-size: 0.9rem;
+  font-size: 1.0rem;
 }
 
 .section5-table {
@@ -374,13 +374,13 @@ header {
 .section6-location-main {
   font-family: NanumMyeongjo-e;
   line-height: 1.5em;
-  font-size: 0.9rem;
+  font-size: 1.0rem;
 }
 
 .section6-sub {
   font-family: NanumMyeongjo-r;
   line-height: 1.5em;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
 }
 
 .section6-location-sub {
@@ -625,7 +625,7 @@ header {
   height: 64px;
   font-size: 48px;      /* 기호 크기를 키움 */
   font-weight: bold;
-  color: #6e6969;          /* 기호를 흰색으로 */
+  color: #6e6767;          /* 기호를 흰색으로 */
   background: transparent; /* 완전히 투명 */
   cursor: pointer;
   z-index: 5;
@@ -636,7 +636,7 @@ header {
 }
 .gallery-modal-nav:hover {
   transform: scale(1.5); /* hover 시 기호만 커짐 */
-  color: #f8f6f6;
+  color: #111111;
 }
 .nav-left  { left: 24px; }
 .nav-right { right: 24px; }
