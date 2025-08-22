@@ -6,14 +6,17 @@
   font-family: 'NanumMyeongjo-r';
   src: url('../font/NanumMyeongjo-Regular.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'NanumMyeongjo-e';
   src: url('../font/NanumMyeongjo-ExtraBold.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'NanumMyeongjo-b';
   src: url('../font/NanumMyeongjo-Bold.ttf') format('truetype');
 }
+
 @font-face {
   font-family: 'DancingScript-b';
   src: url('../font/DancingScript-Bold.ttf') format('truetype');
@@ -31,7 +34,8 @@ a:hover {
 .btn-secondary:hover,
 .btn-secondary:focus {
   color: #333;
-  text-shadow: none; /* Prevent inheritance from `body` */
+  text-shadow: none;
+  /* Prevent inheritance from `body` */
   background-color: #fff;
   border: .05rem solid #fff;
 }
@@ -45,7 +49,7 @@ a:hover {
   font-size: 1.4rem;
 }
 
-.top-title-sub{
+.top-title-sub {
   margin-top: 1em;
   color: #333;
   text-shadow: none;
@@ -137,7 +141,7 @@ body {
   border-bottom-color: rgba(255, 255, 255, .25);
 }
 
-.nav-masthead .nav-link + .nav-link {
+.nav-masthead .nav-link+.nav-link {
   margin-left: 1rem;
 }
 
@@ -166,6 +170,7 @@ header {
   .masthead-brand {
     float: left;
   }
+
   .nav-masthead {
     float: right;
   }
@@ -220,8 +225,8 @@ header {
 
 
 .section2-main::after {
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   content: "";
   background-image: url("../img/section2.jpg");
   background-size: cover;
@@ -258,7 +263,7 @@ header {
 }
 
 .section3-image {
-  box-shadow : 2px 2px 5px #999;
+  box-shadow: 2px 2px 5px #999;
 }
 
 .section4-title {
@@ -331,26 +336,26 @@ header {
   border-bottom: 1px solid #ccc;
 }
 
-.section5-table tr td{
+.section5-table tr td {
   padding-top: 0.8em;
   padding-bottom: 0.8em;
 }
 
-.section5-table tr .sun{
+.section5-table tr .sun {
   color: red;
 }
 
-.section5-table tr .check{
+.section5-table tr .check {
   color: white;
   background-color: chocolate;
   border-radius: 50px;
 }
 
-.section5-table tr:first-child td{
+.section5-table tr:first-child td {
   padding-top: 2em;
 }
 
-.section5-table tr:last-child td{
+.section5-table tr:last-child td {
   padding-bottom: 2em;
 }
 
@@ -458,6 +463,7 @@ header {
 .cover {
   padding: 0 1.5rem;
 }
+
 .cover .btn-lg {
   padding: .75rem 1.25rem;
   font-weight: 700;
@@ -481,7 +487,8 @@ header {
   color: #5e4b3c;
   padding: 12px 0;
   text-align: center;
-  background-color: #f9f5f1; /* 약간 아이보리 톤 */
+  background-color: #f9f5f1;
+  /* 약간 아이보리 톤 */
   border-bottom: 1px solid #ddd;
 }
 
@@ -498,6 +505,7 @@ header {
   color: #fff;
   z-index: 10000;
 }
+
 /* 메시지바 */
 .music-msg-bar {
   position: fixed;
@@ -533,14 +541,15 @@ header {
 
 .gallery-container img {
   width: 100%;
-  aspect-ratio: 1 / 1; /* 1:1 비율 유지 (800x800) */
+  aspect-ratio: 1 / 1;
+  /* 1:1 비율 유지 (800x800) */
   object-fit: cover;
   /* border-radius: 1px; */
   cursor: pointer;
   align-items: center;
 }
 
-  /* #gallery-grid img {
+/* #gallery-grid img {
     width: 800px;
     height: 800px;
     object-fit: cover;
@@ -549,35 +558,38 @@ header {
     margin: 0 auto;
   } */
 
-  @media (max-width: 768px) {
-    #gallery-grid img {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 1/1;
-  align-items: center;
-    }
-  }
-
+@media (max-width: 768px) {
   #gallery-grid img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1/1;
+    align-items: center;
+  }
+}
+
+#gallery-grid img {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
   border-radius: 6px;
   align-items: center;
 }
-  .no-gap {
-    padding: 0 !important;
-    margin: 0 !important;
-  }
 
-  .no-gap img {
+.no-gap {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.no-gap img {
   display: block;
   width: 100%;
   height: auto;
   border: none;
-  border-radius: 8px; /* ← 원하는 정도로 조절 (예: 4px, 8px, 12px 등) */
+  border-radius: 8px;
+  /* ← 원하는 정도로 조절 (예: 4px, 8px, 12px 등) */
   object-fit: cover;
 }
+
 .no-gap img:hover {
   transform: scale(1.02);
   transition: transform 0.2s ease;
@@ -586,8 +598,13 @@ header {
 
 /* 모바일에서 터치 여유 */
 @media (max-width: 576px) {
-  .nav-left  { left: 10px;  }
-  .nav-right { right: 10px; }
+  .nav-left {
+    left: 10px;
+  }
+
+  .nav-right {
+    right: 10px;
+  }
 }
 
 /* 이전 버튼 (좌측 중앙) */
@@ -615,6 +632,7 @@ header {
   }
 
 }
+
 /* 공통 네비게이션 버튼 (< >) */
 .gallery-modal-nav {
   position: absolute;
@@ -623,10 +641,13 @@ header {
   border: none;
   width: 64px;
   height: 64px;
-  font-size: 48px;      /* 기호 크기를 키움 */
+  font-size: 48px;
+  /* 기호 크기를 키움 */
   font-weight: bold;
-  color: #6e6767;          /* 기호를 흰색으로 */
-  background: transparent; /* 완전히 투명 */
+  color: #6e6767;
+  /* 기호를 흰색으로 */
+  background: transparent;
+  /* 완전히 투명 */
   cursor: pointer;
   z-index: 5;
   display: flex;
@@ -634,12 +655,20 @@ header {
   justify-content: center;
   transition: transform 0.15s ease;
 }
+
 .gallery-modal-nav:hover {
-  transform: scale(1.5); /* hover 시 기호만 커짐 */
+  transform: scale(1.5);
+  /* hover 시 기호만 커짐 */
   color: #111111;
 }
-.nav-left  { left: 24px; }
-.nav-right { right: 24px; }
+
+.nav-left {
+  left: 24px;
+}
+
+.nav-right {
+  right: 24px;
+}
 
 /* 닫기 버튼 (흰 원 + 검은 X) */
 .gallery-modal-close {
@@ -651,18 +680,21 @@ header {
   height: 56px;
   border-radius: 50%;
   border: none;
-  background: #fff; /* 흰색 원 */
+  background: #fff;
+  /* 흰색 원 */
   font-size: 28px;
   font-weight: bold;
-  color: #000;      /* 검은색 X */
+  color: #000;
+  /* 검은색 X */
   cursor: pointer;
   z-index: 5;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   transition: background 0.15s ease, transform 0.15s ease;
 }
+
 .gallery-modal-close:hover {
   background: #f0f0f0;
   transform: scale(1.08);
@@ -701,49 +733,50 @@ header {
   padding: 4px;
 }
 
-#loadMoreBtn, #foldBtn {
+#loadMoreBtn,
+#foldBtn {
   min-width: 100px;
 }
 
 
 .copy-btn {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 8px 16px;
-        font-size: 14px;
-        background-color: #C1D0B5;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #C1D0B5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-    .copy-btn:hover {
-        background-color: #9AD756;
-    }
+.copy-btn:hover {
+  background-color: #9AD756;
+}
 
-    #copy-toast {
-        position: fixed;
-        top: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #CCE5FF;
-        color: #333;
-        padding: 12px 18px;
-        border-radius: 6px;
-        font-size: 14px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        opacity: 0;
-        transition: opacity 0.3s ease, top 0.3s ease;
-        pointer-events: none;
-        z-index: 10000;
-    }
+#copy-toast {
+  position: fixed;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #CCE5FF;
+  color: #333;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 14px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease, top 0.3s ease;
+  pointer-events: none;
+  z-index: 10000;
+}
 
-    #copy-toast.show {
-        opacity: 1;
-        top: 60px;
-    }
+#copy-toast.show {
+  opacity: 1;
+  top: 60px;
+}
 
 .copy-btn {
   background-color: #C1D0B5;
@@ -770,6 +803,7 @@ header {
 .copy-btn:hover .copy-icon {
   transform: scale(1.2) rotate(-5deg);
 }
+
 .account-box {
   display: flex;
   align-items: center;
@@ -793,52 +827,75 @@ header {
 
 
 /* === 지도 아래 네비 버튼 (흰 배경 / 3등분 / 동일 가로폭) === */
-.map-buttons{
+.map-buttons {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);  /* 3등분 */
+  grid-template-columns: repeat(3, 1fr);
+  /* 3등분 */
   width: 100%;
   background: #fff;
-  border: 1px solid #e5e7eb;              /* 옅은 테두리 */
-  border-top: none;                        /* 위쪽은 지도와 붙도록 */
-  border-radius: 0 0 8px 8px;              /* 아래 모서리만 둥글게 (선택) */
-  overflow: hidden;                        /* 라운드 밖 내용 자르기 */
-  margin-top: 0;                           /* 지도에 딱 붙도록 */
+  border: 1px solid #e5e7eb;
+  /* 옅은 테두리 */
+  border-top: none;
+  /* 위쪽은 지도와 붙도록 */
+  border-radius: 0 0 8px 8px;
+  /* 아래 모서리만 둥글게 (선택) */
+  overflow: hidden;
+  /* 라운드 밖 내용 자르기 */
+  margin-top: 0;
+  /* 지도에 딱 붙도록 */
 }
 
 /* 버튼 공통: 흰 배경 + 가운데 정렬 + 동일 높이 */
-.map-btn{
+.map-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px 0;                         /* 세로 패딩만 */
+  padding: 12px 0;
+  /* 세로 패딩만 */
   font-size: 14px;
   font-weight: 500;
   color: #374151;
   text-decoration: none;
-  background: #fff !important;             /* 이전 색상 덮어쓰기 */
+  background: #fff !important;
+  /* 이전 색상 덮어쓰기 */
   border: 0;
 }
 
 /* 아이콘 크기 통일 */
-.map-btn img{
+.map-btn img {
   width: 18px;
   height: 18px;
   object-fit: contain;
 }
 
 /* 버튼 사이 구분선 */
-.map-btn + .map-btn{
+.map-btn+.map-btn {
   border-left: 1px solid #eee;
 }
 
 /* 호버/포커스 효과: 살짝 음영만 */
 .map-btn:hover,
-.map-btn:focus{
+.map-btn:focus {
   background: #f9fafb !important;
 }
 
 /* 모바일 터치시 눌림 느낌 */
-.map-btn:active{
+.map-btn:active {
   background: #f3f4f6 !important;
+}
+
+
+/* 보호 대상 이미지에 붙일 클래스 */
+img.no-actions {
+  -webkit-touch-callout: none;
+  /* iOS 사파리: '이미지 저장' 등 콜아웃 비활성화 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+  /* 드래그 저장 방지 */
+  -khtml-user-drag: none;
+  user-drag: none;
+  /* 일부 브라우저 */
 }
