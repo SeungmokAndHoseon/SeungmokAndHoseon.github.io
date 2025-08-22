@@ -596,32 +596,89 @@
                     </a>
                 </div>
                 <script type="text/javascript" src="js/kakao.js"></script>
-                <script>
-                    const lat = 37.4979;   // 위도 (예: 더채플앳논현)
-                    const lng = 127.0280;  // 경도
-                    const placeName = "더채플앳논현";
+<script>
+  // 목적지 정보
+  const lat = 37.4979;         // 위도
+  const lng = 127.0280;        // 경도
+  const placeName = "더채플앳논현";
 
-                    function goKakaoNavi() {
-                        const kakaoUrl = `kakaonavi://navigate?name=${encodeURIComponent(placeName)}&x=${lng}&y=${lat}&coord_type=wgs84`;
-                        const fallbackUrl = `https://map.kakao.com/link/to/${encodeURIComponent(placeName)},${lat},${lng}`;
-                        window.location.href = kakaoUrl;
-                        setTimeout(() => { window.location.href = fallbackUrl; }, 1500);
-                    }
+  // ★ 카카오내비 "네이티브 앱키"로 교체하세요.
+  const KAKAO_APP_KEY = "YOUR_KAKAONAVI_APP_KEY";
 
-                    function goNaverNavi() {
-                        const naverUrl = `nmap://route/car?dlat=${lat}&dlng=${lng}&dname=${encodeURIComponent(placeName)}`;
-                        const fallbackUrl = `https://map.naver.com/v5/directions/${lng},${lat}/${lng},${lat}/car`;
-                        window.location.href = naverUrl;
-                        setTimeout(() => { window.location.href = fallbackUrl; }, 1500);
-                    }
-                    
-                    function goTmapNavi() {
-                        const tmapUrl = `tmap://route?goalx=${lng}&goaly=${lat}&goalname=${encodeURIComponent(placeName)}`;
-                        const fallbackUrl = `https://apis.openapi.sk.com/tmap/app/routes?goalx=${lng}&goaly=${lat}&goalname=${encodeURIComponent(placeName)}`;
-                        window.location.href = tmapUrl;
-                        setTimeout(() => { window.location.href = fallbackUrl; }, 1500);
-                    }
-                </script>
+  // 단말 구분
+  const ua = navigator.userAgent.toLowerCase();
+  const isAndroid = ua.includes("android");
+  const isIOS = /iphone|ipad|ipod/.test(ua);
+
+  /** 현재 페이지를 그대로 유지한 채 앱만 실행 */
+  function launchApp({ schemeUrl, intentUrl }) {
+    if (isAndroid) {
+      // Android: intent:// 로 실행 (웹 이동/새탭 없음)
+      try {
+        window.location.href = intentUrl;
+      } catch (e) { /* 앱 미설치 시에도 웹 이동 금지 */ }
+    } else if (isIOS) {
+      // iOS: 숨김 iframe으로 스킴 실행 (웹 이동/새탭 없음)
+      const iframe = document.createElement("iframe");
+      iframe.style.display = "none";
+      iframe.src = schemeUrl;
+      document.body.appendChild(iframe);
+      setTimeout(() => document.body.removeChild(iframe), 2000);
+    } else {
+      // 기타 환경: 스킴 시도 (가능한 한 현재 탭 유지)
+      window.location.href = schemeUrl;
+    }
+  }
+
+  // Kakao Navi (필수: appkey, apiver)
+  function goKakaoNavi() {
+    const qs = new URLSearchParams({
+      appkey: KAKAO_APP_KEY,   // 필수
+      apiver: "1.0",           // 필수
+      name: placeName,
+      x: String(lng),
+      y: String(lat),
+      coord_type: "wgs84"
+    }).toString();
+
+    const schemeUrl = `kakaonavi://navigate?${qs}`;
+    const intentUrl =
+      `intent://navigate?${qs}#Intent;scheme=kakaonavi;package=com.locnall.KimGiSa;end`;
+
+    launchApp({ schemeUrl, intentUrl });
+  }
+
+  // Naver Map
+  function goNaverNavi() {
+    const qs = new URLSearchParams({
+      dlat: String(lat),
+      dlng: String(lng),
+      dname: placeName
+    }).toString();
+
+    const schemeUrl = `nmap://route/car?${qs}`;
+    const intentUrl =
+      `intent://route/car?${qs}#Intent;scheme=nmap;package=com.nhn.android.nmap;end`;
+
+    launchApp({ schemeUrl, intentUrl });
+  }
+
+  // T map
+  function goTmapNavi() {
+    const qs = new URLSearchParams({
+      goalx: String(lng),
+      goaly: String(lat),
+      goalname: placeName
+    }).toString();
+
+    const schemeUrl = `tmap://route?${qs}`;
+    const intentUrl =
+      `intent://route?${qs}#Intent;scheme=tmap;package=com.skt.tmap.ku;end`;
+
+    launchApp({ schemeUrl, intentUrl });
+  }
+</script>
+
                 <script>
                     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
                         mapOption = {
