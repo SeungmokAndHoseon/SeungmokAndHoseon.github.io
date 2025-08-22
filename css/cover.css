@@ -887,15 +887,11 @@ header {
 
 
 /* 보호 대상 이미지에 붙일 클래스 */
-img.no-actions {
-  -webkit-touch-callout: none;
-  /* iOS 사파리: '이미지 저장' 등 콜아웃 비활성화 */
+img.no-actions{
+  -webkit-touch-callout: none; /* iOS '이미지 저장' 콜아웃 숨김 */
   -webkit-user-select: none;
-  -moz-user-select: none;
   user-select: none;
   -webkit-user-drag: none;
-  /* 드래그 저장 방지 */
-  -khtml-user-drag: none;
   user-drag: none;
-  /* 일부 브라우저 */
+  touch-action: manipulation;   /* 스크롤/탭 성능 힌트 */
 }

@@ -221,41 +221,22 @@
         });
     </script>
     <script>
-        // 우클릭 메뉴 차단 (PC)
-        document.addEventListener('contextmenu', (e) => {
-            if (e.target.closest('img.no-actions')) {
-                e.preventDefault();
-            }
-        });
+// PC/안드: 우클릭·롱프레스 메뉴만 차단 (스크롤 영향 없음)
+document.addEventListener('contextmenu', (e) => {
+  if (e.target.closest('img.no-actions')) {
+    e.preventDefault(); // 메뉴만 막음
+  }
+});
 
-        // 이미지 드래그 시작 차단 (PC)
-        document.addEventListener('dragstart', (e) => {
-            if (e.target.closest('img.no-actions')) {
-                e.preventDefault();
-            }
-        });
+// 드래그 저장 방지
+document.addEventListener('dragstart', (e) => {
+  if (e.target.closest('img.no-actions')) e.preventDefault();
+});
 
-        // 이미지 자체 드래그 비활성화 속성 부여
-        document.querySelectorAll('img.no-actions').forEach(img => {
-            img.setAttribute('draggable', 'false');
-        });
-
-        // 모바일 롱프레스 팝업 억제
-        // 주의: touchstart에서 preventDefault를 걸면 해당 터치 제스처(스크롤/스와이프)가 막힐 수 있음.
-        // → 이미지에만 제한적으로 적용하고, 스크롤이 필요한 갤러리라면 '배경이미지 방식'을 고려하세요(아래 참고).
-        let lpTimer = null;
-        document.addEventListener('touchstart', (e) => {
-            const img = e.target.closest('img.no-actions');
-            if (!img) return;
-
-            // 일부 브라우저는 contextmenu가 뜨기 전에 preventDefault가 필요
-            // passive:false 여야 preventDefault가 동작
-            e.preventDefault(); // 이미지에서 시작되는 스크롤이 막힐 수 있음(의도)
-            // 롱프레스 탐지를 굳이 쓸 필요는 없지만, 유지하고 싶다면 시간 설정 가능
-        }, { passive: false });
-
-        document.addEventListener('touchend', () => { clearTimeout(lpTimer); }, { passive: true });
-        document.addEventListener('touchmove', () => { clearTimeout(lpTimer); }, { passive: true });
+// 이미지 자체 드래그 비활성화
+document.querySelectorAll('img.no-actions').forEach(img => {
+  img.setAttribute('draggable', 'false');
+});
     </script>
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
