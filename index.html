@@ -596,6 +596,9 @@
                     </a>
                 </div>
                 <script type="text/javascript" src="js/kakao.js"></script>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=97a4ac173202661cefba378bc03ac65f"></script>
+<script charset="UTF-8" src="https://t1.daumcdn.net/mapjsapi/js/main/4.4.19/kakao.js"></script>
 <script>
   // 목적지 정보
   const lat = 37.4979;         // 위도
@@ -666,8 +669,9 @@
   }
   // 명시적 버전
   function goKakaoNavi_AOS() {
-    const { androidIntent, webUrl } = buildKakao();
-    openAppDeepLink({ iosScheme: "", androidIntent, webUrl });
+    kakao_navi();
+    // const { androidIntent, webUrl } = buildKakao();
+    // openAppDeepLink({ iosScheme: "", androidIntent, webUrl });
   }
   function goKakaoNavi_IOS() {
     const { iosScheme, webUrl } = buildKakao(true);
@@ -746,6 +750,29 @@
   // document.getElementById('btnKakao').onclick = goKakaoNavi;
   // document.getElementById('btnNaver').onclick = goNaverNavi;
   // document.getElementById('btnTmap').onclick = goTmapNavi;
+
+  
+if (!Kakao.init) {
+    Kakao.init('13da3914377346b0b8f74f5309b49dad')
+}
+
+function kakao_navi() {
+
+    if (is_pc == '1') {
+        alert('모바일 기기 전용 기능입니다')
+    }
+
+    
+    Kakao.Navi.start({
+        name: '엔씨소프트',
+        x: 127.108646701009,
+        y: 37.3994643092008,
+        coordType: 'wgs84'
+    })
+
+    
+}
+
 </script>
 
 
