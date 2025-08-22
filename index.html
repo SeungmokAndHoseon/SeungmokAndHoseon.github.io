@@ -147,6 +147,24 @@
             background-color: #9AD756;
         }
 
+        #kakao-share-btn.sharelink-button {
+            width: 100%;
+            /* 좌우로 100% 채움 */
+            padding: 12px 20px;
+            font-size: 16px;
+            background-color: #f5eb93;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #kakao-share-btn.sharelink-button:hover {
+            background-color: #fae20e;
+        }
+
         #sharelink-toast.sharelink-toast {
             position: fixed;
             top: 40px;
@@ -833,7 +851,15 @@ document.querySelectorAll('img.no-actions').forEach(img => {
                 <br /><br />
                 <br /><br />
             </div>
+            <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script>
+  Kakao.init("39521630d23344f3613c4100a3936364"); 
+  console.log(Kakao.isInitialized()); // true 나오면 정상
+</script>
             <button id="sharelink-btn" class="sharelink-button">🔗 링크로 공유하기</button>
+            <button id="kakao-share-btn" class="sharelink-button"><!--style="margin-top:10px; background-color:#FEE500; color:#3C1E1E;">-->
+  💬 카카오톡으로 공유하기
+</button>
             <div id="sharelink-toast" class="sharelink-toast">📋 링크를 복사했어요!</div>
             <footer class="pt-5 text-muted text-center text-small section8">
 
@@ -847,6 +873,31 @@ document.querySelectorAll('img.no-actions').forEach(img => {
         </main>
     </div>
     <button id="backToTop" title="맨 위로 이동">↑</button>
+    <script>
+  document.getElementById("kakao-share-btn").addEventListener("click", () => {
+    Kakao.Link.sendDefault({
+      objectType: "feed",
+      content: {
+        title: "김승목 ❤️ 이호선 결혼식에 초대합니다.",
+        description: "2025년 11월 8일(토) 18시 30분 · 소풍컨벤션웨딩홀 7층 베일리홀",
+        imageUrl: "https://seungmokandhoseon.github.io/img/header.jpg", 
+        link: {
+          mobileWebUrl: window.location.href,
+          webUrl: window.location.href
+        }
+      },
+      buttons: [
+        {
+          title: "모바일청첩장 열기",
+          link: {
+            mobileWebUrl: window.location.href,
+            webUrl: window.location.href
+          }
+        }
+      ]
+    });
+  });
+</script>
     <script>
         document.getElementById('sharelink-btn').addEventListener('click', function () {
             const url = window.location.href;
