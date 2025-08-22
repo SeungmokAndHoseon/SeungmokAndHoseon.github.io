@@ -596,17 +596,12 @@
                     </a>
                 </div>
                 <script type="text/javascript" src="js/kakao.js"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=97a4ac173202661cefba378bc03ac65f"></script>
-<script charset="UTF-8" src="https://t1.daumcdn.net/mapjsapi/js/main/4.4.19/kakao.js"></script>
+                
 <script>
   // 목적지 정보
   const lat = 37.4979;         // 위도
   const lng = 127.0280;        // 경도
   const placeName = "더채플앳논현";
-
-  // KakaoNavi 네이티브 앱키
-  const KAKAO_APP_KEY = "81a9baa23016b5555dacfb54fdeb2e5b";
 
   // 단말 구분
   const ua = navigator.userAgent.toLowerCase();
@@ -652,10 +647,10 @@
     function buildKakao(iOS = false) {
     // 카카오맵 스킴 파라미터 정의
     const qs = new URLSearchParams({
-        by: "CAR",                  // 이동 수단 (CAR, PUBLICTRANSIT, WALK)
-        eX: String(lng),            // 목적지 경도
-        eY: String(lat),            // 목적지 위도
-        eName: placeName            // 목적지 이름
+        by: "CAR",                         // CAR | PUBLICTRANSIT | WALK
+        ep: `${lat},${lng}`,               // 목적지
+        // eName은 플랫폼/버전에 따라 무시되기도 해서 선택사항입니다.
+        eName: placeName
     }).toString();
 
     return {
@@ -668,18 +663,6 @@
   function goKakaoNavi() {
     const cfg = buildKakao();
     openAppDeepLink(cfg);
-  }
-  // 명시적 버전
-  function goKakaoNavi_AOS() {
-    const { androidIntent, webUrl } = buildKakao();
-    openAppDeepLink({ iosScheme: "", androidIntent, webUrl });
-  }
-  function goKakaoNavi_IOS() {
-    const { iosScheme, webUrl } = buildKakao(true);
-    openAppDeepLink({ iosScheme, androidIntent: "", webUrl });
-  }
-  function goKakaoNavi_PC() {
-    window.open(WEB_FALLBACK.kakao, "_blank");
   }
 
   // =========================
@@ -700,17 +683,6 @@
   function goNaverNavi() {
     const cfg = buildNaver();
     openAppDeepLink(cfg);
-  }
-  function goNaverNavi_AOS() {
-    const { androidIntent, webUrl } = buildNaver();
-    openAppDeepLink({ iosScheme: "", androidIntent, webUrl });
-  }
-  function goNaverNavi_IOS() {
-    const { iosScheme, webUrl } = buildNaver(true);
-    openAppDeepLink({ iosScheme, androidIntent: "", webUrl });
-  }
-  function goNaverNavi_PC() {
-    window.open(WEB_FALLBACK.naver, "_blank");
   }
 
   // =========================
@@ -734,46 +706,11 @@
     const cfg = buildTmap();
     openAppDeepLink(cfg);
   }
-  function goTmapNavi_AOS() {
-    const { androidIntent, webUrl } = buildTmap();
-    openAppDeepLink({ iosScheme: "", androidIntent, webUrl });
-  }
-  function goTmapNavi_IOS() {
-    const { iosScheme, webUrl } = buildTmap(true);
-    openAppDeepLink({ iosScheme, androidIntent: "", webUrl });
-  }
-  function goTmapNavi_PC() {
-    // PC에서는 공개 지도 URL을 새 탭으로
-    window.open(WEB_FALLBACK.tmap, "_blank");
-  }
 
   // 필요 시 버튼에 바인딩:
   // document.getElementById('btnKakao').onclick = goKakaoNavi;
   // document.getElementById('btnNaver').onclick = goNaverNavi;
   // document.getElementById('btnTmap').onclick = goTmapNavi;
-
-  
-
-function kakao_navi() {
-
-    // if (!Kakao.init) {
-        Kakao.init('13da3914377346b0b8f74f5309b49dad')
-    // }
-    // if (is_pc == '1') {
-    //     alert('모바일 기기 전용 기능입니다')
-    // }
-
-    
-    Kakao.Navi.start({
-        name: '엔씨소프트',
-        x: 127.108646701009,
-        y: 37.3994643092008,
-        coordType: 'wgs84'
-    })
-
-    
-}
-
 </script>
 
 
