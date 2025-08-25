@@ -378,30 +378,26 @@
   if (!isKakao) return;
 
   function protectImg(img) {
-    if (img.closest('.img-guard')) return; // 중복 방지
+    if (img.closest('.img-guard')) return;
 
-    // 래퍼
     const wrap = document.createElement('span');
     wrap.className = 'img-guard';
     wrap.style.position = 'relative';
     wrap.style.display  = 'inline-block';
-    // 원래 display가 block/w-100인 경우도 있어서, 부모의 레이아웃을 유지하도록 폭/높이 위임
-    wrap.style.width = img.style.width || (img.classList.contains('w-100') ? '100%' : '');
-    img.parentNode.insertBefore(wap = wrap, img);
+    // 레이아웃 유지 (부트스트랩 w-100 대응)
+    if (img.classList.contains('w-100') || img.style.width === '100%') {
+      wrap.style.width = '100%';
+    }
+    img.parentNode.insertBefore(wrap, img);
     wrap.appendChild(img);
 
-    // 실드 (IMG 위에 완전 덮음)
     const shield = document.createElement('span');
     shield.className = 'img-guard-shield';
     Object.assign(shield.style, {
-      position: 'absolute',
-      left: '0', top: '0', right: '0', bottom: '0',
-      background: 'transparent',
-      zIndex: '5',
+      position: 'absolute', left: '0', top: '0', right: '0', bottom: '0',
+      background: 'transparent', zIndex: '5',
       touchAction: 'manipulation',
-      WebkitTouchCallout: 'none',
-      WebkitUserSelect: 'none',
-      userSelect: 'none',
+      WebkitTouchCallout: 'none', WebkitUserSelect: 'none', userSelect: 'none'
     });
     wrap.appendChild(shield);
 
@@ -410,26 +406,77 @@
       shield.addEventListener(t, e=>e.preventDefault(), { passive:false });
     });
 
-    // 드래그 저장 차단
     shield.setAttribute('draggable','false');
     img.setAttribute('draggable','false');
 
-    // 클릭/탭은 IMG로 전달 (모달/슬라이더 유지)
-    ['click','touchend'].forEach(type=>{
-      shield.addEventListener(type, () => {
-        img.dispatchEvent(new Event('click', { bubbles:true }));
-      }, { passive:true });
+    // ====== 여기부터 "탭만 클릭으로 인정" 로직 ======
+    let tracking = false;
+    let sx = 0, sy = 0, st = 0;
+    const MOVE_PX   = 12;   // 이동 임계값(px): 이보다 크면 드래그로 간주
+    const TIME_MS   = 450;  // 탭으로 인정할 최대 시간
+
+    shield.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return; // 멀티터치 제외
+      tracking = true;
+      const t = e.touches[0];
+      sx = t.clientX; sy = t.clientY; st = Date.now();
+      shield.dataset.dragging = '0';
+    }, { passive: true });
+
+    shield.addEventListener('touchmove', (e) => {
+      if (!tracking) return;
+      const t = e.touches[0];
+      const dx = Math.abs(t.clientX - sx);
+      const dy = Math.abs(t.clientY - sy);
+      if (dx > MOVE_PX || dy > MOVE_PX) {
+        shield.dataset.dragging = '1'; // 드래그/스크롤로 판정
+      }
+      // 기본 스크롤은 막지 않음 (passive:true)
+    }, { passive: true });
+
+    shield.addEventListener('touchend', () => {
+      if (!tracking) return;
+      const elapsed = Date.now() - st;
+      const dragged = shield.dataset.dragging === '1';
+      tracking = false;
+      delete shield.dataset.dragging;
+
+      // 조건: 짧고(시간) 거의 안 움직였을 때만 클릭으로 전달
+      if (!dragged && elapsed <= TIME_MS) {
+        img.dispatchEvent(new Event('click', { bubbles: true }));
+      }
+    }, { passive: true });
+
+    shield.addEventListener('touchcancel', () => {
+      tracking = false;
+      delete shield.dataset.dragging;
+    }, { passive: true });
+
+    // (마우스는 모바일 카카오에서 거의 안 쓰지만, 혹시를 대비해 간단히 처리)
+    let mDown = false, mx=0, my=0;
+    shield.addEventListener('mousedown', (e) => { mDown=true; mx=e.clientX; my=e.clientY; });
+    shield.addEventListener('mousemove', (e) => {
+      if (!mDown) return;
+      if (Math.abs(e.clientX-mx) > MOVE_PX || Math.abs(e.clientY-my) > MOVE_PX) {
+        shield.dataset.dragging = '1';
+      }
+    });
+    shield.addEventListener('mouseup', () => {
+      if (!mDown) return;
+      mDown=false;
+      const dragged = shield.dataset.dragging === '1';
+      delete shield.dataset.dragging;
+      if (!dragged) {
+        img.dispatchEvent(new Event('click', { bubbles: true }));
+      }
     });
   }
 
-  // 갤러리/본문 이미지 보호
   document.querySelectorAll('img.no-actions').forEach(protectImg);
 
-  // 모달 큰 이미지 보호
   const modalImg = document.getElementById('modalImage');
   if (modalImg) protectImg(modalImg);
 
-  // 동적으로 추가되는 썸네일도 보호
   const mo = new MutationObserver((muts)=>{
     muts.forEach(m=>{
       m.addedNodes.forEach(node=>{
