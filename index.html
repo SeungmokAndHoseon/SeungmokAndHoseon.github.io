@@ -533,7 +533,7 @@
         <!-- 음악 파일 -->
         <audio id="bg-music" src="music.mp3" preload="auto" loop></audio>
 <section class="hero-oval" id="hero">
-  <!-- 기존 음악 버튼을 여기서 바로 사용 -->
+  <!-- (기존) 음악 토글 버튼은 그대로 유지 -->
   <button id="music-toggle" aria-label="Toggle Music">
     <span id="music-icon">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
@@ -544,29 +544,32 @@
     </span>
   </button>
 
-  <h1 class="hero-oval__name hero-oval__name--top">SEUNGMOK</h1>
-
-  <!-- 장소 텍스트 (이미지 위쪽으로 이동) -->
-  <div class="hero-center hero-center--top">
-    <span class="hero-side__label">PLACE</span>
-    <span class="hero-side__dot"></span>
-    <span class="hero-side__text">소풍컨벤션웨딩홀 7층 베일리홀</span>
+  <!-- 상단(이름/장소) -->
+  <div class="hero-top">
+    <h1 class="hero-oval__name hero-oval__name--top">SEUNGMOK</h1>
+    <div class="hero-side-row">
+      <span class="hero-side__label">PLACE</span>
+      <span class="hero-side__dot"></span>
+      <span class="hero-side__text">소풍컨벤션웨딩홀 7층 베일리홀</span>
+    </div>
   </div>
 
+  <!-- 가운데: 오벌(항상 화면 정중앙) -->
   <div class="hero-oval__frame">
     <img src="img/header.jpg" alt="" class="hero-oval__img no-actions">
   </div>
 
-  <!-- 날짜 텍스트 (이미지 아래쪽으로 이동) -->
-  <div class="hero-center hero-center--bottom">
-    <span class="hero-side__label">DATE</span>
-    <span class="hero-side__dot"></span>
-    <span class="hero-side__text">2025년 11월 8일 토요일 18시 30분</span>
+  <!-- 하단(날짜/이름) -->
+  <div class="hero-bottom">
+    <div class="hero-side-row">
+      <span class="hero-side__label">DATE</span>
+      <span class="hero-side__dot"></span>
+      <span class="hero-side__text">2025년 11월 8일 토요일 18시 30분</span>
+    </div>
+    <h1 class="hero-oval__name hero-oval__name--bottom">HOSEON</h1>
   </div>
-
-  <h1 class="hero-oval__name hero-oval__name--bottom">HOSEON</h1>
-
 </section>
+
         <!-- <header class="inner cover cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         </header> -->
         <main role="main" class="inner">
