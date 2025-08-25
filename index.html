@@ -300,6 +300,76 @@
             });
         })();
     </script>
+    <script>
+(function () {
+  const ua = navigator.userAgent.toLowerCase();
+  const isIOS   = /iphone|ipad|ipod/.test(ua);
+  const isKakao = /kakaotalk/.test(ua); // ← 카카오톡 인앱 브라우저 감지
+
+  // iOS 또는 카카오톡에서만 실드 적용
+  if (!isIOS && !isKakao) return;
+
+  document.querySelectorAll('img.no-actions').forEach((img) => {
+    // 이미 처리된 경우 무시
+    if (img.closest('.img-guard')) return;
+
+    // 래퍼 생성 후 이미지 감싸기
+    const wrap = document.createElement('span');
+    wrap.className = 'img-guard';
+    // JS로 스타일 주입 (CSS 사용 안 함)
+    wrap.style.position = 'relative';
+    wrap.style.display  = 'inline-block';
+
+    img.parentNode.insertBefore(wrap, img);
+    wrap.appendChild(img);
+
+    // 이미지 자체를 터치 타깃에서 제외 (롱프레스 콜아웃 방지의 핵심)
+    img.style.pointerEvents = 'none';
+    img.style.webkitTouchCallout = 'none';
+    img.style.webkitUserSelect   = 'none';
+    img.style.userSelect         = 'none';
+    img.setAttribute('draggable', 'false');
+
+    // 투명 실드 생성: 롱프레스 타깃을 IMG가 아닌 일반 요소로 전환
+    const shield = document.createElement('span');
+    shield.className = 'img-guard-shield';
+    shield.setAttribute('aria-hidden', 'true');
+    // JS로 스타일 주입
+    shield.style.position = 'absolute';
+    shield.style.left = '0';
+    shield.style.top = '0';
+    shield.style.right = '0';
+    shield.style.bottom = '0';
+    shield.style.background = 'transparent';
+    shield.style.touchAction = 'manipulation';
+    shield.style.webkitTouchCallout = 'none';
+    shield.style.webkitUserSelect   = 'none';
+    shield.style.userSelect         = 'none';
+    wrap.appendChild(shield);
+
+    // 클릭/탭은 이미지로 전달 (모달/슬라이더 동작 유지)
+    ['click', 'touchend'].forEach((type) => {
+      shield.addEventListener(type, () => {
+        img.dispatchEvent(new Event('click', { bubbles: true }));
+      }, { passive: true });
+    });
+
+    // 일부 콜아웃 억제(중복 안전망)
+    ['contextmenu', 'gesturestart'].forEach((type) => {
+      shield.addEventListener(type, (e) => e.preventDefault(), { passive: false });
+    });
+
+    // 아주 공격적인 브라우저에서의 롱프레스 힌트 더 억제
+    shield.addEventListener('touchstart', (e) => {
+      // 길게 누르기 제스처를 시작점에서 최대한 무력화
+      // (기존 스크롤/스와이프는 shield의 touch-action: manipulation 덕분에 정상 작동)
+      if (e.touches && e.touches.length === 1) {
+        // 필요 시 추가 로직 가능
+      }
+    }, { passive: true });
+  });
+})();
+</script>
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
