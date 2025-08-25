@@ -1031,12 +1031,13 @@ img.no-actions{
 /* 가운데 오벌 사진 */
 .hero-oval__frame {
   position: relative;
-  width: min(78vw, 520px);
-  aspect-ratio: 3 / 4;              /* 안정적 비율 */
-  border-radius: 50% / 36%;         /* 타원 */
+  width: min(72vw, 460px);   /* ← 기존 78vw, 520px → 조금 줄임 */
+  aspect-ratio: 3 / 4;
+  border-radius: 50% / 36%;
   overflow: hidden;
   background: #000;
   box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  margin: 10px 0;            /* ← 위/아래에 마진 추가 */
 }
 .hero-oval__img {
   width: 100%; height: 100%;
@@ -1070,86 +1071,43 @@ img.no-actions{
     transform-origin: center;
   }
 }
-
-/* 음악 버튼(기존 버튼을 히어로 오른쪽 위로) */
-/* #music-toggle {
-  position: absolute; top: calc(env(safe-area-inset-top,0) + 10px); right: 12px;
-  width: 36px; height: 36px; border-radius: 999px;
-  display: grid; place-items: center;
-  background: rgba(0,0,0,.06);
-  color: #111; border: 0;
-  backdrop-filter: blur(6px);
-  z-index: 5;
-}
-#music-toggle svg { width: 20px; height: 20px; } */
-
-/* ===== 좌우 세로 텍스트 공통 ===== */
-.hero-side{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  display:flex;
-  align-items:center;
-  gap:10px;               /* 라벨·점·본문 간 간격 */
-  color:#0f0f0f;
-  opacity:.9;
-  pointer-events:none;     /* 갤러리 클릭 방해 금지 */
-  /* 세로쓰기 + 모두 90도 회전 */
-  writing-mode:vertical-rl;
-  text-orientation:sideways; /* ✅ 한글/영문/숫자 모두 가로 방향(눕힘) */
-  letter-spacing:.02em;
-  font-size:13px;
+.hero-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;          /* 라벨·점·본문 간 간격 */
+  color: #0f0f0f;
+  opacity: .9;
+  margin: 8px 0;      /* 위아래 살짝 간격 */
+  font-size: 13px;    /* 기존 글씨 크기 유지 */
+  letter-spacing: .02em;
 }
 
-/* 좌우 위치 */
-.hero-side--left  { left:20px;  text-align:center; }
-.hero-side--right { right:20px; text-align:center; }
-
-/* 라벨(얇고 작은 대문자 느낌) */
-.hero-side__label{
-  font-size:11px;
-  letter-spacing:.2em;
-  opacity:.55;
+/* 라벨 */
+.hero-side__label {
+  font-size: 11px;
+  letter-spacing: .2em;
+  opacity: .55;
 }
 
-/* 작은 구분 점 */
-.hero-side__dot{
-  width:6px; height:6px;
-  border-radius:50%;
-  background:#d9d9d9;
-  display:inline-block;
-  opacity:.8;
+/* 점 */
+.hero-side__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d9d9d9;
+  opacity: .8;
 }
 
-/* 본문(날짜/장소) – 줄 간격을 조금 조밀하게 */
-.hero-side__text{
-  line-height:1.2;
-  font-weight:500;
+/* 본문 */
+.hero-side__text {
+  line-height: 1.2;
+  font-weight: 500;
 }
-
-/* 좁은 화면에서 살짝 축소 */
-@media (max-width:380px){
-  .hero-side{ font-size:12px; gap:8px; }
-  .hero-side__label{ font-size:10px; }
-  .hero-side__dot{ width:5px; height:5px; }
+/* 이미지 위/아래 텍스트 마진 */
+.hero-center--top {
+  margin-bottom: 12px;       /* 오벌 위쪽과 텍스트 사이 */
 }
-
-/* 오벌과 겹치도록 살짝 안쪽으로 */
-/* @media (min-width:361px){
-  .hero-side--left  { left:-6px; }
-  .hero-side--right { right:-6px; }
-} */
-
-@media (max-width:480px){
-  .hero-side--left  { left:12px; }
-  .hero-side--right { right:12px; }
-}
-
-/* 좌우 위치 - 마진 포함 */
-.hero-side--left  { left:20px;  text-align:center; }
-
-.hero-side--right {
-  right:20px;
-  text-align:center;
-  transform: translateY(-50%) rotate(180deg); /* ✅ 180도 회전 */
+.hero-center--bottom {
+  margin-top: 12px;          /* 오벌 아래쪽과 텍스트 사이 */
 }
