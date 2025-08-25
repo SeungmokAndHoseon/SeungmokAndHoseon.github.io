@@ -1032,13 +1032,13 @@ img.no-actions{
 /* 가운데 오벌 사진 */
 .hero-oval__frame {
   position: relative;
-  width: min(78vw, 460px);   /* ← 기존 78vw, 520px → 조금 줄임 */
+  width: min(72vw, 460px);   /* ← 기존 78vw, 520px → 조금 줄임 */
   aspect-ratio: 3 / 4;
   border-radius: 50% / 36%;
   overflow: hidden;
   background: #000;
   box-shadow: 0 6px 20px rgba(0,0,0,.08);
-  margin: 10px 0;            /* ← 위/아래에 마진 추가 */
+  margin: 3px 0;            /* ← 위/아래에 마진 추가 */
 }
 .hero-oval__img {
   width: 110%; 
@@ -1209,5 +1209,5 @@ img.no-actions{
 
 /* 오벌 크기 더 키우고 싶으면 여기 값만 만지세요 */
 @media (max-width: 430px){
-  .hero-oval__frame { width: 72vw; }
+  .hero-oval__frame { width: 78vw; }
 }
