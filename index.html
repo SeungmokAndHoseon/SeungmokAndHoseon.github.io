@@ -533,17 +533,48 @@
 
         <!-- 음악 파일 -->
         <audio id="bg-music" src="music.mp3" preload="auto" loop></audio>
+<section class="hero-oval" id="hero">
+  <!-- 기존 음악 버튼을 여기서 바로 사용 -->
+  <button id="music-toggle" aria-label="Toggle Music">
+    <span id="music-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+           stroke-width="2" viewBox="0 0 24 24">
+        <path d="M9 18V5l12-2v13M3 3l18 18" />
+        <circle cx="6" cy="18" r="3" />
+      </svg>
+    </span>
+  </button>
 
-        <header class="inner cover cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <h1 class="hero-oval__name hero-oval__name--top">SEUNGMOK</h1>
 
-            <!--<h1 class="wow fadeIn cover-heading" style="text-align: right; margin-top: 38%; margin-right: 25%; font-size: 2rem;">
-            <span style="letter-spacing : -0.13em; margin-right: 0.1em">⎽⎽⎽⎽⎽⎽⎽⎽⎽⎽</span><br/>
-            11月&nbsp;8日 <br/>
-            <span style="letter-spacing : -0.13em; margin-right: 0.1em;">⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺</span>
-        </h1>-->
-        </header>
+  <div class="hero-oval__frame">
+    <!-- 대표 사진 경로만 바꾸면 됨 -->
+    <img src="img/header.jpg" alt="" class="hero-oval__img no-actions">
+  </div>
+
+  <h1 class="hero-oval__name hero-oval__name--bottom">HOSEON</h1>
+
+  <!-- 좌측: 날짜/시간 -->
+<div class="hero-side hero-side--left">
+  <span class="hero-side__label">DATE</span>
+  <span class="hero-side__dot"></span>
+  <span class="hero-side__text">
+    2025년 11월 8일 토요일 오후 6시 30분
+  </span>
+</div>
+
+<div class="hero-side hero-side--right">
+  <span class="hero-side__label">PLACE</span>
+  <span class="hero-side__dot"></span>
+  <span class="hero-side__text">
+    소풍컨벤션웨딩홀 7층 베일리홀
+  </span>
+</div>
+</section>
+        <!-- <header class="inner cover cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        </header> -->
         <main role="main" class="inner">
-            <div class="wow fadeInUp"><br>
+            <!-- <div class="wow fadeInUp"><br>
                 <img class="header-deco svelte-15smenq" alt="letter header deco" src="img/deco.png"
                     style="width:154px;margin-top:10px;" class="no-actions">
                 <p class="top-title">김승목 ❤️ 이호선</p>
@@ -551,10 +582,10 @@
 
                 <p class="top-title-sub">2025년 11월 8일(토) 18시 30분</p>
                 <p class="top-title-sub">소풍컨벤션웨딩홀 7층 베일리홀</p>
-                <br /><!--<br/><br/>-->
+                <br />
                 <hr class="cover-container" />
                 <br />
-            </div>
+            </div> -->
             <p
                 class="wow fadeInUp section2-title section2-main inner cover cover-container d-flex w-100 h-100 p-5 mx-auto flex-column">
                 축하해 주시는<br />
