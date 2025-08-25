@@ -1032,7 +1032,7 @@ img.no-actions{
 /* 가운데 오벌 사진 */
 .hero-oval__frame {
   position: relative;
-  width: min(72vw, 460px);   /* ← 기존 78vw, 520px → 조금 줄임 */
+  width: min(78vw, 460px);   /* ← 기존 78vw, 520px → 조금 줄임 */
   aspect-ratio: 3 / 4;
   border-radius: 50% / 36%;
   overflow: hidden;
@@ -1041,7 +1041,8 @@ img.no-actions{
   margin: 10px 0;            /* ← 위/아래에 마진 추가 */
 }
 .hero-oval__img {
-  width: 100%; height: 100%;
+  width: 110%; 
+  /* height: 100%; */
   object-fit: cover; object-position: center;
   display: block; user-select: none; -webkit-user-drag: none;
   filter: grayscale(100%);
