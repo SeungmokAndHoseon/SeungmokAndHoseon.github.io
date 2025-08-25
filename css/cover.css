@@ -495,15 +495,19 @@ header {
 /* 토글 버튼 */
 #music-toggle {
   position: fixed;
-  top: 7px;
+  top: 6px;
   right: 16px;
-  font-size: 18px;
+  width: 36px;
+  height: 36px;
   background: none;
   border: none;
+  color: black;
   cursor: pointer;
-  outline: none;
-  color: #fff;
   z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 }
 
 /* 메시지바 */
@@ -643,7 +647,7 @@ header {
   height: 80px;
   font-size: 64px;          /* 기호 자체 크게 */
   font-weight: 300;         /* 얇게 (Light 느낌) */
-  color: #6e6767;           /* 기호 색상 */
+  color: #f1ecec;           /* 기호 색상 */
   background: transparent;  /* 투명 배경 */
   cursor: pointer;
   z-index: 5;
