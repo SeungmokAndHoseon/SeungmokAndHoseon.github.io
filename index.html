@@ -372,7 +372,7 @@
 </script>
 <script>
 (function () {
-    alert(2);
+    alert(3);
   const ua = navigator.userAgent.toLowerCase();
   const isKakao = /kakaotalk/.test(ua);
   if (!isKakao) return;
@@ -382,14 +382,26 @@
 
     const wrap = document.createElement('span');
     wrap.className = 'img-guard';
+    
+    
     wrap.style.position = 'relative';
-    wrap.style.display  = 'inline-block';
+    wrap.style.display  = 'block';   // ← inline-block → block
+    wrap.style.width    = '100%';    // 썸네일이 w-100일 때 레이아웃 유지
+    wrap.style.lineHeight = '0';     // ← 베이스라인 간격 제거
+    wrap.style.fontSize   = '0';     // ← 일부 브라우저에서 남는 여백 제거
+
+
     // 레이아웃 유지 (부트스트랩 w-100 대응)
     if (img.classList.contains('w-100') || img.style.width === '100%') {
       wrap.style.width = '100%';
     }
     img.parentNode.insertBefore(wrap, img);
     wrap.appendChild(img);
+
+    
+    img.style.display = 'block';           // ← inline → block
+    img.style.verticalAlign = 'top';       // 안전망
+    img.setAttribute('draggable','false');
 
     const shield = document.createElement('span');
     shield.className = 'img-guard-shield';
