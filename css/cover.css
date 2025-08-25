@@ -1004,12 +1004,13 @@ img.no-actions{
   min-height: var(--hero-h);
   width: 100%;
   background: #fff;
-  padding: calc(env(safe-area-inset-top,0) + 16px) 16px 28px;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-items: center;
+  justify-content: center;     /* ✅ 세로 중앙 배치 */
+  padding: calc(env(safe-area-inset-top,0) + 16px) 16px 28px;
   overflow: hidden;
+  text-align: center;
 }
 
 /* 상/하 이름 */
