@@ -370,184 +370,79 @@
   });
 })();
 </script>
-
 <script>
-    alert(1);
 (function () {
+    alert(2);
   const ua = navigator.userAgent.toLowerCase();
   const isKakao = /kakaotalk/.test(ua);
   if (!isKakao) return;
 
-  // 공통: 클릭 이벤트 위임(원래 IMG에 걸린 핸들러를 최대한 살리기 위함)
-  function forwardClick(fromEl, toEl) {
+  function protectImg(img) {
+    if (img.closest('.img-guard')) return; // 중복 방지
+
+    // 래퍼
+    const wrap = document.createElement('span');
+    wrap.className = 'img-guard';
+    wrap.style.position = 'relative';
+    wrap.style.display  = 'inline-block';
+    // 원래 display가 block/w-100인 경우도 있어서, 부모의 레이아웃을 유지하도록 폭/높이 위임
+    wrap.style.width = img.style.width || (img.classList.contains('w-100') ? '100%' : '');
+    img.parentNode.insertBefore(wap = wrap, img);
+    wrap.appendChild(img);
+
+    // 실드 (IMG 위에 완전 덮음)
+    const shield = document.createElement('span');
+    shield.className = 'img-guard-shield';
+    Object.assign(shield.style, {
+      position: 'absolute',
+      left: '0', top: '0', right: '0', bottom: '0',
+      background: 'transparent',
+      zIndex: '5',
+      touchAction: 'manipulation',
+      WebkitTouchCallout: 'none',
+      WebkitUserSelect: 'none',
+      userSelect: 'none',
+    });
+    wrap.appendChild(shield);
+
+    // 컨텍스트 메뉴/제스처 차단
+    ['contextmenu','gesturestart'].forEach(t=>{
+      shield.addEventListener(t, e=>e.preventDefault(), { passive:false });
+    });
+
+    // 드래그 저장 차단
+    shield.setAttribute('draggable','false');
+    img.setAttribute('draggable','false');
+
+    // 클릭/탭은 IMG로 전달 (모달/슬라이더 유지)
     ['click','touchend'].forEach(type=>{
-      fromEl.addEventListener(type, () => {
-        toEl.dispatchEvent(new Event('click', { bubbles:true }));
+      shield.addEventListener(type, () => {
+        img.dispatchEvent(new Event('click', { bubbles:true }));
       }, { passive:true });
     });
   }
 
-  // 1) IMG → DIV(background-image) 변환 (그리드/본문용)
-  function replaceImgWithBgDiv(img) {
-    // 이미 처리됨?
-    if (img.dataset.bgReplaced === '1') return;
+  // 갤러리/본문 이미지 보호
+  document.querySelectorAll('img.no-actions').forEach(protectImg);
 
-    const div = document.createElement('div');
-    // 기존 class를 최대한 승계(부트스트랩 w-100, img-fluid 등)
-    div.className = (img.className || '')
-      .replace(/\bimg-fluid\b/g, '')  // IMG 전용 클래스는 제거
-      .replace(/\bw-100\b/g, '');     // width는 스타일로 보장
+  // 모달 큰 이미지 보호
+  const modalImg = document.getElementById('modalImage');
+  if (modalImg) protectImg(modalImg);
 
-    // 스타일: 배경으로 그림
-    div.style.backgroundImage = `url("${img.src}")`;
-    div.style.backgroundRepeat = 'no-repeat';
-    div.style.backgroundPosition = 'center';
-    div.style.backgroundSize = 'contain';
-    div.style.display = 'block';
-    div.style.width = '100%';
-
-    // 크기: aspect-ratio 지원 시 사용, 미지원 시 padding-top 트릭
-    const applySize = () => {
-      const w = img.naturalWidth;
-      const h = img.naturalHeight;
-      if (w && h) {
-        if ('aspectRatio' in div.style) {
-          div.style.aspectRatio = `${w} / ${h}`;
-          div.style.height = 'auto';
-        } else {
-          // padding-top 트릭
-          div.style.height = '0';
-          div.style.paddingTop = (h / w * 100) + '%';
-        }
-      } else {
-        // 아직 로드 전이면 임시 높이
-        div.style.height = img.height ? (img.height + 'px') : '200px';
-      }
-    };
-
-    if (img.complete) applySize();
-    else img.addEventListener('load', applySize, { once:true });
-
-    // 접근성(대체텍스트)
-    if (img.alt) {
-      div.setAttribute('role', 'img');
-      div.setAttribute('aria-label', img.alt);
-    }
-
-    // 클릭 이벤트 위임
-    forwardClick(div, img);
-
-    // 교체
-    img.style.display = 'none'; // 혹시 필요 시 되돌릴 수 있게 숨김 처리
-    img.parentNode.insertBefore(div, img);
-
-    // 보호 플래그 & 드래그/콜아웃 억제
-    img.dataset.bgReplaced = '1';
-    div.style.webkitUserSelect = 'none';
-    div.style.userSelect = 'none';
-    div.style.webkitTouchCallout = 'none';
-    div.setAttribute('draggable','false');
-
-    // 컨텍스트 메뉴/롱프레스 억제
-    ['contextmenu','gesturestart'].forEach(t=>{
-      div.addEventListener(t, e=>e.preventDefault(), { passive:false });
-    });
-  }
-
-  // 2) 모달 큰 이미지(#modalImage) → canvas 변환
-  function patchModalCanvas() {
-    const modalImg = document.getElementById('modalImage');
-    if (!modalImg || modalImg.dataset.canvasPatched === '1') return;
-
-    // 캔버스 생성
-    const canvas = document.createElement('canvas');
-    canvas.style.maxWidth = '100%';
-    canvas.style.maxHeight = '100%';
-    canvas.style.objectFit = 'contain';
-    canvas.style.display = 'block';
-    canvas.className = modalImg.className.replace(/\bno-actions\b/g,'').trim();
-
-    // IMG 숨김 & 캔버스 삽입
-    modalImg.style.display = 'none';
-    modalImg.parentNode.insertBefore(canvas, modalImg.nextSibling);
-
-    // src 바뀔 때마다 캔버스에 그려 넣기
-    const drawToCanvas = () => {
-      const src = modalImg.src;
-      if (!src) return;
-      const tmp = new Image();
-      tmp.crossOrigin = 'anonymous'; // CORS 허용이면 선명
-      tmp.onload = () => {
-        // 뷰 영역에 맞춰 스케일링해서 그리기
-        const maxW = canvas.parentElement.clientWidth  || tmp.width;
-        const maxH = canvas.parentElement.clientHeight || tmp.height;
-        const scale = Math.min(maxW/tmp.width, maxH/tmp.height, 1);
-        const w = Math.round(tmp.width  * scale);
-        const h = Math.round(tmp.height * scale);
-        canvas.width  = w;
-        canvas.height = h;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0,0,w,h);
-        ctx.drawImage(tmp, 0, 0, w, h);
-      };
-      tmp.src = src;
-    };
-
-    // 최초/업데이트 훅: src 변경 시 다시 그리기
-    const obs = new MutationObserver(muts=>{
-      for (const m of muts) {
-        if (m.type === 'attributes' && m.attributeName === 'src') {
-          drawToCanvas();
-        }
-      }
-    });
-    obs.observe(modalImg, { attributes:true });
-
-    // 모달이 열릴 때도 다시 그리기(부모 크기가 바뀌므로)
-    ['show.bs.modal','shown.bs.modal','resize','orientationchange'].forEach(ev=>{
-      window.addEventListener(ev, drawToCanvas);
-    });
-
-    // 초기 1회
-    drawToCanvas();
-
-    // 보호 플래그 & 이벤트 차단
-    modalImg.dataset.canvasPatched = '1';
-    ['contextmenu','gesturestart'].forEach(t=>{
-      canvas.addEventListener(t, e=>e.preventDefault(), { passive:false });
-    });
-    canvas.setAttribute('draggable','false');
-    canvas.style.webkitUserSelect = 'none';
-    canvas.style.userSelect = 'none';
-    canvas.style.webkitTouchCallout = 'none';
-  }
-
-  // 초기 적용
-  document.querySelectorAll('img.no-actions').forEach(replaceImgWithBgDiv);
-  patchModalCanvas();
-
-  // 동적으로 추가되는 이미지도 보호
+  // 동적으로 추가되는 썸네일도 보호
   const mo = new MutationObserver((muts)=>{
     muts.forEach(m=>{
       m.addedNodes.forEach(node=>{
-        if (node.nodeType === 1) {
-          if (node.matches && node.matches('img.no-actions')) replaceImgWithBgDiv(node);
-          node.querySelectorAll && node.querySelectorAll('img.no-actions').forEach(replaceImgWithBgDiv);
-        }
+        if (node.nodeType !== 1) return;
+        if (node.matches && node.matches('img.no-actions')) protectImg(node);
+        node.querySelectorAll && node.querySelectorAll('img.no-actions').forEach(protectImg);
       });
     });
   });
   mo.observe(document.documentElement, { childList:true, subtree:true });
-
-  // 추가 안전망(페이지 전역)
-  document.addEventListener('dragstart', e => {
-    if (e.target.closest('img,no-actions,canvas,.img-guard,.img-guard-shield')) e.preventDefault();
-  });
-  document.addEventListener('contextmenu', e => {
-    if (e.target.closest('img,no-actions,canvas,.img-guard,.img-guard-shield')) e.preventDefault();
-  });
 })();
 </script>
+
 
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -1423,6 +1318,32 @@
             }
         });
     </script>
+    <script>
+  // 기존 리스너를 제거할 수 없으면, 아래 코드를 기존 코드 '아래'에 추가해도 됩니다.
+  galleryGrid.addEventListener('click', (e) => {
+    const clickable = e.target.closest('[data-index]') || e.target;
+    const idxEl = clickable.closest('[data-index]') 
+                  ? clickable.closest('[data-index]') 
+                  : (clickable.tagName === 'IMG' ? clickable : null);
+    if (!idxEl) return;
+
+    const idx = parseInt(idxEl.dataset.index);
+    if (Number.isNaN(idx)) return;
+
+    currentIndex = idx;
+    modalImage.src = imagePairs[currentIndex].full;
+    // 모달 표시
+    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+      // 이미 인스턴스가 있으면 재사용
+      const modalEl = document.getElementById('imageModal');
+      const instance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+      instance.show();
+    } else if (window.$) { // jQuery Fallback
+      $('#imageModal').modal('show');
+    }
+  });
+</script>
+
     <div id="copy-toast">📋 계좌번호가 복사되었습니다!</div>
 
 </body>
