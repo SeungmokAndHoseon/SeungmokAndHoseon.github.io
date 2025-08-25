@@ -301,206 +301,205 @@
         })();
     </script>
     <script>
-(function () {
-  const ua = navigator.userAgent.toLowerCase();
-  const isIOS   = /iphone|ipad|ipod/.test(ua);
-  const isKakao = /kakaotalk/.test(ua); // ← 카카오톡 인앱 브라우저 감지
+        (function () {
+            const ua = navigator.userAgent.toLowerCase();
+            const isIOS = /iphone|ipad|ipod/.test(ua);
+            const isKakao = /kakaotalk/.test(ua); // ← 카카오톡 인앱 브라우저 감지
 
-  // iOS 또는 카카오톡에서만 실드 적용
-  if (!isIOS && !isKakao) return;
+            // iOS 또는 카카오톡에서만 실드 적용
+            if (!isIOS && !isKakao) return;
 
-  document.querySelectorAll('img.no-actions').forEach((img) => {
-    // 이미 처리된 경우 무시
-    if (img.closest('.img-guard')) return;
+            document.querySelectorAll('img.no-actions').forEach((img) => {
+                // 이미 처리된 경우 무시
+                if (img.closest('.img-guard')) return;
 
-    // 래퍼 생성 후 이미지 감싸기
-    const wrap = document.createElement('span');
-    wrap.className = 'img-guard';
-    // JS로 스타일 주입 (CSS 사용 안 함)
-    wrap.style.position = 'relative';
-    wrap.style.display  = 'inline-block';
+                // 래퍼 생성 후 이미지 감싸기
+                const wrap = document.createElement('span');
+                wrap.className = 'img-guard';
+                // JS로 스타일 주입 (CSS 사용 안 함)
+                wrap.style.position = 'relative';
+                wrap.style.display = 'inline-block';
 
-    img.parentNode.insertBefore(wrap, img);
-    wrap.appendChild(img);
+                img.parentNode.insertBefore(wrap, img);
+                wrap.appendChild(img);
 
-    // 이미지 자체를 터치 타깃에서 제외 (롱프레스 콜아웃 방지의 핵심)
-    img.style.pointerEvents = 'none';
-    img.style.webkitTouchCallout = 'none';
-    img.style.webkitUserSelect   = 'none';
-    img.style.userSelect         = 'none';
-    img.setAttribute('draggable', 'false');
+                // 이미지 자체를 터치 타깃에서 제외 (롱프레스 콜아웃 방지의 핵심)
+                img.style.pointerEvents = 'none';
+                img.style.webkitTouchCallout = 'none';
+                img.style.webkitUserSelect = 'none';
+                img.style.userSelect = 'none';
+                img.setAttribute('draggable', 'false');
 
-    // 투명 실드 생성: 롱프레스 타깃을 IMG가 아닌 일반 요소로 전환
-    const shield = document.createElement('span');
-    shield.className = 'img-guard-shield';
-    shield.setAttribute('aria-hidden', 'true');
-    // JS로 스타일 주입
-    shield.style.position = 'absolute';
-    shield.style.left = '0';
-    shield.style.top = '0';
-    shield.style.right = '0';
-    shield.style.bottom = '0';
-    shield.style.background = 'transparent';
-    shield.style.touchAction = 'manipulation';
-    shield.style.webkitTouchCallout = 'none';
-    shield.style.webkitUserSelect   = 'none';
-    shield.style.userSelect         = 'none';
-    wrap.appendChild(shield);
+                // 투명 실드 생성: 롱프레스 타깃을 IMG가 아닌 일반 요소로 전환
+                const shield = document.createElement('span');
+                shield.className = 'img-guard-shield';
+                shield.setAttribute('aria-hidden', 'true');
+                // JS로 스타일 주입
+                shield.style.position = 'absolute';
+                shield.style.left = '0';
+                shield.style.top = '0';
+                shield.style.right = '0';
+                shield.style.bottom = '0';
+                shield.style.background = 'transparent';
+                shield.style.touchAction = 'manipulation';
+                shield.style.webkitTouchCallout = 'none';
+                shield.style.webkitUserSelect = 'none';
+                shield.style.userSelect = 'none';
+                wrap.appendChild(shield);
 
-    // 클릭/탭은 이미지로 전달 (모달/슬라이더 동작 유지)
-    ['click', 'touchend'].forEach((type) => {
-      shield.addEventListener(type, () => {
-        img.dispatchEvent(new Event('click', { bubbles: true }));
-      }, { passive: true });
-    });
+                // 클릭/탭은 이미지로 전달 (모달/슬라이더 동작 유지)
+                ['click', 'touchend'].forEach((type) => {
+                    shield.addEventListener(type, () => {
+                        img.dispatchEvent(new Event('click', { bubbles: true }));
+                    }, { passive: true });
+                });
 
-    // 일부 콜아웃 억제(중복 안전망)
-    ['contextmenu', 'gesturestart'].forEach((type) => {
-      shield.addEventListener(type, (e) => e.preventDefault(), { passive: false });
-    });
+                // 일부 콜아웃 억제(중복 안전망)
+                ['contextmenu', 'gesturestart'].forEach((type) => {
+                    shield.addEventListener(type, (e) => e.preventDefault(), { passive: false });
+                });
 
-    // 아주 공격적인 브라우저에서의 롱프레스 힌트 더 억제
-    shield.addEventListener('touchstart', (e) => {
-      // 길게 누르기 제스처를 시작점에서 최대한 무력화
-      // (기존 스크롤/스와이프는 shield의 touch-action: manipulation 덕분에 정상 작동)
-      if (e.touches && e.touches.length === 1) {
-        // 필요 시 추가 로직 가능
-      }
-    }, { passive: true });
-  });
-})();
-</script>
-<script>
-(function () {
-    alert(3);
-  const ua = navigator.userAgent.toLowerCase();
-  const isKakao = /kakaotalk/.test(ua);
-  if (!isKakao) return;
+                // 아주 공격적인 브라우저에서의 롱프레스 힌트 더 억제
+                shield.addEventListener('touchstart', (e) => {
+                    // 길게 누르기 제스처를 시작점에서 최대한 무력화
+                    // (기존 스크롤/스와이프는 shield의 touch-action: manipulation 덕분에 정상 작동)
+                    if (e.touches && e.touches.length === 1) {
+                        // 필요 시 추가 로직 가능
+                    }
+                }, { passive: true });
+            });
+        })();
+    </script>
+    <script>
+        (function () {
+            const ua = navigator.userAgent.toLowerCase();
+            const isKakao = /kakaotalk/.test(ua);
+            if (!isKakao) return;
 
-  function protectImg(img) {
-    if (img.closest('.img-guard')) return;
+            function protectImg(img) {
+                if (img.closest('.img-guard')) return;
 
-    const wrap = document.createElement('span');
-    wrap.className = 'img-guard';
-    
-    
-    wrap.style.position = 'relative';
-    wrap.style.display  = 'block';   // ← inline-block → block
-    wrap.style.width    = '100%';    // 썸네일이 w-100일 때 레이아웃 유지
-    wrap.style.lineHeight = '0';     // ← 베이스라인 간격 제거
-    wrap.style.fontSize   = '0';     // ← 일부 브라우저에서 남는 여백 제거
+                const wrap = document.createElement('span');
+                wrap.className = 'img-guard';
 
 
-    // 레이아웃 유지 (부트스트랩 w-100 대응)
-    if (img.classList.contains('w-100') || img.style.width === '100%') {
-      wrap.style.width = '100%';
-    }
-    img.parentNode.insertBefore(wrap, img);
-    wrap.appendChild(img);
+                wrap.style.position = 'relative';
+                wrap.style.display = 'block';   // ← inline-block → block
+                wrap.style.width = '100%';    // 썸네일이 w-100일 때 레이아웃 유지
+                wrap.style.lineHeight = '0';     // ← 베이스라인 간격 제거
+                wrap.style.fontSize = '0';     // ← 일부 브라우저에서 남는 여백 제거
 
-    
-    img.style.display = 'block';           // ← inline → block
-    img.style.verticalAlign = 'top';       // 안전망
-    img.setAttribute('draggable','false');
 
-    const shield = document.createElement('span');
-    shield.className = 'img-guard-shield';
-    Object.assign(shield.style, {
-      position: 'absolute', left: '0', top: '0', right: '0', bottom: '0',
-      background: 'transparent', zIndex: '5',
-      touchAction: 'manipulation',
-      WebkitTouchCallout: 'none', WebkitUserSelect: 'none', userSelect: 'none'
-    });
-    wrap.appendChild(shield);
+                // 레이아웃 유지 (부트스트랩 w-100 대응)
+                if (img.classList.contains('w-100') || img.style.width === '100%') {
+                    wrap.style.width = '100%';
+                }
+                img.parentNode.insertBefore(wrap, img);
+                wrap.appendChild(img);
 
-    // 컨텍스트 메뉴/제스처 차단
-    ['contextmenu','gesturestart'].forEach(t=>{
-      shield.addEventListener(t, e=>e.preventDefault(), { passive:false });
-    });
 
-    shield.setAttribute('draggable','false');
-    img.setAttribute('draggable','false');
+                img.style.display = 'block';           // ← inline → block
+                img.style.verticalAlign = 'top';       // 안전망
+                img.setAttribute('draggable', 'false');
 
-    // ====== 여기부터 "탭만 클릭으로 인정" 로직 ======
-    let tracking = false;
-    let sx = 0, sy = 0, st = 0;
-    const MOVE_PX   = 12;   // 이동 임계값(px): 이보다 크면 드래그로 간주
-    const TIME_MS   = 450;  // 탭으로 인정할 최대 시간
+                const shield = document.createElement('span');
+                shield.className = 'img-guard-shield';
+                Object.assign(shield.style, {
+                    position: 'absolute', left: '0', top: '0', right: '0', bottom: '0',
+                    background: 'transparent', zIndex: '5',
+                    touchAction: 'manipulation',
+                    WebkitTouchCallout: 'none', WebkitUserSelect: 'none', userSelect: 'none'
+                });
+                wrap.appendChild(shield);
 
-    shield.addEventListener('touchstart', (e) => {
-      if (e.touches.length !== 1) return; // 멀티터치 제외
-      tracking = true;
-      const t = e.touches[0];
-      sx = t.clientX; sy = t.clientY; st = Date.now();
-      shield.dataset.dragging = '0';
-    }, { passive: true });
+                // 컨텍스트 메뉴/제스처 차단
+                ['contextmenu', 'gesturestart'].forEach(t => {
+                    shield.addEventListener(t, e => e.preventDefault(), { passive: false });
+                });
 
-    shield.addEventListener('touchmove', (e) => {
-      if (!tracking) return;
-      const t = e.touches[0];
-      const dx = Math.abs(t.clientX - sx);
-      const dy = Math.abs(t.clientY - sy);
-      if (dx > MOVE_PX || dy > MOVE_PX) {
-        shield.dataset.dragging = '1'; // 드래그/스크롤로 판정
-      }
-      // 기본 스크롤은 막지 않음 (passive:true)
-    }, { passive: true });
+                shield.setAttribute('draggable', 'false');
+                img.setAttribute('draggable', 'false');
 
-    shield.addEventListener('touchend', () => {
-      if (!tracking) return;
-      const elapsed = Date.now() - st;
-      const dragged = shield.dataset.dragging === '1';
-      tracking = false;
-      delete shield.dataset.dragging;
+                // ====== 여기부터 "탭만 클릭으로 인정" 로직 ======
+                let tracking = false;
+                let sx = 0, sy = 0, st = 0;
+                const MOVE_PX = 12;   // 이동 임계값(px): 이보다 크면 드래그로 간주
+                const TIME_MS = 450;  // 탭으로 인정할 최대 시간
 
-      // 조건: 짧고(시간) 거의 안 움직였을 때만 클릭으로 전달
-      if (!dragged && elapsed <= TIME_MS) {
-        img.dispatchEvent(new Event('click', { bubbles: true }));
-      }
-    }, { passive: true });
+                shield.addEventListener('touchstart', (e) => {
+                    if (e.touches.length !== 1) return; // 멀티터치 제외
+                    tracking = true;
+                    const t = e.touches[0];
+                    sx = t.clientX; sy = t.clientY; st = Date.now();
+                    shield.dataset.dragging = '0';
+                }, { passive: true });
 
-    shield.addEventListener('touchcancel', () => {
-      tracking = false;
-      delete shield.dataset.dragging;
-    }, { passive: true });
+                shield.addEventListener('touchmove', (e) => {
+                    if (!tracking) return;
+                    const t = e.touches[0];
+                    const dx = Math.abs(t.clientX - sx);
+                    const dy = Math.abs(t.clientY - sy);
+                    if (dx > MOVE_PX || dy > MOVE_PX) {
+                        shield.dataset.dragging = '1'; // 드래그/스크롤로 판정
+                    }
+                    // 기본 스크롤은 막지 않음 (passive:true)
+                }, { passive: true });
 
-    // (마우스는 모바일 카카오에서 거의 안 쓰지만, 혹시를 대비해 간단히 처리)
-    let mDown = false, mx=0, my=0;
-    shield.addEventListener('mousedown', (e) => { mDown=true; mx=e.clientX; my=e.clientY; });
-    shield.addEventListener('mousemove', (e) => {
-      if (!mDown) return;
-      if (Math.abs(e.clientX-mx) > MOVE_PX || Math.abs(e.clientY-my) > MOVE_PX) {
-        shield.dataset.dragging = '1';
-      }
-    });
-    shield.addEventListener('mouseup', () => {
-      if (!mDown) return;
-      mDown=false;
-      const dragged = shield.dataset.dragging === '1';
-      delete shield.dataset.dragging;
-      if (!dragged) {
-        img.dispatchEvent(new Event('click', { bubbles: true }));
-      }
-    });
-  }
+                shield.addEventListener('touchend', () => {
+                    if (!tracking) return;
+                    const elapsed = Date.now() - st;
+                    const dragged = shield.dataset.dragging === '1';
+                    tracking = false;
+                    delete shield.dataset.dragging;
 
-  document.querySelectorAll('img.no-actions').forEach(protectImg);
+                    // 조건: 짧고(시간) 거의 안 움직였을 때만 클릭으로 전달
+                    if (!dragged && elapsed <= TIME_MS) {
+                        img.dispatchEvent(new Event('click', { bubbles: true }));
+                    }
+                }, { passive: true });
 
-  const modalImg = document.getElementById('modalImage');
-  if (modalImg) protectImg(modalImg);
+                shield.addEventListener('touchcancel', () => {
+                    tracking = false;
+                    delete shield.dataset.dragging;
+                }, { passive: true });
 
-  const mo = new MutationObserver((muts)=>{
-    muts.forEach(m=>{
-      m.addedNodes.forEach(node=>{
-        if (node.nodeType !== 1) return;
-        if (node.matches && node.matches('img.no-actions')) protectImg(node);
-        node.querySelectorAll && node.querySelectorAll('img.no-actions').forEach(protectImg);
-      });
-    });
-  });
-  mo.observe(document.documentElement, { childList:true, subtree:true });
-})();
-</script>
+                // (마우스는 모바일 카카오에서 거의 안 쓰지만, 혹시를 대비해 간단히 처리)
+                let mDown = false, mx = 0, my = 0;
+                shield.addEventListener('mousedown', (e) => { mDown = true; mx = e.clientX; my = e.clientY; });
+                shield.addEventListener('mousemove', (e) => {
+                    if (!mDown) return;
+                    if (Math.abs(e.clientX - mx) > MOVE_PX || Math.abs(e.clientY - my) > MOVE_PX) {
+                        shield.dataset.dragging = '1';
+                    }
+                });
+                shield.addEventListener('mouseup', () => {
+                    if (!mDown) return;
+                    mDown = false;
+                    const dragged = shield.dataset.dragging === '1';
+                    delete shield.dataset.dragging;
+                    if (!dragged) {
+                        img.dispatchEvent(new Event('click', { bubbles: true }));
+                    }
+                });
+            }
+
+            document.querySelectorAll('img.no-actions').forEach(protectImg);
+
+            const modalImg = document.getElementById('modalImage');
+            if (modalImg) protectImg(modalImg);
+
+            const mo = new MutationObserver((muts) => {
+                muts.forEach(m => {
+                    m.addedNodes.forEach(node => {
+                        if (node.nodeType !== 1) return;
+                        if (node.matches && node.matches('img.no-actions')) protectImg(node);
+                        node.querySelectorAll && node.querySelectorAll('img.no-actions').forEach(protectImg);
+                    });
+                });
+            });
+            mo.observe(document.documentElement, { childList: true, subtree: true });
+        })();
+    </script>
 
 
     <!-- Swiper CSS -->
@@ -1378,30 +1377,30 @@
         });
     </script>
     <script>
-  // 기존 리스너를 제거할 수 없으면, 아래 코드를 기존 코드 '아래'에 추가해도 됩니다.
-  galleryGrid.addEventListener('click', (e) => {
-    const clickable = e.target.closest('[data-index]') || e.target;
-    const idxEl = clickable.closest('[data-index]') 
-                  ? clickable.closest('[data-index]') 
-                  : (clickable.tagName === 'IMG' ? clickable : null);
-    if (!idxEl) return;
+        // 기존 리스너를 제거할 수 없으면, 아래 코드를 기존 코드 '아래'에 추가해도 됩니다.
+        galleryGrid.addEventListener('click', (e) => {
+            const clickable = e.target.closest('[data-index]') || e.target;
+            const idxEl = clickable.closest('[data-index]')
+                ? clickable.closest('[data-index]')
+                : (clickable.tagName === 'IMG' ? clickable : null);
+            if (!idxEl) return;
 
-    const idx = parseInt(idxEl.dataset.index);
-    if (Number.isNaN(idx)) return;
+            const idx = parseInt(idxEl.dataset.index);
+            if (Number.isNaN(idx)) return;
 
-    currentIndex = idx;
-    modalImage.src = imagePairs[currentIndex].full;
-    // 모달 표시
-    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-      // 이미 인스턴스가 있으면 재사용
-      const modalEl = document.getElementById('imageModal');
-      const instance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-      instance.show();
-    } else if (window.$) { // jQuery Fallback
-      $('#imageModal').modal('show');
-    }
-  });
-</script>
+            currentIndex = idx;
+            modalImage.src = imagePairs[currentIndex].full;
+            // 모달 표시
+            if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                // 이미 인스턴스가 있으면 재사용
+                const modalEl = document.getElementById('imageModal');
+                const instance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                instance.show();
+            } else if (window.$) { // jQuery Fallback
+                $('#imageModal').modal('show');
+            }
+        });
+    </script>
 
     <div id="copy-toast">📋 계좌번호가 복사되었습니다!</div>
 
