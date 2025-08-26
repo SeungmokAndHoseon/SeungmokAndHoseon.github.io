@@ -1035,10 +1035,15 @@ img.no-actions{
   width: min(72vw, 460px);
   aspect-ratio: 3 / 4;
   border-radius: 50% / 36%;
-  overflow: hidden;           /* 오벌 밖은 잘라냄 */
-  background: #fff;           /* 혹시 남는 부분이 있어도 흰색 */
+  overflow: hidden;
+  background: #000;
   box-shadow: 0 6px 20px rgba(0,0,0,.08);
-  margin: 3px 0;
+
+  /* 💡 핵심: 오벌 내부를 background로 채움 */
+  background-image: url("../img/header.jpg");
+  background-size: cover;        /* 꽉 채우기 */
+  background-position: center;   /* 중앙 기준 */
+  background-repeat: no-repeat;  /* 반복 금지 */
 }
 
 .hero-oval__img {
@@ -1046,7 +1051,7 @@ img.no-actions{
   height: 100%;
   object-fit: cover;          /* 오벌 영역에 꽉 채움 (잘릴 수 있음) */
   object-position: center;    /* 중앙 기준 */
-  display: block;
+  display: none;
   user-select: none;
   -webkit-user-drag: none;
 }
@@ -1140,10 +1145,15 @@ img.no-actions{
   width: min(72vw, 460px);
   aspect-ratio: 3 / 4;
   border-radius: 50% / 36%;
-  overflow: hidden;           /* 오벌 밖은 잘라냄 */
-  background: #fff;           /* 혹시 남는 부분이 있어도 흰색 */
+  overflow: hidden;
+  background: #000;
   box-shadow: 0 6px 20px rgba(0,0,0,.08);
-  margin: 3px 0;
+
+  /* 💡 핵심: 오벌 내부를 background로 채움 */
+  background-image: url("../img/header.jpg");
+  background-size: cover;        /* 꽉 채우기 */
+  background-position: center;   /* 중앙 기준 */
+  background-repeat: no-repeat;  /* 반복 금지 */
 }
 
 .hero-oval__img {
@@ -1151,7 +1161,7 @@ img.no-actions{
   height: 100%;
   object-fit: cover;          /* 오벌 영역에 꽉 채움 (잘릴 수 있음) */
   object-position: center;    /* 중앙 기준 */
-  display: block;
+  display: none;
   user-select: none;
   -webkit-user-drag: none;
 }
