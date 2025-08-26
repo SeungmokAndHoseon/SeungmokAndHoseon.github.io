@@ -1036,25 +1036,21 @@ img.no-actions{
   aspect-ratio: 3 / 4;
   border-radius: 50% / 36%;
   overflow: hidden;
-  background: #000;
+  background: transparent;  /* ✅ 배경 제거 */
   box-shadow: 0 6px 20px rgba(0,0,0,.08);
-
-  /* 💡 핵심: 오벌 내부를 background로 채움 */
-  background-image: url("../img/header.jpg");
-  background-size: cover;        /* 꽉 채우기 */
-  background-position: center;   /* 중앙 기준 */
-  background-repeat: no-repeat;  /* 반복 금지 */
 }
 
 .hero-oval__img {
   width: 100%;
   height: 100%;
-  object-fit: cover;          /* 오벌 영역에 꽉 채움 (잘릴 수 있음) */
-  object-position: center;    /* 중앙 기준 */
-  display: none;
+  object-fit: cover;       /* ✅ 오벌 안에 꽉 차게 */
+  object-position: center; /* ✅ 중앙 기준 */
+  display: block;
+  background: transparent;
   user-select: none;
   -webkit-user-drag: none;
 }
+
 
 /* 좌우 세로 텍스트 */
 .hero-oval__side {
@@ -1146,25 +1142,21 @@ img.no-actions{
   aspect-ratio: 3 / 4;
   border-radius: 50% / 36%;
   overflow: hidden;
-  background: #000;
+  background: transparent;  /* ✅ 배경 제거 */
   box-shadow: 0 6px 20px rgba(0,0,0,.08);
-
-  /* 💡 핵심: 오벌 내부를 background로 채움 */
-  background-image: url("../img/header.jpg");
-  background-size: cover;        /* 꽉 채우기 */
-  background-position: center;   /* 중앙 기준 */
-  background-repeat: no-repeat;  /* 반복 금지 */
 }
 
 .hero-oval__img {
   width: 100%;
   height: 100%;
-  object-fit: cover;          /* 오벌 영역에 꽉 채움 (잘릴 수 있음) */
-  object-position: center;    /* 중앙 기준 */
-  display: none;
+  object-fit: cover;       /* ✅ 오벌 안에 꽉 차게 */
+  object-position: center; /* ✅ 중앙 기준 */
+  display: block;
+  background: transparent;
   user-select: none;
   -webkit-user-drag: none;
 }
+
 
 /* 상/하 스택 */
 .hero-top,
