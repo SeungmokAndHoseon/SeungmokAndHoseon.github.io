@@ -532,43 +532,43 @@
 
         <!-- 음악 파일 -->
         <audio id="bg-music" src="music.mp3" preload="auto" loop></audio>
-<section class="hero-oval" id="hero">
-  <!-- (기존) 음악 토글 버튼은 그대로 유지 -->
-  <button id="music-toggle" aria-label="Toggle Music">
-    <span id="music-icon">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
-           stroke-width="2" viewBox="0 0 24 24">
-        <path d="M9 18V5l12-2v13M3 3l18 18" />
-        <circle cx="6" cy="18" r="3" />
-      </svg>
-    </span>
-  </button>
+        <section class="hero-oval" id="hero">
+            <!-- (기존) 음악 토글 버튼은 그대로 유지 -->
+            <button id="music-toggle" aria-label="Toggle Music">
+                <span id="music-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path d="M9 18V5l12-2v13M3 3l18 18" />
+                        <circle cx="6" cy="18" r="3" />
+                    </svg>
+                </span>
+            </button>
 
-  <!-- 상단(이름/장소) -->
-  <div class="hero-top">
-    <h1 class="hero-oval__name hero-oval__name--top">SEUNGMOK</h1>
-    <div class="hero-side-row">
-      <span class="hero-side__label">PLACE</span>
-      <span class="hero-side__dot"></span>
-      <span class="hero-side__text">소풍컨벤션웨딩홀 7층 베일리홀</span>
-    </div>
-  </div>
+            <!-- 상단(이름/장소) -->
+            <div class="hero-top">
+                <h1 class="hero-oval__name hero-oval__name--top">SEUNGMOK</h1>
+                <div class="hero-side-row">
+                    <span class="hero-side__label">PLACE</span>
+                    <span class="hero-side__dot"></span>
+                    <span class="hero-side__text">소풍컨벤션웨딩홀 7층 베일리홀</span>
+                </div>
+            </div>
 
-  <!-- 가운데: 오벌(항상 화면 정중앙) -->
-  <div class="hero-oval__frame">
-    <img src="img/header.jpg" alt="" class="hero-oval__img no-actions">
-  </div>
+            <!-- 가운데: 오벌(항상 화면 정중앙) -->
+            <div class="hero-oval__frame">
+                <img src="img/header.jpg" alt="" class="hero-oval__img no-actions">
+            </div>
 
-  <!-- 하단(날짜/이름) -->
-  <div class="hero-bottom">
-    <div class="hero-side-row">
-      <span class="hero-side__label">DATE</span>
-      <span class="hero-side__dot"></span>
-      <span class="hero-side__text">2025년 11월 8일 토요일 18시 30분</span>
-    </div>
-    <h1 class="hero-oval__name hero-oval__name--bottom">HOSEON</h1>
-  </div>
-</section>
+            <!-- 하단(날짜/이름) -->
+            <div class="hero-bottom">
+                <div class="hero-side-row">
+                    <span class="hero-side__label">DATE</span>
+                    <span class="hero-side__dot"></span>
+                    <span class="hero-side__text">2025년 11월 8일 토요일 18시 30분</span>
+                </div>
+                <h1 class="hero-oval__name hero-oval__name--bottom">HOSEON</h1>
+            </div>
+        </section>
 
         <!-- <header class="inner cover cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         </header> -->
@@ -1126,10 +1126,72 @@
                             <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                                 data-parent="#accordionExample">
                                 <div class="card-body section6-location-sub">
-                                    네비게이션: "소풍컨벤션웨딩홀 " 또는 "부천 터미널 소풍" 입력 <br />
-                                    &nbsp;&nbsp;&nbsp;👉🏻 [주소검색] 경기도 부천시 원미구 송내대로 239<br />
-                                    &nbsp;&nbsp;&nbsp;👉🏻 <div class="highlight-box">건물 내 <strong>3시간 무료주차</strong>
-                                    </div><br />
+                                    <div style="margin-bottom:8px;">
+                                        네비게이션: <b>"소풍컨벤션웨딩홀"</b> 또는 <b>"부천 터미널 소풍"</b> <br />
+                                        &nbsp;&nbsp;&nbsp;👉🏻 [주소검색] 경기도 부천시 원미구 송내대로 239<br />
+                                        &nbsp;&nbsp;&nbsp;👉🏻
+                                        <span class="parking-badge parking-badge--pulse" role="text"
+                                            aria-label="건물 내 3시간 무료 주차">
+                                            <!-- 아이콘: 차 + 시계 (SVG, 이모지 대체 가능) -->
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="#5a3b00" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                <path d="M3 13l2-5a2 2 0 0 1 2-1h6a2 2 0 0 1 2 1l2 5" />
+                                                <circle cx="7.5" cy="16.5" r="1.8" />
+                                                <circle cx="16.5" cy="16.5" r="1.8" />
+                                                <path d="M12 3v4m0 0h3" />
+                                            </svg>
+                                            <span><b>건물 내</b> <span class="em">3시간 무료주차</span></span>
+                                        </span>
+                                    </div>
+
+                                    <!-- SOPPOONG 스타일 주차안내 카드 -->
+                                    <div class="parking-card">
+                                        <div class="parking-title">소풍컨벤션웨딩홀 7층<br />주 차 안 내 서</div>
+
+                                        <!-- 테이블 1 -->
+                                        <div class="parking-subtitle"></div>
+                                        <table class="parking-table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:28%;">주차장</th>
+                                                    <th>지하 1층</th>
+                                                    <th>지하 2층</th>
+                                                    <th>지하 3층</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>기둥 번호</th>
+                                                    <td>3, 4, 5</td>
+                                                    <td>3, 4, 5, 6</td>
+                                                    <td>3, 4, 5, 6</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="parking-note">7층 전용 엘리베이터 <b>20, 21, 22호기</b> 이용 바랍니다.</div>
+
+                                        <!-- 테이블 2 -->
+                                        <table class="parking-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>주차장</th>
+                                                    <th>지하 2층</th>
+                                                    <th>지하 3층</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>기둥 번호</th>
+                                                    <td>17, 18</td>
+                                                    <td>27</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="parking-note">7층 전용 엘리베이터 <b>17, 18호기</b> 이용 바랍니다.</div>
+
+                                        <div class="parking-footer">기둥번호를 꼭 확인하시고 주차하시기 바랍니다.</div>
+                                    </div>
+                                    <!-- /주차안내 카드 -->
                                 </div>
                             </div>
                         </div>
