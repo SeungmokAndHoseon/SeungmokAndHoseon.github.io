@@ -637,13 +637,13 @@
                             <!-- 이전/다음 버튼 -->
                             <button id="prevBtn" class="gallery-modal-nav nav-left" aria-label="Previous"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"
-                                    fill="none" stroke="#6e6767" stroke-width="2" stroke-linecap="round"
+                                    fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
                                     <polyline points="15 18 9 12 15 6"></polyline>
                                 </svg></button>
                             <button id="nextBtn" class="gallery-modal-nav nav-right" aria-label="Next"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"
-                                    fill="none" stroke="#6e6767" stroke-width="2" stroke-linecap="round"
+                                    fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
                                     <polyline points="9 18 15 12 9 6"></polyline>
                                 </svg></button>
@@ -1488,8 +1488,8 @@
             if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
                 // 이미 인스턴스가 있으면 재사용
                 const modalEl = document.getElementById('imageModal');
-                const instance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-                instance.show();
+                // const instance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+                // instance.show();
             } else if (window.$) { // jQuery Fallback
                 $('#imageModal').modal('show');
             }
