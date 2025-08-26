@@ -1030,26 +1030,26 @@ img.no-actions{
 }
 
 /* 가운데 오벌 사진 */
-.hero-oval__frame {
+.hero-oval__frame{
   position: relative;
   width: min(72vw, 460px);
   aspect-ratio: 3 / 4;
   border-radius: 50% / 36%;
   overflow: hidden;
-  background: transparent;  /* ✅ 배경 제거 */
+  background: transparent;       /* 기본은 투명 */
   box-shadow: 0 6px 20px rgba(0,0,0,.08);
 }
-
-.hero-oval__img {
+.hero-oval__img{
   width: 100%;
   height: 100%;
-  object-fit: cover;       /* ✅ 오벌 안에 꽉 차게 */
-  object-position: center; /* ✅ 중앙 기준 */
+  object-fit: cover;
+  object-position: center;
   display: block;
   background: transparent;
   user-select: none;
   -webkit-user-drag: none;
 }
+
 
 
 /* 좌우 세로 텍스트 */
@@ -1136,26 +1136,26 @@ img.no-actions{
 }
 
 /* 가운데 오벌: 사이즈는 적당히 조절 가능 */
-.hero-oval__frame {
+.hero-oval__frame{
   position: relative;
   width: min(72vw, 460px);
   aspect-ratio: 3 / 4;
   border-radius: 50% / 36%;
   overflow: hidden;
-  background: transparent;  /* ✅ 배경 제거 */
+  background: transparent;       /* 기본은 투명 */
   box-shadow: 0 6px 20px rgba(0,0,0,.08);
 }
-
-.hero-oval__img {
+.hero-oval__img{
   width: 100%;
   height: 100%;
-  object-fit: cover;       /* ✅ 오벌 안에 꽉 차게 */
-  object-position: center; /* ✅ 중앙 기준 */
+  object-fit: cover;
+  object-position: center;
   display: block;
   background: transparent;
   user-select: none;
   -webkit-user-drag: none;
 }
+
 
 
 /* 상/하 스택 */

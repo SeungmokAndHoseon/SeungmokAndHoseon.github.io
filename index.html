@@ -1495,6 +1495,27 @@
             }
         });
     </script>
+    <script>
+        (function () {
+            const ua = navigator.userAgent.toLowerCase();
+            const isKakao = ua.includes('kakaotalk');       // 카카오 인앱 감지
+            if (!isKakao) return;
+
+            const frame = document.querySelector('.hero-oval__frame');
+            const img = frame && frame.querySelector('img.hero-oval__img');
+            if (!frame || !img) return;
+
+            // 프레임에 배경이미지로 그리기 (cover)
+            frame.style.backgroundImage = `url("${img.currentSrc || img.src}")`;
+            frame.style.backgroundSize = 'cover';
+            frame.style.backgroundPosition = 'center';
+            frame.style.backgroundRepeat = 'no-repeat';
+            frame.style.backgroundColor = 'transparent';
+
+            // 카카오 브라우저에서만 <img> 숨김 → 흰 띠/배경 노출 버그 회피
+            img.style.display = 'none';
+        })();
+    </script>
 
     <div id="copy-toast">📋 계좌번호가 복사되었습니다!</div>
 
