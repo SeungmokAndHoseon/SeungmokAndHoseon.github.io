@@ -1045,7 +1045,7 @@ img.no-actions{
   /* height: 100%; */
   object-fit: cover; object-position: center;
   display: block; user-select: none; -webkit-user-drag: none;
-  filter: grayscale(100%);
+  /* filter: grayscale(100%); */
 }
 
 /* 좌우 세로 텍스트 */
@@ -1148,7 +1148,7 @@ img.no-actions{
   display: block;
   user-select: none;
   -webkit-user-drag: none;
-  filter: grayscale(100%);
+  /* filter: grayscale(100%); */
 }
 
 /* 상/하 스택 */
