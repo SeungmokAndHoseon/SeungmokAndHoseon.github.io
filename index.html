@@ -622,31 +622,25 @@
             </div>
             <!-- Swiper Modal -->
             <!-- 이미지 모달 -->
+            <!-- 이미지 모달 -->
             <div id="imageModal" class="modal fade" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered modal-xl">
                     <div class="modal-content bg-transparent border-0">
                         <div class="modal-body p-0 position-relative d-flex align-items-center justify-content-center"
                             style="height: 80vh;">
-                            <img id="modalImage" src="" class="img-fluid no-actions"
-                                style="max-width: 100%; object-fit: contain;">
 
-                            <button type="button" class="gallery-modal-close" data-dismiss="modal" aria-label="Close">
-                                &times;
-                            </button>
+                            <!-- Swiper 컨테이너 -->
+                            <div class="swiper mySwiper w-100 h-100">
+                                <div class="swiper-wrapper" id="swiperWrapper">
+                                    <!-- JS에서 이미지 슬라이드 생성 -->
+                                </div>
+                                <!-- 페이지네이션 점 -->
+                                <div class="swiper-pagination"></div>
+                            </div>
 
-                            <!-- 이전/다음 버튼 -->
-                            <button id="prevBtn" class="gallery-modal-nav nav-left" aria-label="Previous"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"
-                                    fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <polyline points="15 18 9 12 15 6"></polyline>
-                                </svg></button>
-                            <button id="nextBtn" class="gallery-modal-nav nav-right" aria-label="Next"><svg
-                                    xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"
-                                    fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <polyline points="9 18 15 12 9 6"></polyline>
-                                </svg></button>
+                            <!-- 닫기 버튼 -->
+                            <button type="button" class="gallery-modal-close" data-dismiss="modal"
+                                aria-label="Close">&times;</button>
                         </div>
                     </div>
                 </div>
@@ -1317,8 +1311,6 @@
         const foldBtn = document.getElementById('foldBtn');
         const modal = new bootstrap.Modal(document.getElementById('imageModal'));
         const modalImage = document.getElementById('modalImage');
-        const nextBtn = document.getElementById('nextBtn');
-        const prevBtn = document.getElementById('prevBtn');
 
         const imagePairs = [
             { thumb: 'img/thumbs/1.jpg', full: 'img/1.jpg' },
@@ -1392,35 +1384,8 @@
             renderThumbnails(false);
         });
 
-        galleryGrid.addEventListener('click', (e) => {
-            if (e.target.tagName === 'IMG') {
-                currentIndex = parseInt(e.target.dataset.index);
-                modalImage.src = imagePairs[currentIndex].full;
-                modal.show();
-            }
-        });
 
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % imagePairs.length;
-            modalImage.src = imagePairs[currentIndex].full;
-        });
 
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + imagePairs.length) % imagePairs.length;
-            modalImage.src = imagePairs[currentIndex].full;
-        });
-
-        // 터치 스와이프
-        let touchStartX = 0;
-        modalImage.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        modalImage.addEventListener('touchend', (e) => {
-            const touchEndX = e.changedTouches[0].screenX;
-            if (touchStartX - touchEndX > 50) nextBtn.click();
-            else if (touchEndX - touchStartX > 50) prevBtn.click();
-        });
 
         function preloadImages(range) {
             range.forEach(idx => {
@@ -1472,26 +1437,43 @@
     </script>
     <script>
         // 기존 리스너를 제거할 수 없으면, 아래 코드를 기존 코드 '아래'에 추가해도 됩니다.
+        const modal2 = new bootstrap.Modal(document.getElementById('imageModal'));
+        const swiperWrapper = document.getElementById('swiperWrapper');
+
+        let swiper; // Swiper 인스턴스
+
+        // 썸네일 클릭 → Swiper에 전체 이미지 렌더링 + 해당 인덱스로 이동
         galleryGrid.addEventListener('click', (e) => {
-            const clickable = e.target.closest('[data-index]') || e.target;
-            const idxEl = clickable.closest('[data-index]')
-                ? clickable.closest('[data-index]')
-                : (clickable.tagName === 'IMG' ? clickable : null);
-            if (!idxEl) return;
+            if (e.target.tagName === 'IMG') {
+                const index = parseInt(e.target.dataset.index);
 
-            const idx = parseInt(idxEl.dataset.index);
-            if (Number.isNaN(idx)) return;
+                // 기존 슬라이드 제거
+                swiperWrapper.innerHTML = '';
 
-            currentIndex = idx;
-            modalImage.src = imagePairs[currentIndex].full;
-            // 모달 표시
-            if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
-                // 이미 인스턴스가 있으면 재사용
-                const modalEl = document.getElementById('imageModal');
-                // const instance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
-                // instance.show();
-            } else if (window.$) { // jQuery Fallback
-                $('#imageModal').modal('show');
+                // imagePairs 배열 기반 슬라이드 생성
+                imagePairs.forEach((pair) => {
+                    const slide = document.createElement('div');
+                    slide.className = 'swiper-slide d-flex align-items-center justify-content-center';
+                    slide.innerHTML = `<img src="${pair.full}" class="img-fluid no-actions" style="max-height:80vh; object-fit:contain;">`;
+                    swiperWrapper.appendChild(slide);
+                });
+
+                // 모달 열기
+                modal2.show();
+
+                // Swiper 초기화 (이미 있으면 destroy 후 새로 생성)
+                if (swiper) swiper.destroy(true, true);
+                swiper = new Swiper('.mySwiper', {
+                    initialSlide: index,
+                    loop: true,
+                    centeredSlides: true,
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true,
+                    },
+                    // 모바일/PC 스와이프 모두 지원
+                    spaceBetween: 20,
+                });
             }
         });
     </script>
